@@ -1,10 +1,16 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { formDevtoolsPlugin } from "@tanstack/react-form-devtools";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-
 import "../styles.css";
+import type { AuthState } from "@/auth";
+import { Toaster } from "@/components/ui/sonner";
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+	auth: AuthState;
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: RootComponent,
 });
 
@@ -12,6 +18,7 @@ function RootComponent() {
 	return (
 		<>
 			<Outlet />
+			<Toaster />
 			<TanStackDevtools
 				config={{
 					position: "bottom-right",
@@ -22,6 +29,7 @@ function RootComponent() {
 						name: "TanStack Router",
 						render: <TanStackRouterDevtoolsPanel />,
 					},
+					formDevtoolsPlugin(),
 				]}
 			/>
 		</>

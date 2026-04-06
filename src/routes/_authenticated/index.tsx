@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Footer from "#/components/Footer";
-import Header from "#/components/Header";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
-export const Route = createFileRoute("/")({ component: App });
+export const Route = createFileRoute("/_authenticated/")({ component: App });
 
 function App() {
 	return (
@@ -89,5 +89,5 @@ function App() {
 			</main>
 			<Footer />
 		</>
-	);
+	)
 }
