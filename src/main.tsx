@@ -1,13 +1,21 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
-import { AuthProvider, useAuth } from "./auth";
+import { AuthProvider } from "@/features/auth/components/auth-provider";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { ThemeProvider } from "@/features/shared/components/theme-provider";
+import { TooltipProvider } from "@/features/shared/components/ui/tooltip";
 import { routeTree } from "./routeTree.gen";
+
+const queryClient = new QueryClient();
 
 const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
+	defaultPreloadStaleTime: 0,
 	scrollRestoration: true,
 	context: {
+		queryClient,
 		auth: undefined!,
 	},
 });
@@ -27,9 +35,15 @@ if (!rootElement.innerHTML) {
 
 function App() {
 	return (
-		<AuthProvider>
-			<InnerApp />
-		</AuthProvider>
+		<QueryClientProvider client={queryClient}>
+			<AuthProvider>
+				<ThemeProvider>
+					<TooltipProvider>
+						<InnerApp />
+					</TooltipProvider>
+				</ThemeProvider>
+			</AuthProvider>
+		</QueryClientProvider>
 	);
 }
 

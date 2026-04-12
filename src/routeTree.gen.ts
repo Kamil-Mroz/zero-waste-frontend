@@ -9,16 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
+import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as UnauthenticatedRouteImport } from './routes/_unauthenticated'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as MarketplaceIndexRouteImport } from './routes/marketplace/index'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as MarketplaceItemIdRouteImport } from './routes/marketplace/$itemId'
+import { Route as UnauthenticatedRegisterRouteImport } from './routes/_unauthenticated/register'
 import { Route as UnauthenticatedLoginRouteImport } from './routes/_unauthenticated/login'
-import { Route as AuthenticatedUnauthorizedRouteImport } from './routes/_authenticated/unauthorized'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
 import { Route as AuthenticatedAboutRouteImport } from './routes/_authenticated/about'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/_admin'
+import { Route as AuthenticatedProfileCreateRouteImport } from './routes/_authenticated/profile.create'
+import { Route as AuthenticatedMarketplaceWishlistRouteImport } from './routes/_authenticated/marketplace/wishlist'
+import { Route as AuthenticatedMarketplaceMyItemsRouteImport } from './routes/_authenticated/marketplace/my-items'
+import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_authenticated/marketplace/create'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/_admin/dashboard'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/_admin/categories'
+import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/_admin/categories/index'
+import { Route as AuthenticatedMarketplaceEditItemIdRouteImport } from './routes/_authenticated/marketplace/edit.$itemId'
+import { Route as AuthenticatedAdminCategoriesCreateIndexRouteImport } from './routes/_authenticated/_admin/categories/create/index'
+import { Route as AuthenticatedAdminCategoriesEditCategoryIdRouteImport } from './routes/_authenticated/_admin/categories/edit/$categoryId'
+import { Route as AuthenticatedAdminCategoriesCreateParentIdRouteImport } from './routes/_authenticated/_admin/categories/create/$parentId'
 
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
+  id: '/unauthorized',
+  path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UnauthenticatedRoute = UnauthenticatedRouteImport.update({
   id: '/_unauthenticated',
   getParentRoute: () => rootRouteImport,
@@ -27,27 +52,42 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MarketplaceIndexRoute = MarketplaceIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MarketplaceRoute,
+} as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
+} as any)
+const MarketplaceItemIdRoute = MarketplaceItemIdRouteImport.update({
+  id: '/$itemId',
+  path: '/$itemId',
+  getParentRoute: () => MarketplaceRoute,
+} as any)
+const UnauthenticatedRegisterRoute = UnauthenticatedRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => UnauthenticatedRoute,
 } as any)
 const UnauthenticatedLoginRoute = UnauthenticatedLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => UnauthenticatedRoute,
 } as any)
-const AuthenticatedUnauthorizedRoute =
-  AuthenticatedUnauthorizedRouteImport.update({
-    id: '/unauthorized',
-    path: '/unauthorized',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedMarketplaceRoute =
+  AuthenticatedMarketplaceRouteImport.update({
+    id: '/marketplace',
+    path: '/marketplace',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAboutRoute = AuthenticatedAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -57,72 +97,236 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/_admin',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedProfileCreateRoute =
+  AuthenticatedProfileCreateRouteImport.update({
+    id: '/create',
+    path: '/create',
+    getParentRoute: () => AuthenticatedProfileRoute,
+  } as any)
+const AuthenticatedMarketplaceWishlistRoute =
+  AuthenticatedMarketplaceWishlistRouteImport.update({
+    id: '/wishlist',
+    path: '/wishlist',
+    getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any)
+const AuthenticatedMarketplaceMyItemsRoute =
+  AuthenticatedMarketplaceMyItemsRouteImport.update({
+    id: '/my-items',
+    path: '/my-items',
+    getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any)
+const AuthenticatedMarketplaceCreateRoute =
+  AuthenticatedMarketplaceCreateRouteImport.update({
+    id: '/create',
+    path: '/create',
+    getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any)
 const AuthenticatedAdminDashboardRoute =
   AuthenticatedAdminDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminCategoriesIndexRoute =
+  AuthenticatedAdminCategoriesIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
+  } as any)
+const AuthenticatedMarketplaceEditItemIdRoute =
+  AuthenticatedMarketplaceEditItemIdRouteImport.update({
+    id: '/edit/$itemId',
+    path: '/edit/$itemId',
+    getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any)
+const AuthenticatedAdminCategoriesCreateIndexRoute =
+  AuthenticatedAdminCategoriesCreateIndexRouteImport.update({
+    id: '/create/',
+    path: '/create/',
+    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
+  } as any)
+const AuthenticatedAdminCategoriesEditCategoryIdRoute =
+  AuthenticatedAdminCategoriesEditCategoryIdRouteImport.update({
+    id: '/edit/$categoryId',
+    path: '/edit/$categoryId',
+    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
+  } as any)
+const AuthenticatedAdminCategoriesCreateParentIdRoute =
+  AuthenticatedAdminCategoriesCreateParentIdRouteImport.update({
+    id: '/create/$parentId',
+    path: '/create/$parentId',
+    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
+  '/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
+  '/unauthorized': typeof UnauthorizedRoute
   '/about': typeof AuthenticatedAboutRoute
-  '/profile': typeof AuthenticatedProfileRoute
-  '/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/profile': typeof AuthenticatedProfileRouteWithChildren
   '/login': typeof UnauthenticatedLoginRoute
+  '/register': typeof UnauthenticatedRegisterRoute
+  '/marketplace/$itemId': typeof MarketplaceItemIdRoute
+  '/marketplace/': typeof MarketplaceIndexRoute
+  '/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
+  '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
+  '/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
+  '/profile/create': typeof AuthenticatedProfileCreateRoute
+  '/marketplace/edit/$itemId': typeof AuthenticatedMarketplaceEditItemIdRoute
+  '/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
+  '/categories/create/$parentId': typeof AuthenticatedAdminCategoriesCreateParentIdRoute
+  '/categories/edit/$categoryId': typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
+  '/categories/create/': typeof AuthenticatedAdminCategoriesCreateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
+  '/unauthorized': typeof UnauthorizedRoute
   '/about': typeof AuthenticatedAboutRoute
-  '/profile': typeof AuthenticatedProfileRoute
-  '/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/marketplace': typeof MarketplaceIndexRoute
+  '/profile': typeof AuthenticatedProfileRouteWithChildren
   '/login': typeof UnauthenticatedLoginRoute
+  '/register': typeof UnauthenticatedRegisterRoute
+  '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
+  '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
+  '/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
+  '/profile/create': typeof AuthenticatedProfileCreateRoute
+  '/marketplace/edit/$itemId': typeof AuthenticatedMarketplaceEditItemIdRoute
+  '/categories': typeof AuthenticatedAdminCategoriesIndexRoute
+  '/categories/create/$parentId': typeof AuthenticatedAdminCategoriesCreateParentIdRoute
+  '/categories/edit/$categoryId': typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
+  '/categories/create': typeof AuthenticatedAdminCategoriesCreateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_unauthenticated': typeof UnauthenticatedRouteWithChildren
+  '/marketplace': typeof MarketplaceRouteWithChildren
+  '/unauthorized': typeof UnauthorizedRoute
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/about': typeof AuthenticatedAboutRoute
-  '/_authenticated/profile': typeof AuthenticatedProfileRoute
-  '/_authenticated/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
+  '/_authenticated/profile': typeof AuthenticatedProfileRouteWithChildren
   '/_unauthenticated/login': typeof UnauthenticatedLoginRoute
+  '/_unauthenticated/register': typeof UnauthenticatedRegisterRoute
+  '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/marketplace/': typeof MarketplaceIndexRoute
+  '/_authenticated/_admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/_authenticated/_admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
+  '/_authenticated/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
+  '/_authenticated/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
+  '/_authenticated/profile/create': typeof AuthenticatedProfileCreateRoute
+  '/_authenticated/marketplace/edit/$itemId': typeof AuthenticatedMarketplaceEditItemIdRoute
+  '/_authenticated/_admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
+  '/_authenticated/_admin/categories/create/$parentId': typeof AuthenticatedAdminCategoriesCreateParentIdRoute
+  '/_authenticated/_admin/categories/edit/$categoryId': typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
+  '/_authenticated/_admin/categories/create/': typeof AuthenticatedAdminCategoriesCreateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/marketplace'
+    | '/unauthorized'
     | '/about'
     | '/profile'
-    | '/unauthorized'
     | '/login'
+    | '/register'
+    | '/marketplace/$itemId'
+    | '/marketplace/'
+    | '/categories'
     | '/dashboard'
+    | '/marketplace/create'
+    | '/marketplace/my-items'
+    | '/marketplace/wishlist'
+    | '/profile/create'
+    | '/marketplace/edit/$itemId'
+    | '/categories/'
+    | '/categories/create/$parentId'
+    | '/categories/edit/$categoryId'
+    | '/categories/create/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/profile' | '/unauthorized' | '/login' | '/dashboard'
+  to:
+    | '/'
+    | '/unauthorized'
+    | '/about'
+    | '/marketplace'
+    | '/profile'
+    | '/login'
+    | '/register'
+    | '/marketplace/$itemId'
+    | '/dashboard'
+    | '/marketplace/create'
+    | '/marketplace/my-items'
+    | '/marketplace/wishlist'
+    | '/profile/create'
+    | '/marketplace/edit/$itemId'
+    | '/categories'
+    | '/categories/create/$parentId'
+    | '/categories/edit/$categoryId'
+    | '/categories/create'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_unauthenticated'
+    | '/marketplace'
+    | '/unauthorized'
     | '/_authenticated/_admin'
     | '/_authenticated/about'
+    | '/_authenticated/marketplace'
     | '/_authenticated/profile'
-    | '/_authenticated/unauthorized'
     | '/_unauthenticated/login'
+    | '/_unauthenticated/register'
+    | '/marketplace/$itemId'
     | '/_authenticated/'
+    | '/marketplace/'
+    | '/_authenticated/_admin/categories'
     | '/_authenticated/_admin/dashboard'
+    | '/_authenticated/marketplace/create'
+    | '/_authenticated/marketplace/my-items'
+    | '/_authenticated/marketplace/wishlist'
+    | '/_authenticated/profile/create'
+    | '/_authenticated/marketplace/edit/$itemId'
+    | '/_authenticated/_admin/categories/'
+    | '/_authenticated/_admin/categories/create/$parentId'
+    | '/_authenticated/_admin/categories/edit/$categoryId'
+    | '/_authenticated/_admin/categories/create/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   UnauthenticatedRoute: typeof UnauthenticatedRouteWithChildren
+  MarketplaceRoute: typeof MarketplaceRouteWithChildren
+  UnauthorizedRoute: typeof UnauthorizedRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace': {
+      id: '/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof MarketplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_unauthenticated': {
       id: '/_unauthenticated'
       path: ''
@@ -137,12 +341,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/marketplace/': {
+      id: '/marketplace/'
+      path: '/'
+      fullPath: '/marketplace/'
+      preLoaderRoute: typeof MarketplaceIndexRouteImport
+      parentRoute: typeof MarketplaceRoute
+    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/marketplace/$itemId': {
+      id: '/marketplace/$itemId'
+      path: '/$itemId'
+      fullPath: '/marketplace/$itemId'
+      preLoaderRoute: typeof MarketplaceItemIdRouteImport
+      parentRoute: typeof MarketplaceRoute
+    }
+    '/_unauthenticated/register': {
+      id: '/_unauthenticated/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof UnauthenticatedRegisterRouteImport
+      parentRoute: typeof UnauthenticatedRoute
     }
     '/_unauthenticated/login': {
       id: '/_unauthenticated/login'
@@ -151,18 +376,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnauthenticatedLoginRouteImport
       parentRoute: typeof UnauthenticatedRoute
     }
-    '/_authenticated/unauthorized': {
-      id: '/_authenticated/unauthorized'
-      path: '/unauthorized'
-      fullPath: '/unauthorized'
-      preLoaderRoute: typeof AuthenticatedUnauthorizedRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/marketplace': {
+      id: '/_authenticated/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof AuthenticatedMarketplaceRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/about': {
@@ -179,6 +404,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/profile/create': {
+      id: '/_authenticated/profile/create'
+      path: '/create'
+      fullPath: '/profile/create'
+      preLoaderRoute: typeof AuthenticatedProfileCreateRouteImport
+      parentRoute: typeof AuthenticatedProfileRoute
+    }
+    '/_authenticated/marketplace/wishlist': {
+      id: '/_authenticated/marketplace/wishlist'
+      path: '/wishlist'
+      fullPath: '/marketplace/wishlist'
+      preLoaderRoute: typeof AuthenticatedMarketplaceWishlistRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
+    '/_authenticated/marketplace/my-items': {
+      id: '/_authenticated/marketplace/my-items'
+      path: '/my-items'
+      fullPath: '/marketplace/my-items'
+      preLoaderRoute: typeof AuthenticatedMarketplaceMyItemsRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
+    '/_authenticated/marketplace/create': {
+      id: '/_authenticated/marketplace/create'
+      path: '/create'
+      fullPath: '/marketplace/create'
+      preLoaderRoute: typeof AuthenticatedMarketplaceCreateRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
     '/_authenticated/_admin/dashboard': {
       id: '/_authenticated/_admin/dashboard'
       path: '/dashboard'
@@ -186,33 +439,135 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/_admin/categories': {
+      id: '/_authenticated/_admin/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/_admin/categories/': {
+      id: '/_authenticated/_admin/categories/'
+      path: '/'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    }
+    '/_authenticated/marketplace/edit/$itemId': {
+      id: '/_authenticated/marketplace/edit/$itemId'
+      path: '/edit/$itemId'
+      fullPath: '/marketplace/edit/$itemId'
+      preLoaderRoute: typeof AuthenticatedMarketplaceEditItemIdRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
+    '/_authenticated/_admin/categories/create/': {
+      id: '/_authenticated/_admin/categories/create/'
+      path: '/create'
+      fullPath: '/categories/create/'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesCreateIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    }
+    '/_authenticated/_admin/categories/edit/$categoryId': {
+      id: '/_authenticated/_admin/categories/edit/$categoryId'
+      path: '/edit/$categoryId'
+      fullPath: '/categories/edit/$categoryId'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesEditCategoryIdRouteImport
+      parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    }
+    '/_authenticated/_admin/categories/create/$parentId': {
+      id: '/_authenticated/_admin/categories/create/$parentId'
+      path: '/create/$parentId'
+      fullPath: '/categories/create/$parentId'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesCreateParentIdRouteImport
+      parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    }
   }
 }
 
+interface AuthenticatedAdminCategoriesRouteChildren {
+  AuthenticatedAdminCategoriesIndexRoute: typeof AuthenticatedAdminCategoriesIndexRoute
+  AuthenticatedAdminCategoriesCreateParentIdRoute: typeof AuthenticatedAdminCategoriesCreateParentIdRoute
+  AuthenticatedAdminCategoriesEditCategoryIdRoute: typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
+  AuthenticatedAdminCategoriesCreateIndexRoute: typeof AuthenticatedAdminCategoriesCreateIndexRoute
+}
+
+const AuthenticatedAdminCategoriesRouteChildren: AuthenticatedAdminCategoriesRouteChildren =
+  {
+    AuthenticatedAdminCategoriesIndexRoute:
+      AuthenticatedAdminCategoriesIndexRoute,
+    AuthenticatedAdminCategoriesCreateParentIdRoute:
+      AuthenticatedAdminCategoriesCreateParentIdRoute,
+    AuthenticatedAdminCategoriesEditCategoryIdRoute:
+      AuthenticatedAdminCategoriesEditCategoryIdRoute,
+    AuthenticatedAdminCategoriesCreateIndexRoute:
+      AuthenticatedAdminCategoriesCreateIndexRoute,
+  }
+
+const AuthenticatedAdminCategoriesRouteWithChildren =
+  AuthenticatedAdminCategoriesRoute._addFileChildren(
+    AuthenticatedAdminCategoriesRouteChildren,
+  )
+
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRouteWithChildren
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminCategoriesRoute:
+    AuthenticatedAdminCategoriesRouteWithChildren,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
   AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
+interface AuthenticatedMarketplaceRouteChildren {
+  AuthenticatedMarketplaceCreateRoute: typeof AuthenticatedMarketplaceCreateRoute
+  AuthenticatedMarketplaceMyItemsRoute: typeof AuthenticatedMarketplaceMyItemsRoute
+  AuthenticatedMarketplaceWishlistRoute: typeof AuthenticatedMarketplaceWishlistRoute
+  AuthenticatedMarketplaceEditItemIdRoute: typeof AuthenticatedMarketplaceEditItemIdRoute
+}
+
+const AuthenticatedMarketplaceRouteChildren: AuthenticatedMarketplaceRouteChildren =
+  {
+    AuthenticatedMarketplaceCreateRoute: AuthenticatedMarketplaceCreateRoute,
+    AuthenticatedMarketplaceMyItemsRoute: AuthenticatedMarketplaceMyItemsRoute,
+    AuthenticatedMarketplaceWishlistRoute:
+      AuthenticatedMarketplaceWishlistRoute,
+    AuthenticatedMarketplaceEditItemIdRoute:
+      AuthenticatedMarketplaceEditItemIdRoute,
+  }
+
+const AuthenticatedMarketplaceRouteWithChildren =
+  AuthenticatedMarketplaceRoute._addFileChildren(
+    AuthenticatedMarketplaceRouteChildren,
+  )
+
+interface AuthenticatedProfileRouteChildren {
+  AuthenticatedProfileCreateRoute: typeof AuthenticatedProfileCreateRoute
+}
+
+const AuthenticatedProfileRouteChildren: AuthenticatedProfileRouteChildren = {
+  AuthenticatedProfileCreateRoute: AuthenticatedProfileCreateRoute,
+}
+
+const AuthenticatedProfileRouteWithChildren =
+  AuthenticatedProfileRoute._addFileChildren(AuthenticatedProfileRouteChildren)
+
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedAboutRoute: typeof AuthenticatedAboutRoute
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
-  AuthenticatedUnauthorizedRoute: typeof AuthenticatedUnauthorizedRoute
+  AuthenticatedMarketplaceRoute: typeof AuthenticatedMarketplaceRouteWithChildren
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedAboutRoute: AuthenticatedAboutRoute,
-  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
-  AuthenticatedUnauthorizedRoute: AuthenticatedUnauthorizedRoute,
+  AuthenticatedMarketplaceRoute: AuthenticatedMarketplaceRouteWithChildren,
+  AuthenticatedProfileRoute: AuthenticatedProfileRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
@@ -222,19 +577,37 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 interface UnauthenticatedRouteChildren {
   UnauthenticatedLoginRoute: typeof UnauthenticatedLoginRoute
+  UnauthenticatedRegisterRoute: typeof UnauthenticatedRegisterRoute
 }
 
 const UnauthenticatedRouteChildren: UnauthenticatedRouteChildren = {
   UnauthenticatedLoginRoute: UnauthenticatedLoginRoute,
+  UnauthenticatedRegisterRoute: UnauthenticatedRegisterRoute,
 }
 
 const UnauthenticatedRouteWithChildren = UnauthenticatedRoute._addFileChildren(
   UnauthenticatedRouteChildren,
 )
 
+interface MarketplaceRouteChildren {
+  MarketplaceItemIdRoute: typeof MarketplaceItemIdRoute
+  MarketplaceIndexRoute: typeof MarketplaceIndexRoute
+}
+
+const MarketplaceRouteChildren: MarketplaceRouteChildren = {
+  MarketplaceItemIdRoute: MarketplaceItemIdRoute,
+  MarketplaceIndexRoute: MarketplaceIndexRoute,
+}
+
+const MarketplaceRouteWithChildren = MarketplaceRoute._addFileChildren(
+  MarketplaceRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   UnauthenticatedRoute: UnauthenticatedRouteWithChildren,
+  MarketplaceRoute: MarketplaceRouteWithChildren,
+  UnauthorizedRoute: UnauthorizedRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

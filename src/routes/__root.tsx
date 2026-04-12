@@ -3,21 +3,29 @@ import { formDevtoolsPlugin } from "@tanstack/react-form-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import "../styles.css";
-import type { AuthState } from "@/auth";
-import { Toaster } from "@/components/ui/sonner";
+import type { QueryClient } from "@tanstack/react-query";
+import type { AuthState } from "@/features/auth/types";
+import { MainLayout } from "@/features/shared/components/main-layout";
+import { NotFound } from "@/features/shared/components/not-found";
+
+import { Toaster } from "@/features/shared/components/ui/sonner";
 
 interface MyRouterContext {
 	auth: AuthState;
+	queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: RootComponent,
+	notFoundComponent: NotFound,
 });
 
 function RootComponent() {
 	return (
 		<>
-			<Outlet />
+			<MainLayout>
+				<Outlet />
+			</MainLayout>
 			<Toaster />
 			<TanStackDevtools
 				config={{

@@ -1,11 +1,10 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { redirectSchema } from "@/features/shared/schemas/redirect.schema";
 
 export const Route = createFileRoute("/_unauthenticated")({
-	validateSearch: (search) => ({
-		redirect: (search.redirect as string) || "/",
-	}),
+	validateSearch: redirectSchema,
 	beforeLoad: ({ context, search }) => {
-		if (context.auth.isAuthenticated) {
+		if (context.auth.user) {
 			throw redirect({ to: search.redirect });
 		}
 	},
@@ -14,7 +13,7 @@ export const Route = createFileRoute("/_unauthenticated")({
 
 function RouteComponent() {
 	return (
-		<div className="min-h-screen grid place-items-center">
+		<div className="h-full grid place-items-center">
 			<Outlet />
 		</div>
 	);
