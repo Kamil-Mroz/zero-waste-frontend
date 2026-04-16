@@ -5,11 +5,11 @@ import type { CategoryActionsProps } from "../types";
 
 export function CategoryActions({ category, onDelete }: CategoryActionsProps) {
 	return (
-		<div className="flex flex-1  gap-1 opacity-0 group-hover:opacity-100 justify-end">
+		<div className="flex gap-1 items-center justify-center">
 			<Button size="sm" variant="ghost" asChild>
 				<Link
-					to="/categories/create/$parentId"
-					params={{ parentId: category.id }}
+					to="/admin/categories/create/$categoryId"
+					params={{ categoryId: category.id }}
 				>
 					<Plus />
 					<span className="sr-only">Add to category</span>
@@ -17,7 +17,7 @@ export function CategoryActions({ category, onDelete }: CategoryActionsProps) {
 			</Button>
 			<Button size="sm" variant="ghost" asChild>
 				<Link
-					to="/categories/edit/$categoryId"
+					to="/admin/categories/edit/$categoryId"
 					params={{
 						categoryId: category.id,
 					}}
@@ -29,10 +29,10 @@ export function CategoryActions({ category, onDelete }: CategoryActionsProps) {
 			<Button
 				size="sm"
 				variant="ghost"
-				onClick={(e) => {
-					e.stopPropagation();
+				onClick={() => {
 					onDelete(category.id);
 				}}
+				className="cursor-pointer"
 			>
 				<Trash />
 				<span className="sr-only">Delete item</span>

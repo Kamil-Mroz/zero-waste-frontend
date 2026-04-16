@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/_admin/categories")({
+export const Route = createFileRoute("/_authenticated/admin/categories")({
 	staticData: {
 		getTitle: () => "Categories",
 	},

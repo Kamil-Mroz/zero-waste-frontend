@@ -12,7 +12,7 @@ export const registerSchema = z.object({
 		)
 		.min(10, "Password must be at least 10 characters")
 		.max(128, "Password can be maximum 128 characters"),
-	location: z.string().nonempty("Location required"),
+	city: z.string().nonempty("City is required"),
 	phoneNumber: z
 		.string()
 		.regex(

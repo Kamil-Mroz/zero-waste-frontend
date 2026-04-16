@@ -1,5 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { type PropsWithChildren, useLayoutEffect, useState } from "react";
+import {
+	type PropsWithChildren,
+	useEffect,
+	useLayoutEffect,
+	useState,
+} from "react";
 import { toast } from "sonner";
 import { api } from "@/lib/axios";
 import { AuthContext } from "../hooks/useAuth";
@@ -15,17 +19,24 @@ import type {
 export function AuthProvider({ children }: PropsWithChildren) {
 	const [user, setUser] = useState<AuthState["user"]>(null);
 	const [token, setToken] = useState<AuthState["token"]>(null);
+	const [isLoading, setIsLoading] = useState(true);
 
-	const { isLoading } = useQuery({
-		queryKey: ["auth", "refresh"],
-		queryFn: async () => {
-			const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
-			setToken(res.data.accessToken);
-			setUser({ ...res.data.user, roles: new Set(res.data.user.roles) });
-			return res.data;
-		},
-		retry: false,
-	});
+	useEffect(() => {
+		const fetchMe = async () => {
+			try {
+				const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
+				setToken(res.data.accessToken);
+
+				setUser({ ...res.data.user, roles: new Set(res.data.user.roles) });
+			} catch {
+				setToken(null);
+				setUser(null);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+		fetchMe();
+	}, []);
 
 	useLayoutEffect(() => {
 		const authInterceptor = api.interceptors.request.use((config) => {
@@ -47,16 +58,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			async (error) => {
 				const originalRequest = error.config;
 				if (
-					error.response.status === 401 &&
+					error.response?.status === 401 &&
 					error.response.data.detail === "Token invalid or expired"
 				) {
 					try {
-						const response = await api.post<AuthResponse>(
-							"/api/v1/auth/refresh",
-						);
-						setToken(response.data.accessToken);
-						setUser(response.data.user);
-						originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+						const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
+						setToken(res.data.accessToken);
+						setUser({ ...res.data.user, roles: new Set(res.data.user.roles) });
+						originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
 						originalRequest._retry = true;
 						return api(originalRequest);
 					} catch (refreshError) {
@@ -87,9 +96,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	};
 
 	const login = async (data: LoginRequest) => {
-		const response = await api.post<AuthResponse>("/api/v1/auth/login", data);
-		setToken(response.data.accessToken);
-		setUser(response.data.user);
+		const res = await api.post<AuthResponse>("/api/v1/auth/login", data);
+		setToken(res.data.accessToken);
+		setUser(mapUser(res.data.user));
 	};
 
 	const logout = async () => {
@@ -103,13 +112,17 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	};
 	const hasRole = (role: Roles) => {
 		if (!user) return false;
-		return user.roles.has(role) ?? false;
+		return user.roles.has(role);
 	};
 
 	const hasAnyRole = (roles: UserRoles) => {
 		if (!user) return false;
 		return Array.from(roles).some((role) => user.roles.has(role));
 	};
+	const mapUser = (user: AuthResponse["user"]) => ({
+		...user,
+		roles: new Set(user.roles),
+	});
 
 	return (
 		<AuthContext.Provider
@@ -119,6 +132,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				login,
 				logout,
 				hasRole,
+				isLoading,
 				hasAnyRole,
 				token,
 			}}

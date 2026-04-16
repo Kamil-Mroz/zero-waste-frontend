@@ -5,9 +5,10 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import "../styles.css";
 import type { QueryClient } from "@tanstack/react-query";
 import type { AuthState } from "@/features/auth/types";
+import { RouteError } from "@/features/shared/components/error-component";
+import { ErrorLayout } from "@/features/shared/components/error-layout";
 import { MainLayout } from "@/features/shared/components/main-layout";
 import { NotFound } from "@/features/shared/components/not-found";
-
 import { Toaster } from "@/features/shared/components/ui/sonner";
 
 interface MyRouterContext {
@@ -17,7 +18,8 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: RootComponent,
-	notFoundComponent: NotFound,
+	notFoundComponent: () => <NotFound />,
+
 });
 
 function RootComponent() {

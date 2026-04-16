@@ -1,24 +1,19 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+
 import { api } from "@/lib/axios";
 import { handleApiError } from "@/lib/utils";
 import type { CategoryTreeProps } from "../types";
 import { CategoryTreeItem } from "./category-tree-item";
 
 export function CategoryTree({ items }: CategoryTreeProps) {
-	const { token } = useAuth();
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const onDelete = async (id: string) => {
 		try {
-			await api.delete(`/api/v1/categories/${id}`, {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			await api.delete(`/api/v1/categories/${id}`);
 			toast.success("Category deleted successfully");
 			await queryClient.invalidateQueries({
 				queryKey: ["category", id],

@@ -1,4 +1,5 @@
 import { useStore } from "@tanstack/react-form";
+import { Button } from "../ui/button";
 import {
 	Field,
 	FieldContent,
@@ -21,10 +22,12 @@ export function SelectField({
 	label,
 	items,
 	description,
+	optionalClear = false,
 }: {
 	description?: string;
 	label: string;
 	items: SelectItems;
+	optionalClear?: boolean;
 }) {
 	const field = useFieldContext<string>();
 
@@ -48,7 +51,18 @@ export function SelectField({
 				<SelectTrigger id={field.name} aria-invalid={isInvalid}>
 					<SelectValue placeholder="Select" />
 				</SelectTrigger>
-				<SelectContent position="item-aligned" className="">
+				<SelectContent position="popper" className="">
+					{optionalClear ? (
+						<Button
+							className="max-w-3/4 w-full mx-auto my-1.5  block"
+							size="sm"
+							variant="outline"
+							type="button"
+							onClick={() => field.clearValues()}
+						>
+							Clear
+						</Button>
+					) : null}
 					{items.map((item) => (
 						<SelectItem key={item.value} value={item.value}>
 							{item.label}

@@ -4,7 +4,7 @@ import { redirectSchema } from "@/features/shared/schemas/redirect.schema";
 export const Route = createFileRoute("/_unauthenticated")({
 	validateSearch: redirectSchema,
 	beforeLoad: ({ context, search }) => {
-		if (context.auth.user) {
+		if (!context.auth.isLoading && context.auth.user) {
 			throw redirect({ to: search.redirect });
 		}
 	},

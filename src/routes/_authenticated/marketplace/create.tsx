@@ -1,19 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { z } from "zod/v4";
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import type { Category } from "@/features/category/types";
-import { useAppForm } from "@/features/shared/components/form/form";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/features/shared/components/ui/card";
-import { FieldGroup } from "@/features/shared/components/ui/field";
+import { categoriesQueryOptions } from "@/features/category/hooks/query-options";
+import { ItemForm } from "@/features/item/components/item-form";
+import { ITEM_QUERY_KEYS } from "@/features/item/constants";
+import type { ItemFormRequest, ItemType } from "@/features/item/types";
 import { api } from "@/lib/axios";
 
 export const Route = createFileRoute("/_authenticated/marketplace/create")({
@@ -22,120 +13,27 @@ export const Route = createFileRoute("/_authenticated/marketplace/create")({
 	staticData: {
 		getTitle: () => "Create item",
 	},
+	loader: async ({ context }) => {
+		await context.queryClient.ensureQueryData(categoriesQueryOptions());
+	},
 });
-
-const itemFormSchema = z.object({
-	title: z.string().nonempty("Title is required"),
-	description: z.string().nonempty("Description is required"),
-	condition: z.enum(["NEW", "REPAIRED", "DAMAGE", "OLD"]),
-	category: z.string().nonempty("Category is required"),
-	location: z.string().nonempty("Location is required"),
-});
-
-export type itemFormRequest = z.infer<typeof itemFormSchema>;
-
-export const ITEM_CONDITION = [
-	{ value: "NEW", label: "New" },
-	{ value: "REPAIRED", label: "Repaired" },
-	{ value: "DAMAGE", label: "Damage" },
-	{ value: "OLD", label: "Old" },
-];
 
 function RouteComponent() {
-	const { token } = useAuth();
-	const [categories, setCategories] = useState<Record<string, string>[]>();
-	useEffect(() => {
-		const getCategories = async () => {
-			const response = await api.get<Category[]>("/api/v1/categories", {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			setCategories(
-				response.data.map((category) => ({
-					value: category.id,
-					label: category.name,
-				})),
-			);
-		};
-		getCategories();
-	}, [token]);
+	const { data: categories } = useSuspenseQuery(categoriesQueryOptions());
+	const router = useRouter();
+	const queryClient = useQueryClient();
+	const navigate = Route.useNavigate();
 
-	const form = useAppForm({
-		defaultValues: {
-			title: "",
-			description: "",
-			condition: "NEW",
-			category: "",
-			location: "",
-		},
-		validators: {
-			onSubmit: itemFormSchema,
-		},
-		onSubmit: async ({ value }) => {
-			try {
-				form.reset();
-				// await navigate({ to: redirect, replace: true });
-			} catch (error) {
-				let errorMessage = "Something went wrong, please try again.";
-				if (error instanceof AxiosError) {
-					errorMessage = error.response?.data.detail || "Invalid credentials";
-				}
-				toast.error(errorMessage);
-			}
-		},
-	});
+	const onSubmit = async (values: ItemFormRequest) => {
+		const res = await api.post<ItemType>(`/api/v1/items`, values);
+		toast.success("Item created successfully");
+		await queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() });
+		await router.invalidate();
+		await navigate({
+			to: "/marketplace/$itemId",
+			params: { itemId: res.data.id },
+		});
+	};
 
-	return (
-		<div className="grid h-full place-items-center p-4">
-			<Card className="w-full sm:max-w-lg">
-				<CardHeader>
-					<CardTitle className="text-center text-3xl">Add item</CardTitle>
-					<CardDescription></CardDescription>
-				</CardHeader>
-				<CardContent>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							form.handleSubmit();
-						}}
-					>
-						<FieldGroup>
-							<form.AppField name="title">
-								{(field) => <field.TextField label="Title" />}
-							</form.AppField>
-							<form.AppField name="description">
-								{(field) => <field.TextareaField label="Description" />}
-							</form.AppField>
-							<form.AppField name="condition">
-								{(field) => (
-									<field.SelectField label="Condition" items={ITEM_CONDITION} />
-								)}
-							</form.AppField>
-							{/* {categories ? (
-								<form.AppField name="category">
-									{(field) => (
-										<field.SelectField label="Category" items={categories} />
-									)}
-								</form.AppField>
-							) : (
-								<div>Loading categories...</div>
-							)} */}
-							<form.AppField name="location">
-								{(field) => <field.TextField label="Location" />}
-							</form.AppField>
-							<div className=" grid grid-cols-2 gap-4">
-								<form.AppForm>
-									<form.ResetButton />
-								</form.AppForm>
-								<form.AppForm>
-									<form.SubmitButton label="Submit" />
-								</form.AppForm>
-							</div>
-						</FieldGroup>
-					</form>
-				</CardContent>
-			</Card>
-		</div>
-	);
+	return <ItemForm categories={categories} onSubmit={onSubmit} />;
 }

@@ -91,14 +91,14 @@ export const NAV_LINKS = {
 		},
 		{
 			title: "Admin",
-			url: "/dashboard",
+			url: "/admin/dashboard",
 			icon: Shield,
 			private: true,
 			role: "ADMIN",
 			items: [
 				{
 					title: "Dashboard",
-					url: "/dashboard",
+					url: "/admin/dashboard",
 				},
 				{
 					title: "Manage Users",
@@ -110,7 +110,7 @@ export const NAV_LINKS = {
 				},
 				{
 					title: "Manage categories",
-					url: "/categories",
+					url: "/admin/categories",
 				},
 				{
 					title: "Manage Blog",

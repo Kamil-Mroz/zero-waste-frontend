@@ -1,41 +1,47 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { CategoryForm } from "@/features/category/components/category-form";
 import type { CategoryFormType } from "@/features/category/types";
+import { categoryParamSchema } from "@/features/shared/schemas/uuid.schema";
 import { api } from "@/lib/axios";
 
 export const Route = createFileRoute(
-	"/_authenticated/_admin/categories/create/$parentId",
+	"/_authenticated/admin/categories/create/$categoryId",
 )({
 	component: RouteComponent,
 	staticData: {
 		getTitle: () => "Create category",
 	},
+	params: {
+		parse: (params) => {
+			const result = categoryParamSchema.safeParse(params);
+			if (!result.success) {
+				throw notFound();
+			}
+			return {
+				categoryId: result.data.categoryId,
+			}
+		},
+	},
 });
 
 function RouteComponent() {
-	const { token } = useAuth();
-	const { parentId } = Route.useParams();
+	const { categoryId } = Route.useParams();
 	const queryClient = useQueryClient();
 	const router = useRouter();
 
 	const onSubmit = async (value: CategoryFormType) => {
-		await api.post(`/api/v1/categories`, value, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		await api.post(`/api/v1/categories`, value);
 		toast.success("Category created successfully");
 		await queryClient.invalidateQueries({ queryKey: ["categoryTree"] });
 		await router.invalidate();
-	};
+	}
 
 	return (
 		<CategoryForm
-			defaultValues={{ name: "", categoryId: parentId }}
+			defaultValues={{ name: "", categoryId: categoryId }}
 			onSubmit={onSubmit}
 		/>
-	);
+	)
 }

@@ -16,17 +16,17 @@ export type User = {
 	email: string;
 	phoneNumber: string;
 	roles: UserRoles;
-	location: string;
 };
 
 export type AuthState = {
 	user: User | null;
 	token: string | null;
+	isLoading: boolean;
 	hasRole: (role: "USER" | "ADMIN" | "WRITER") => boolean;
 	hasAnyRole: (roles: UserRoles) => boolean;
 	register: (data: RegisterRequest) => Promise<void>;
 	login: (data: LoginRequest) => Promise<void>;
-	logout: () => void;
+	logout: () => Promise<void>;
 };
 
 export type LoginRequest = z.infer<typeof loginSchema>;

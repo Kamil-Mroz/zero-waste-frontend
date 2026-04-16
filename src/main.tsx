@@ -5,6 +5,9 @@ import { AuthProvider } from "@/features/auth/components/auth-provider";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ThemeProvider } from "@/features/shared/components/theme-provider";
 import { TooltipProvider } from "@/features/shared/components/ui/tooltip";
+import { RouteError } from "./features/shared/components/error-component";
+import { ErrorLayout } from "./features/shared/components/error-layout";
+import { NotFound } from "./features/shared/components/not-found";
 import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
@@ -14,6 +17,12 @@ const router = createRouter({
 	defaultPreload: "intent",
 	defaultPreloadStaleTime: 0,
 	scrollRestoration: true,
+	defaultNotFoundComponent: () => <NotFound />,
+	defaultErrorComponent: ({ error, reset }) => (
+		<ErrorLayout reset={reset}>
+			<RouteError error={error} />
+		</ErrorLayout>
+	),
 	context: {
 		queryClient,
 		auth: undefined!,
@@ -35,15 +44,15 @@ if (!rootElement.innerHTML) {
 
 function App() {
 	return (
-		<QueryClientProvider client={queryClient}>
-			<AuthProvider>
-				<ThemeProvider>
+		<ThemeProvider>
+			<QueryClientProvider client={queryClient}>
+				<AuthProvider>
 					<TooltipProvider>
 						<InnerApp />
 					</TooltipProvider>
-				</ThemeProvider>
-			</AuthProvider>
-		</QueryClientProvider>
+				</AuthProvider>
+			</QueryClientProvider>
+		</ThemeProvider>
 	);
 }
 

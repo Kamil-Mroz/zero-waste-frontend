@@ -1,20 +1,13 @@
-import { Button } from "@/features/shared/components/ui/button";
 import type { CategoryLeafItemProps } from "../types";
 import { CategoryActions } from "./category-actions";
 
 export function CategoryLeafItem({ item, onDelete }: CategoryLeafItemProps) {
 	return (
-		<Button
-			key={item.id}
-			variant="ghost"
-			size="sm"
-			className="group w-full justify-start transition-none hover:bg-accent hover:text-accent-foreground"
-			asChild
-		>
-			<div className="flex flex-1 w-full ">
-				<span>{item.name}</span>
-				<CategoryActions category={item} onDelete={onDelete} />
-			</div>
-		</Button>
+		<div className="group flex gap-1 items-center">
+			<p className="flex-1 group-hover:bg-accent transition-colors px-2 rounded-sm  group-focus-visible:bg-accent group-[&:has(:focus)]:bg-accent">
+				{item.name}
+			</p>
+			<CategoryActions category={item} onDelete={onDelete} />
+		</div>
 	);
 }

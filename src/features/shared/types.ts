@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { PropsWithChildren } from "react";
 import type { Roles } from "../auth/types";
 
 export type NavItem = {
@@ -10,3 +11,17 @@ export type NavItem = {
 	role?: Roles;
 	items: NavItem[];
 };
+
+export type EmptyComponentProps = {
+	title: string;
+	description: string;
+	icon: LucideIcon;
+	linkTo?: string;
+	linkLabel?: string;
+};
+export type NotFoundProps = {
+	detail?: string;
+};
+export type ErrorLayoutProps = {
+	reset: () => void;
+} & PropsWithChildren;

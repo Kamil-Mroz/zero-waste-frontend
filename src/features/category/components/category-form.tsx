@@ -62,7 +62,7 @@ export function CategoryForm({
 	return (
 		<div className="flex items-center justify-center flex-col gap-4 h-full px-2">
 			<Button asChild variant={"secondary"}>
-				<Link to="/categories">
+				<Link to="/admin/categories">
 					<ChevronLeft /> Go back
 				</Link>
 			</Button>
@@ -87,6 +87,7 @@ export function CategoryForm({
 									{(field) => (
 										<field.SelectField
 											label="Parent category"
+											optionalClear
 											items={categories}
 										/>
 									)}
