@@ -1,7 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { CategoryDialog } from "@/features/category/components/category-dialog";
 import { CategoryList } from "@/features/category/components/category-list";
-import { categoryTreeQueryOptions } from "@/features/category/hooks/query-options";
+import {
+	categoriesQueryOptions,
+	categoryQueryOptions,
+	categoryTreeQueryOptions,
+} from "@/features/category/hooks/query-options";
+import { categorySearchSchema } from "@/features/category/schemas/category.schema";
 import { PendingComponent } from "@/features/shared/components/pending";
 
 export const Route = createFileRoute("/_authenticated/admin/categories/")({
@@ -9,14 +15,32 @@ export const Route = createFileRoute("/_authenticated/admin/categories/")({
 	staticData: {
 		getTitle: () => "List",
 	},
-	loader: async ({ context }) => {
-		await context.queryClient.ensureQueryData(categoryTreeQueryOptions());
+
+	validateSearch: categorySearchSchema,
+	loaderDeps: ({ search }) => ({ search }),
+	loader: async ({ context, deps: { search } }) => {
+		if (search.modal === "edit" && search.categoryId) {
+			await Promise.all([
+				context.queryClient.ensureQueryData(categoryTreeQueryOptions()),
+				context.queryClient.ensureQueryData(
+					categoryQueryOptions(search.categoryId),
+				),
+				context.queryClient.ensureQueryData(categoriesQueryOptions()),
+			]);
+		} else {
+			await context.queryClient.ensureQueryData(categoryTreeQueryOptions());
+		}
 	},
 	pendingComponent: PendingComponent,
 });
 
 function RouteComponent() {
-	const { data: categories } = useSuspenseQuery(categoryTreeQueryOptions());
+	const { data: tree } = useSuspenseQuery(categoryTreeQueryOptions());
 
-	return <CategoryList categories={categories} />;
+	return (
+		<div>
+			<CategoryList categories={tree} />
+			<CategoryDialog />
+		</div>
+	);
 }

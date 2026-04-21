@@ -30,11 +30,10 @@ import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_au
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/admin/categories/index'
 import { Route as AuthenticatedMarketplaceItemIdEditRouteImport } from './routes/_authenticated/marketplace/$itemId.edit'
-import { Route as AuthenticatedAdminCategoriesCreateIndexRouteImport } from './routes/_authenticated/admin/categories/create/index'
-import { Route as AuthenticatedAdminCategoriesEditCategoryIdRouteImport } from './routes/_authenticated/admin/categories/edit/$categoryId'
-import { Route as AuthenticatedAdminCategoriesCreateCategoryIdRouteImport } from './routes/_authenticated/admin/categories/create/$categoryId'
+import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users/$userId'
 
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
@@ -147,6 +146,12 @@ const AuthenticatedAdminCategoriesRoute =
     path: '/categories',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminUsersIndexRoute =
+  AuthenticatedAdminUsersIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminUsersRoute,
+  } as any)
 const AuthenticatedAdminCategoriesIndexRoute =
   AuthenticatedAdminCategoriesIndexRouteImport.update({
     id: '/',
@@ -159,23 +164,11 @@ const AuthenticatedMarketplaceItemIdEditRoute =
     path: '/$itemId/edit',
     getParentRoute: () => AuthenticatedMarketplaceRoute,
   } as any)
-const AuthenticatedAdminCategoriesCreateIndexRoute =
-  AuthenticatedAdminCategoriesCreateIndexRouteImport.update({
-    id: '/create/',
-    path: '/create/',
-    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
-  } as any)
-const AuthenticatedAdminCategoriesEditCategoryIdRoute =
-  AuthenticatedAdminCategoriesEditCategoryIdRouteImport.update({
-    id: '/edit/$categoryId',
-    path: '/edit/$categoryId',
-    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
-  } as any)
-const AuthenticatedAdminCategoriesCreateCategoryIdRoute =
-  AuthenticatedAdminCategoriesCreateCategoryIdRouteImport.update({
-    id: '/create/$categoryId',
-    path: '/create/$categoryId',
-    getParentRoute: () => AuthenticatedAdminCategoriesRoute,
+const AuthenticatedAdminUsersUserIdRoute =
+  AuthenticatedAdminUsersUserIdRouteImport.update({
+    id: '/$userId',
+    path: '/$userId',
+    getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -191,17 +184,16 @@ export interface FileRoutesByFullPath {
   '/marketplace/': typeof MarketplaceIndexRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
   '/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
   '/profile/create': typeof AuthenticatedProfileCreateRoute
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
   '/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
   '/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
-  '/admin/categories/create/$categoryId': typeof AuthenticatedAdminCategoriesCreateCategoryIdRoute
-  '/admin/categories/edit/$categoryId': typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
-  '/admin/categories/create/': typeof AuthenticatedAdminCategoriesCreateIndexRoute
+  '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
@@ -214,17 +206,15 @@ export interface FileRoutesByTo {
   '/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
   '/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
   '/profile/create': typeof AuthenticatedProfileCreateRoute
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
   '/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesIndexRoute
-  '/admin/categories/create/$categoryId': typeof AuthenticatedAdminCategoriesCreateCategoryIdRoute
-  '/admin/categories/edit/$categoryId': typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
-  '/admin/categories/create': typeof AuthenticatedAdminCategoriesCreateIndexRoute
+  '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -243,17 +233,16 @@ export interface FileRoutesById {
   '/marketplace/': typeof MarketplaceIndexRoute
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/_authenticated/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/_authenticated/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/_authenticated/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
   '/_authenticated/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
   '/_authenticated/profile/create': typeof AuthenticatedProfileCreateRoute
+  '/_authenticated/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
   '/_authenticated/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
   '/_authenticated/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
-  '/_authenticated/admin/categories/create/$categoryId': typeof AuthenticatedAdminCategoriesCreateCategoryIdRoute
-  '/_authenticated/admin/categories/edit/$categoryId': typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
-  '/_authenticated/admin/categories/create/': typeof AuthenticatedAdminCategoriesCreateIndexRoute
+  '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -276,11 +265,10 @@ export interface FileRouteTypes {
     | '/marketplace/my-items'
     | '/marketplace/wishlist'
     | '/profile/create'
+    | '/admin/users/$userId'
     | '/marketplace/$itemId/edit'
     | '/admin/categories/'
-    | '/admin/categories/create/$categoryId'
-    | '/admin/categories/edit/$categoryId'
-    | '/admin/categories/create/'
+    | '/admin/users/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -293,17 +281,15 @@ export interface FileRouteTypes {
     | '/register'
     | '/marketplace/$itemId'
     | '/admin/dashboard'
-    | '/admin/users'
     | '/marketplace/create'
     | '/marketplace/history'
     | '/marketplace/my-items'
     | '/marketplace/wishlist'
     | '/profile/create'
+    | '/admin/users/$userId'
     | '/marketplace/$itemId/edit'
     | '/admin/categories'
-    | '/admin/categories/create/$categoryId'
-    | '/admin/categories/edit/$categoryId'
-    | '/admin/categories/create'
+    | '/admin/users'
   id:
     | '__root__'
     | '/_authenticated'
@@ -327,11 +313,10 @@ export interface FileRouteTypes {
     | '/_authenticated/marketplace/my-items'
     | '/_authenticated/marketplace/wishlist'
     | '/_authenticated/profile/create'
+    | '/_authenticated/admin/users/$userId'
     | '/_authenticated/marketplace/$itemId/edit'
     | '/_authenticated/admin/categories/'
-    | '/_authenticated/admin/categories/create/$categoryId'
-    | '/_authenticated/admin/categories/edit/$categoryId'
-    | '/_authenticated/admin/categories/create/'
+    | '/_authenticated/admin/users/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -490,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/users/': {
+      id: '/_authenticated/admin/users/'
+      path: '/'
+      fullPath: '/admin/users/'
+      preLoaderRoute: typeof AuthenticatedAdminUsersIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersRoute
+    }
     '/_authenticated/admin/categories/': {
       id: '/_authenticated/admin/categories/'
       path: '/'
@@ -504,47 +496,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMarketplaceItemIdEditRouteImport
       parentRoute: typeof AuthenticatedMarketplaceRoute
     }
-    '/_authenticated/admin/categories/create/': {
-      id: '/_authenticated/admin/categories/create/'
-      path: '/create'
-      fullPath: '/admin/categories/create/'
-      preLoaderRoute: typeof AuthenticatedAdminCategoriesCreateIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminCategoriesRoute
-    }
-    '/_authenticated/admin/categories/edit/$categoryId': {
-      id: '/_authenticated/admin/categories/edit/$categoryId'
-      path: '/edit/$categoryId'
-      fullPath: '/admin/categories/edit/$categoryId'
-      preLoaderRoute: typeof AuthenticatedAdminCategoriesEditCategoryIdRouteImport
-      parentRoute: typeof AuthenticatedAdminCategoriesRoute
-    }
-    '/_authenticated/admin/categories/create/$categoryId': {
-      id: '/_authenticated/admin/categories/create/$categoryId'
-      path: '/create/$categoryId'
-      fullPath: '/admin/categories/create/$categoryId'
-      preLoaderRoute: typeof AuthenticatedAdminCategoriesCreateCategoryIdRouteImport
-      parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    '/_authenticated/admin/users/$userId': {
+      id: '/_authenticated/admin/users/$userId'
+      path: '/$userId'
+      fullPath: '/admin/users/$userId'
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersRoute
     }
   }
 }
 
 interface AuthenticatedAdminCategoriesRouteChildren {
   AuthenticatedAdminCategoriesIndexRoute: typeof AuthenticatedAdminCategoriesIndexRoute
-  AuthenticatedAdminCategoriesCreateCategoryIdRoute: typeof AuthenticatedAdminCategoriesCreateCategoryIdRoute
-  AuthenticatedAdminCategoriesEditCategoryIdRoute: typeof AuthenticatedAdminCategoriesEditCategoryIdRoute
-  AuthenticatedAdminCategoriesCreateIndexRoute: typeof AuthenticatedAdminCategoriesCreateIndexRoute
 }
 
 const AuthenticatedAdminCategoriesRouteChildren: AuthenticatedAdminCategoriesRouteChildren =
   {
     AuthenticatedAdminCategoriesIndexRoute:
       AuthenticatedAdminCategoriesIndexRoute,
-    AuthenticatedAdminCategoriesCreateCategoryIdRoute:
-      AuthenticatedAdminCategoriesCreateCategoryIdRoute,
-    AuthenticatedAdminCategoriesEditCategoryIdRoute:
-      AuthenticatedAdminCategoriesEditCategoryIdRoute,
-    AuthenticatedAdminCategoriesCreateIndexRoute:
-      AuthenticatedAdminCategoriesCreateIndexRoute,
   }
 
 const AuthenticatedAdminCategoriesRouteWithChildren =
@@ -552,17 +521,33 @@ const AuthenticatedAdminCategoriesRouteWithChildren =
     AuthenticatedAdminCategoriesRouteChildren,
   )
 
+interface AuthenticatedAdminUsersRouteChildren {
+  AuthenticatedAdminUsersUserIdRoute: typeof AuthenticatedAdminUsersUserIdRoute
+  AuthenticatedAdminUsersIndexRoute: typeof AuthenticatedAdminUsersIndexRoute
+}
+
+const AuthenticatedAdminUsersRouteChildren: AuthenticatedAdminUsersRouteChildren =
+  {
+    AuthenticatedAdminUsersUserIdRoute: AuthenticatedAdminUsersUserIdRoute,
+    AuthenticatedAdminUsersIndexRoute: AuthenticatedAdminUsersIndexRoute,
+  }
+
+const AuthenticatedAdminUsersRouteWithChildren =
+  AuthenticatedAdminUsersRoute._addFileChildren(
+    AuthenticatedAdminUsersRouteChildren,
+  )
+
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRouteWithChildren
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
-  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCategoriesRoute:
     AuthenticatedAdminCategoriesRouteWithChildren,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
-  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
 }
 
 const AuthenticatedAdminRouteWithChildren =

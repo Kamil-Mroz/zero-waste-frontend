@@ -9,10 +9,11 @@ import {
 	EmptyTitle,
 } from "@/features/shared/components/ui/empty";
 import type { EmptyComponentProps } from "../types";
+import type { PropsWithChildren } from "react";
 
-export function EmptyComponent(desc: EmptyComponentProps) {
+export function EmptyComponent(desc: EmptyComponentProps & PropsWithChildren) {
 	return (
-		<Empty>
+		<Empty className="h-full">
 			<EmptyHeader>
 				<EmptyMedia variant="icon">
 					<desc.icon />
@@ -21,13 +22,9 @@ export function EmptyComponent(desc: EmptyComponentProps) {
 				<EmptyDescription>{desc.description}</EmptyDescription>
 			</EmptyHeader>
 
-			{desc.linkLabel && desc.linkTo ? (
 				<EmptyContent>
-					<Button asChild className="">
-						<Link to={desc.linkTo}>{desc.linkLabel}</Link>
-					</Button>
+          {desc.children}
 				</EmptyContent>
-			) : null}
 		</Empty>
 	);
 }

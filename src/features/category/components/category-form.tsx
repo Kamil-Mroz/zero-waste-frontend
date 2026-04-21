@@ -1,14 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@/features/shared/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/features/shared/components/ui/card";
+
 import { handleApiError } from "@/lib/utils";
 import { useAppForm } from "../../shared/components/form/form";
 import { FieldGroup } from "../../shared/components/ui/field";
@@ -60,51 +51,36 @@ export function CategoryForm({
 	});
 
 	return (
-		<div className="flex items-center justify-center flex-col gap-4 h-full px-2">
-			<Button asChild variant={"secondary"}>
-				<Link to="/admin/categories">
-					<ChevronLeft /> Go back
-				</Link>
-			</Button>
-			<Card className="w-full sm:max-w-md">
-				<CardHeader>
-					<CardTitle className="text-center text-3xl">Category</CardTitle>
-					<CardDescription></CardDescription>
-				</CardHeader>
-				<CardContent>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							form.handleSubmit();
-						}}
-					>
-						<FieldGroup>
-							<form.AppField name="name">
-								{(field) => <field.TextField label="Name" />}
-							</form.AppField>
-							{showCategorySelect && categories && (
-								<form.AppField name="categoryId">
-									{(field) => (
-										<field.SelectField
-											label="Parent category"
-											optionalClear
-											items={categories}
-										/>
-									)}
-								</form.AppField>
-							)}
-							<div className="grid grid-cols-2 gap-1">
-								<form.AppForm>
-									<form.ResetButton />
-								</form.AppForm>
-								<form.AppForm>
-									<form.SubmitButton label="Submit" />
-								</form.AppForm>
-							</div>
-						</FieldGroup>
-					</form>
-				</CardContent>
-			</Card>
-		</div>
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				form.handleSubmit();
+			}}
+		>
+			<FieldGroup>
+				<form.AppField name="name">
+					{(field) => <field.TextField label="Name" />}
+				</form.AppField>
+				{showCategorySelect && categories && (
+					<form.AppField name="categoryId">
+						{(field) => (
+							<field.SelectField
+								label="Parent category"
+								optionalClear
+								items={categories}
+							/>
+						)}
+					</form.AppField>
+				)}
+				<div className="grid grid-cols-2 gap-1">
+					<form.AppForm>
+						<form.ResetButton />
+					</form.AppForm>
+					<form.AppForm>
+						<form.SubmitButton label="Submit" />
+					</form.AppForm>
+				</div>
+			</FieldGroup>
+		</form>
 	);
 }

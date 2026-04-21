@@ -5,24 +5,21 @@ import { AuthProvider } from "@/features/auth/components/auth-provider";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ThemeProvider } from "@/features/shared/components/theme-provider";
 import { TooltipProvider } from "@/features/shared/components/ui/tooltip";
-import { RouteError } from "./features/shared/components/error-component";
-import { ErrorLayout } from "./features/shared/components/error-layout";
+import { ErrorComponent } from "./features/shared/components/error-component";
 import { NotFound } from "./features/shared/components/not-found";
+import { PendingComponent } from "./features/shared/components/pending";
 import { routeTree } from "./routeTree.gen";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
 	defaultPreloadStaleTime: 0,
 	scrollRestoration: true,
-	defaultNotFoundComponent: () => <NotFound />,
-	defaultErrorComponent: ({ error, reset }) => (
-		<ErrorLayout reset={reset}>
-			<RouteError error={error} />
-		</ErrorLayout>
-	),
+	defaultNotFoundComponent: NotFound,
+	defaultErrorComponent: ErrorComponent,
+	defaultPendingComponent: PendingComponent,
 	context: {
 		queryClient,
 		auth: undefined!,

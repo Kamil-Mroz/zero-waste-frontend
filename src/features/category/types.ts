@@ -1,3 +1,4 @@
+import type { AxiosResponse } from "axios";
 import type { z } from "zod/v4";
 import type { SelectItems } from "../shared/components/form/select-field";
 import type { categorySchema } from "./schemas/category.schema";
@@ -8,7 +9,7 @@ export type CategoryFormProps = {
 		categoryId?: string;
 	};
 	blank?: boolean;
-	onSubmit: (value: CategoryFormType) => Promise<void>;
+	onSubmit: (value: CategoryFormType) => Promise<AxiosResponse>;
 	showCategorySelect?: boolean;
 	categories?: SelectItems;
 };
@@ -34,15 +35,12 @@ export type CategoryTreeProps = { items: CategoryTreeType[] };
 
 export type CategoryTreeItemProps = {
 	item: CategoryTreeType;
-} & CategoryActions;
+};
 
 export type CategoryLeafItemProps = {
 	item: CategoryTreeType;
-} & CategoryActions;
-
-export type CategoryActions = {
-	onDelete: (id: string) => void;
 };
+
 export type CategoryActionsProps = {
 	category: CategoryTreeType;
-} & CategoryActions;
+};

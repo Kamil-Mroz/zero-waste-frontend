@@ -19,9 +19,13 @@ export function CategoryList({ categories }: CategoryListProps) {
 					Categories are need to create an item
 				"
 				icon={LayoutGrid}
-				linkTo="/admin/categories/create"
-				linkLabel="Add Category"
-			/>
+			>
+				<Button asChild>
+					<Link to="/admin/categories" search={{ modal: "create" }}>
+						Add category
+					</Link>
+				</Button>
+			</EmptyComponent>
 		);
 	}
 
@@ -30,12 +34,12 @@ export function CategoryList({ categories }: CategoryListProps) {
 			<Card className=" w-full gap-2" size="sm">
 				<CardHeader>
 					<Button asChild>
-						<Link to="/admin/categories/create">
+						<Link to="/admin/categories" search={{ modal: "create" }}>
 							<Plus /> Add
 						</Link>
 					</Button>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="overflow-x-auto">
 					<CategoryTree items={categories} />
 				</CardContent>
 			</Card>

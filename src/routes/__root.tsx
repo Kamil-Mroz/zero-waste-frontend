@@ -1,15 +1,14 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { formDevtoolsPlugin } from "@tanstack/react-form-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import "../styles.css";
 import type { QueryClient } from "@tanstack/react-query";
 import type { AuthState } from "@/features/auth/types";
-import { RouteError } from "@/features/shared/components/error-component";
-import { ErrorLayout } from "@/features/shared/components/error-layout";
 import { MainLayout } from "@/features/shared/components/main-layout";
-import { NotFound } from "@/features/shared/components/not-found";
 import { Toaster } from "@/features/shared/components/ui/sonner";
+import { queryClient } from "@/main";
 
 interface MyRouterContext {
 	auth: AuthState;
@@ -18,8 +17,6 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: RootComponent,
-	notFoundComponent: () => <NotFound />,
-
 });
 
 function RootComponent() {
@@ -38,6 +35,10 @@ function RootComponent() {
 					{
 						name: "TanStack Router",
 						render: <TanStackRouterDevtoolsPanel />,
+					},
+					{
+						name: "TanStack Query",
+						render: <ReactQueryDevtoolsPanel client={queryClient} />,
 					},
 					formDevtoolsPlugin(),
 				]}

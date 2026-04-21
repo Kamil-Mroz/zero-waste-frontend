@@ -5,6 +5,7 @@ import {
 	useState,
 } from "react";
 import { toast } from "sonner";
+import type { Roles, UserRoles } from "@/features/users/types";
 import { api } from "@/lib/axios";
 import { AuthContext } from "../hooks/useAuth";
 import type {
@@ -12,8 +13,6 @@ import type {
 	AuthState,
 	LoginRequest,
 	RegisterRequest,
-	Roles,
-	UserRoles,
 } from "../types";
 
 export function AuthProvider({ children }: PropsWithChildren) {
@@ -27,7 +26,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
 				setToken(res.data.accessToken);
 
-				setUser({ ...res.data.user, roles: new Set(res.data.user.roles) });
+				setUser(res.data.user);
 			} catch {
 				setToken(null);
 				setUser(null);
@@ -64,7 +63,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 					try {
 						const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
 						setToken(res.data.accessToken);
-						setUser({ ...res.data.user, roles: new Set(res.data.user.roles) });
+						setUser(res.data.user);
 						originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
 						originalRequest._retry = true;
 						return api(originalRequest);
@@ -98,7 +97,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	const login = async (data: LoginRequest) => {
 		const res = await api.post<AuthResponse>("/api/v1/auth/login", data);
 		setToken(res.data.accessToken);
-		setUser(mapUser(res.data.user));
+		setUser(res.data.user);
 	};
 
 	const logout = async () => {
@@ -112,17 +111,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	};
 	const hasRole = (role: Roles) => {
 		if (!user) return false;
-		return user.roles.has(role);
+		return user.roles.includes(role);
 	};
 
 	const hasAnyRole = (roles: UserRoles) => {
 		if (!user) return false;
-		return Array.from(roles).some((role) => user.roles.has(role));
+		return roles.some((role) => user.roles.includes(role));
 	};
-	const mapUser = (user: AuthResponse["user"]) => ({
-		...user,
-		roles: new Set(user.roles),
-	});
 
 	return (
 		<AuthContext.Provider

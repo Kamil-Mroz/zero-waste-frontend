@@ -1,40 +1,11 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
-
-import { api } from "@/lib/axios";
-import { handleApiError } from "@/lib/utils";
 import type { CategoryTreeProps } from "../types";
 import { CategoryTreeItem } from "./category-tree-item";
 
 export function CategoryTree({ items }: CategoryTreeProps) {
-	const router = useRouter();
-	const queryClient = useQueryClient();
-
-	const onDelete = async (id: string) => {
-		try {
-			await api.delete(`/api/v1/categories/${id}`);
-			toast.success("Category deleted successfully");
-			await queryClient.invalidateQueries({
-				queryKey: ["category", id],
-			});
-			await queryClient.invalidateQueries({ queryKey: ["categories"] });
-			await queryClient.invalidateQueries({ queryKey: ["categoryTree"] });
-			await router.invalidate();
-		} catch (error) {
-			const message = handleApiError(error);
-			if (message) toast.error(message);
-		}
-	};
-
 	return (
 		<div className="flex flex-col gap-1">
 			{items.map((category) => (
-				<CategoryTreeItem
-					key={category.id}
-					onDelete={onDelete}
-					item={category}
-				/>
+				<CategoryTreeItem key={category.id} item={category} />
 			))}
 		</div>
 	);

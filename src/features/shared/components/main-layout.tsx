@@ -10,7 +10,9 @@ export function MainLayout({ children }: PropsWithChildren) {
 				<Header />
 				<div className="flex flex-1">
 					<AppSidebar />
-					<SidebarInset>{children}</SidebarInset>
+					<SidebarInset className="mx-auto container p-2">
+						{children}
+					</SidebarInset>
 				</div>
 			</SidebarProvider>
 		</div>

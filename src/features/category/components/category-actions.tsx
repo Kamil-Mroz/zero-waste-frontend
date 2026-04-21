@@ -1,42 +1,75 @@
-import { Link } from "@tanstack/react-router";
-import { Pencil, Plus, Trash } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link, useRouter } from "@tanstack/react-router";
+import { MoreHorizontal } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/features/shared/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/features/shared/components/ui/dropdown-menu";
+import { categoryDeleteMutationOptions } from "../hooks/mutation-options";
 import type { CategoryActionsProps } from "../types";
 
-export function CategoryActions({ category, onDelete }: CategoryActionsProps) {
+export function CategoryActions({ category }: CategoryActionsProps) {
+	const router = useRouter();
+	const queryClient = useQueryClient();
+
+	const deleteMutation = useMutation({
+		...categoryDeleteMutationOptions(),
+		onSuccess: async (_, id) => {
+			toast.success("category deleted successfully");
+
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: ["category", id],
+				}),
+				queryClient.invalidateQueries({ queryKey: ["categories"] }),
+				queryClient.invalidateQueries({ queryKey: ["categoryTree"] }),
+			]);
+			await router.invalidate();
+		},
+	});
+
 	return (
-		<div className="flex gap-1 items-center justify-center">
-			<Button size="sm" variant="ghost" asChild>
-				<Link
-					to="/admin/categories/create/$categoryId"
-					params={{ categoryId: category.id }}
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant="ghost" size="sm">
+					<MoreHorizontal />
+					<span className="sr-only">Open menu</span>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				<DropdownMenuItem asChild>
+					<Link
+						to="/admin/categories"
+						search={{ modal: "create", categoryId: category.id }}
+					>
+						Add
+					</Link>
+				</DropdownMenuItem>
+				<DropdownMenuItem asChild>
+					<Link
+						to="/admin/categories"
+						search={{
+							modal: "edit",
+							categoryId: category.id,
+						}}
+					>
+						Edit
+					</Link>
+				</DropdownMenuItem>
+
+				<DropdownMenuSeparator />
+				<DropdownMenuItem
+					variant="destructive"
+					onClick={() => deleteMutation.mutate(category.id)}
 				>
-					<Plus />
-					<span className="sr-only">Add to category</span>
-				</Link>
-			</Button>
-			<Button size="sm" variant="ghost" asChild>
-				<Link
-					to="/admin/categories/edit/$categoryId"
-					params={{
-						categoryId: category.id,
-					}}
-				>
-					<Pencil />
-					<span className="sr-only">Edit item</span>
-				</Link>
-			</Button>
-			<Button
-				size="sm"
-				variant="ghost"
-				onClick={() => {
-					onDelete(category.id);
-				}}
-				className="cursor-pointer"
-			>
-				<Trash />
-				<span className="sr-only">Delete item</span>
-			</Button>
-		</div>
+					Delete
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 }

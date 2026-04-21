@@ -1,22 +1,13 @@
 import type { z } from "zod/v4";
 import type { loginSchema } from "./schemas/login.schema";
 import type { registerSchema } from "./schemas/register.schema";
+import type { User, UserRoles } from "../users/types";
 export type AuthResponse = {
 	user: User;
 	accessToken: string;
 };
 
-export type Roles = "USER" | "ADMIN" | "WRITER";
-export type UserRoles = Set<Roles>;
 
-export type User = {
-	id: string;
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	roles: UserRoles;
-};
 
 export type AuthState = {
 	user: User | null;

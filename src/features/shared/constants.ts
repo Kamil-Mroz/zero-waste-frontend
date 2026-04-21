@@ -95,6 +95,7 @@ export const NAV_LINKS = {
 			icon: Shield,
 			private: true,
 			role: "ADMIN",
+			isActive: true,
 			items: [
 				{
 					title: "Dashboard",

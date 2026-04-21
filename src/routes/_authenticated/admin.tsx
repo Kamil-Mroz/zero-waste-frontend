@@ -1,6 +1,4 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { NotFound } from "@/features/shared/components/not-found";
-
 export const Route = createFileRoute("/_authenticated/admin")({
 	beforeLoad: ({ context, location }) => {
 		if (!context.auth.hasRole("ADMIN")) {
@@ -12,8 +10,12 @@ export const Route = createFileRoute("/_authenticated/admin")({
 			});
 		}
 	},
-	component: () => <Outlet />,
+	component: RouteComponent,
 	staticData: {
 		getTitle: () => "Admin",
 	},
 });
+
+function RouteComponent() {
+	return <Outlet />;
+}

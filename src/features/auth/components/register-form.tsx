@@ -63,9 +63,7 @@ export function RegisterForm() {
 									<field.TextField label="Password" type="password" />
 								)}
 							</form.AppField>
-							<form.AppField name="city">
-								{(field) => <field.TextField label="City" />}
-							</form.AppField>
+					
 							<form.AppField name="phoneNumber">
 								{(field) => <field.TextField label="Phone number" type="tel" />}
 							</form.AppField>

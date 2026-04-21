@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Box } from "lucide-react";
-import { ItemLIst } from "@/features/item/components/item-list";
+import { ItemList } from "@/features/item/components/item-list";
 import { ownItemsQueryOptions } from "@/features/item/hooks/query-options";
 import { EmptyComponent } from "@/features/shared/components/empty-component";
 
@@ -31,5 +31,5 @@ function RouteComponent() {
 		);
 	}
 
-	return <ItemLIst items={items} />;
+	return <ItemList items={items} />;
 }

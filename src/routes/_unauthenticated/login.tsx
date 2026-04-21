@@ -7,6 +7,5 @@ export const Route = createFileRoute("/_unauthenticated/login")({
 
 function RouteComponent() {
 	const { redirect } = Route.useSearch();
-
 	return <LoginForm redirect={redirect} />;
 }

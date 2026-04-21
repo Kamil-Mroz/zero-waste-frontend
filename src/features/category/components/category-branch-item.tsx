@@ -9,10 +9,10 @@ import type { CategoryTreeItemProps } from "../types";
 import { CategoryActions } from "./category-actions";
 import { CategoryTreeItem } from "./category-tree-item";
 
-export function CategoryBranchItem({ item, onDelete }: CategoryTreeItemProps) {
+export function CategoryBranchItem({ item }: CategoryTreeItemProps) {
 	return (
-		<Collapsible key={item.id} defaultOpen={true}>
-			<div className="flex">
+		<Collapsible defaultOpen={true}>
+			<div className="flex items-center">
 				<CollapsibleTrigger asChild>
 					<Button
 						variant="ghost"
@@ -24,12 +24,12 @@ export function CategoryBranchItem({ item, onDelete }: CategoryTreeItemProps) {
 					</Button>
 				</CollapsibleTrigger>
 
-				<CategoryActions category={item} onDelete={onDelete} />
+				<CategoryActions category={item} />
 			</div>
 			<CollapsibleContent className="mt-1 ml-5 style-lyra:ml-4">
 				<div className="flex flex-col gap-1">
 					{item.children.map((child) => (
-						<CategoryTreeItem onDelete={onDelete} key={item.id} item={child} />
+						<CategoryTreeItem key={child.id} item={child} />
 					))}
 				</div>
 			</CollapsibleContent>

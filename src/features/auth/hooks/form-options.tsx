@@ -9,7 +9,6 @@ export const registerFormOpts = () =>
 			lastName: "Doe",
 			email: "john.doe@example.com",
 			password: "SecurePassword123!",
-			city: "Texas",
 			phoneNumber: "23912123",
 		},
 		validators: {

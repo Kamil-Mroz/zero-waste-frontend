@@ -1,8 +1,8 @@
 import type { z } from "zod/v4";
-import type { User } from "../auth/types";
 import type { Category } from "../category/types";
 import type { SelectItems } from "../shared/components/form/select-field";
 import type { itemFormSchema } from "./schemas/item.schema";
+import type { User } from "../users/types";
 
 export type ItemFormRequest = z.infer<typeof itemFormSchema>;
 export type ItemFormProps = {

@@ -8,7 +8,6 @@ import {
 	Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import type { User } from "@/features/auth/types";
 import {
 	Avatar,
 	AvatarFallback,
@@ -29,6 +28,7 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/features/shared/components/ui/sidebar";
+import type { User } from "@/features/users/types";
 
 export function NavUser({ user }: { user: User }) {
 	const { isMobile } = useSidebar();

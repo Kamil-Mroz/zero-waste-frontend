@@ -8,11 +8,10 @@ export const registerSchema = z.object({
 		.nonempty("Password is required")
 		.regex(
 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-			"Password requires at least one: [a-z], [A-z], [0-9], [@$!%*?&]",
+			"Password requires at least one of each: [a-z], [A-Z], [0-9], [@$!%*?&]",
 		)
 		.min(10, "Password must be at least 10 characters")
 		.max(128, "Password can be maximum 128 characters"),
-	city: z.string().nonempty("City is required"),
 	phoneNumber: z
 		.string()
 		.regex(

@@ -41,7 +41,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
 			<SidebarMenu>
 				{items.map((item) => {
 					return canAccess(item) ? (
-						<Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+						<Collapsible key={item.title} asChild defaultOpen={item?.isActive}>
 							<SidebarMenuItem>
 								<SidebarMenuButton asChild tooltip={item.title}>
 									<Link to={item.url}>

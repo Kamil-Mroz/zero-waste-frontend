@@ -1,3 +1,4 @@
+import type { AnyFormApi } from "@tanstack/react-form";
 import { AxiosError } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -14,14 +15,10 @@ export type ApiError = {
 	errors?: Record<string, { message: string }>;
 };
 
-type ErrorMappableForm = {
-	setErrorMap: (args: any) => void;
-};
-
 export const handleApiError = (
 	error: unknown,
 
-	form?: ErrorMappableForm,
+	form?: AnyFormApi,
 ) => {
 	if (error instanceof AxiosError && error.response) {
 		const data = error.response.data as ApiError;

@@ -16,7 +16,7 @@ import {
 } from "../ui/select";
 import { useFieldContext } from "./form";
 
-export type SelectItems = { value: string; label: string }[];
+export type SelectItems = readonly { value: string; label: string }[];
 
 export function SelectField({
 	label,

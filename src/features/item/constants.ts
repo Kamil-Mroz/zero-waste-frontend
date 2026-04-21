@@ -3,7 +3,7 @@ export const ITEM_CONDITION = [
 	{ value: "REPAIRED", label: "Repaired" },
 	{ value: "DAMAGED", label: "Damaged" },
 	{ value: "OLD", label: "Old" },
-];
+] as const;
 
 export const ITEM_QUERY_KEYS = {
 	all: ["items"],

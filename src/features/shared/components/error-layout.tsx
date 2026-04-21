@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 export function ErrorLayout({ children, reset }: ErrorLayoutProps) {
 	return (
-		<div className="grid place-items-center h-full">
+		<div className="grid place-items-center min-h-full">
 			<div className=" flex flex-col gap-2">
 				{children}
 				<div className=" grid grid-cols-2 gap-2">
