@@ -1,11 +1,14 @@
-import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import {
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { categoriesQueryOptions } from "@/features/category/hooks/query-options";
-import { ItemForm } from "@/features/item/components/item-form";
+import { CreateItemForm } from "@/features/item/components/create-item-form";
 import { ITEM_QUERY_KEYS } from "@/features/item/constants";
-import type { ItemFormRequest, ItemType } from "@/features/item/types";
-import { api } from "@/lib/axios";
+import { createItemMutationOptions } from "@/features/item/hooks/mutation-options";
 
 export const Route = createFileRoute("/_authenticated/marketplace/create")({
 	component: RouteComponent,
@@ -20,20 +23,22 @@ export const Route = createFileRoute("/_authenticated/marketplace/create")({
 
 function RouteComponent() {
 	const { data: categories } = useSuspenseQuery(categoriesQueryOptions());
-	const router = useRouter();
 	const queryClient = useQueryClient();
 	const navigate = Route.useNavigate();
+	const mutation = useMutation({
+		...createItemMutationOptions(),
+		onSuccess: async (data) => {
+			toast.success("Item created successfully");
 
-	const onSubmit = async (values: ItemFormRequest) => {
-		const res = await api.post<ItemType>(`/api/v1/items`, values);
-		toast.success("Item created successfully");
-		await queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() });
-		await router.invalidate();
-		await navigate({
-			to: "/marketplace/$itemId",
-			params: { itemId: res.data.id },
-		});
-	};
+			await navigate({
+				to: "/marketplace/$itemId",
+				params: { itemId: data.id },
+			});
+			await queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() });
+		},
+	});
 
-	return <ItemForm categories={categories} onSubmit={onSubmit} />;
+	return (
+		<CreateItemForm categories={categories} onSubmit={mutation.mutateAsync} />
+	);
 }

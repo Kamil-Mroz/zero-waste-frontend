@@ -2,7 +2,8 @@ import { Link } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/features/shared/components/ui/button";
 import { Checkbox } from "@/features/shared/components/ui/checkbox";
-import { DataTableRowsActions } from "@/features/shared/components/ui/data-table-row-actions";
+import { DataTableColumnHeader } from "@/features/shared/components/ui/data-table-column-header";
+import { UserTableRowsActions } from "@/features/users/components/user-table-row-actions";
 import type { User } from "../types";
 
 export const columns: ColumnDef<User>[] = [
@@ -28,11 +29,18 @@ export const columns: ColumnDef<User>[] = [
 	},
 	{
 		id: "name",
-		header: "Name",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Name" />
+		),
 		cell: ({ row }) => {
 			const user = row.original;
 			return (
-				<Button variant="link" asChild size="sm" className="text-foreground">
+				<Button
+					variant="link"
+					asChild
+					size="sm"
+					className="pl-0 text-foreground"
+				>
 					<Link to="/admin/users/$userId" params={{ userId: user.id }}>
 						{user.firstName} {user.lastName}
 					</Link>
@@ -42,26 +50,36 @@ export const columns: ColumnDef<User>[] = [
 	},
 	{
 		accessorKey: "email",
-		header: "Email",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Email" />
+		),
 	},
 	{
+		id: "Phone",
 		accessorKey: "phoneNumber",
-		header: "Phone",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Phone" />
+		),
 	},
 	{
 		accessorKey: "roles",
-		header: "Roles",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Roles" />
+		),
 		cell: ({ row }) => {
 			const formatted = (row.getValue("roles") as User["roles"]).join(", ");
 			return <div>{formatted}</div>;
 		},
 	},
 	{
+		id: "Banned",
 		accessorKey: "hasActiveBan",
-		header: "Banned",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Banned" />
+		),
 	},
 	{
 		id: "actions",
-		cell: DataTableRowsActions,
+		cell: UserTableRowsActions,
 	},
 ];

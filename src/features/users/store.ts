@@ -1,15 +1,23 @@
 import { create } from "zustand";
 
-type UsersSelectionStoreState = { selectedIds: string[] };
-type UserSelectionStoreActions = {
-	setSelectedIds: (ids: string[]) => void;
-	clear: () => void;
+type UsersSelectionStoreState = {
+	selectedIds: string[];
+	clearSelectionTrigger: number;
 };
 
-type UserSelectionStore = UsersSelectionStoreState & UserSelectionStoreActions;
+type UserSelectionStore = UsersSelectionStoreState;
 
-export const useUserSelectionStore = create<UserSelectionStore>((set) => ({
+export const useTableStore = create<UserSelectionStore>(() => ({
 	selectedIds: [],
-	setSelectedIds: (ids) => set({ selectedIds: ids }),
-	clear: () => set({ selectedIds: [] }),
+	clearSelectionTrigger: 0,
 }));
+
+export function clearSelection() {
+	useTableStore.setState((s) => ({
+		selectedIds: [],
+		clearSelectionTrigger: s.clearSelectionTrigger + 1,
+	}));
+}
+export function setSelectedIds(ids: string[]) {
+	useTableStore.setState(() => ({ selectedIds: ids }));
+}

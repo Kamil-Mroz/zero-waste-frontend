@@ -1,18 +1,16 @@
-import { useQueryClient, useSuspenseQueries } from "@tanstack/react-query";
 import {
-	createFileRoute,
-	notFound,
-	redirect,
-	useRouter,
-} from "@tanstack/react-router";
+	useMutation,
+	useQueryClient,
+	useSuspenseQueries,
+} from "@tanstack/react-query";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { categoriesQueryOptions } from "@/features/category/hooks/query-options";
-import { ItemForm } from "@/features/item/components/item-form";
+import { EditItemForm } from "@/features/item/components/edit-item-form";
 import { ITEM_QUERY_KEYS } from "@/features/item/constants";
+import { updateItemMutationOptions } from "@/features/item/hooks/mutation-options";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
-import type { ItemFormRequest, ItemType } from "@/features/item/types";
 import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
-import { api } from "@/lib/axios";
 
 export const Route = createFileRoute(
 	"/_authenticated/marketplace/$itemId/edit",
@@ -50,27 +48,29 @@ function RouteComponent() {
 	});
 	const queryClient = useQueryClient();
 	const navigate = Route.useNavigate();
-	const router = useRouter();
 
-	const onSubmit = async (values: ItemFormRequest) => {
-		const res = await api.put<ItemType>(`/api/v1/items/${itemId}`, values);
-		toast.success("Item updated successfully");
-		await queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() });
-		await queryClient.invalidateQueries({
-			queryKey: ITEM_QUERY_KEYS.byId(itemId),
-		});
+	const mutation = useMutation({
+		...updateItemMutationOptions(itemId),
+		onSuccess: async (data) => {
+			toast.success("Item updated successfully");
+			await navigate({
+				to: "/marketplace/$itemId",
+				params: { itemId: data.id },
+			});
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() }),
+				queryClient.invalidateQueries({
+					queryKey: ITEM_QUERY_KEYS.byId(itemId),
+				}),
+			]);
+		},
+	});
 
-		await router.invalidate();
-		await navigate({
-			to: "/marketplace/$itemId",
-			params: { itemId: res.data.id },
-		});
-	};
 	return (
-		<ItemForm
-			onSubmit={onSubmit}
+		<EditItemForm
+			item={item}
+			onSubmit={mutation.mutateAsync}
 			categories={categories}
-			defaultValues={{ ...item, categoryId: item.category.id }}
 		/>
 	);
 }

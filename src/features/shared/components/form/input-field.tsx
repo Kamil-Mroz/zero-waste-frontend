@@ -8,7 +8,7 @@ import {
 import { Input } from "@/features/shared/components/ui/input";
 import { useFieldContext } from "./form";
 
-export function TextField({
+export function InputField({
 	label,
 	type = "text",
 }: {

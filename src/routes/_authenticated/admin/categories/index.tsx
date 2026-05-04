@@ -27,6 +27,13 @@ export const Route = createFileRoute("/_authenticated/admin/categories/")({
 				),
 				context.queryClient.ensureQueryData(categoriesQueryOptions()),
 			]);
+		} else if (search.modal === "delete" && search.categoryId) {
+			await Promise.all([
+				context.queryClient.ensureQueryData(categoryTreeQueryOptions()),
+				context.queryClient.ensureQueryData(
+					categoryQueryOptions(search.categoryId),
+				),
+			]);
 		} else {
 			await context.queryClient.ensureQueryData(categoryTreeQueryOptions());
 		}

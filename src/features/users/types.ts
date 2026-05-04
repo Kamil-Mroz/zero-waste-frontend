@@ -1,3 +1,4 @@
+import type { Pageable } from "../shared/types";
 import type { CreateUserType } from "./schemas/user.schema";
 
 export type Roles = "USER" | "ADMIN" | "WRITER";
@@ -15,3 +16,5 @@ export type User = {
 export type UserFormProps = {
 	defaultValues?: CreateUserType;
 };
+
+export type UsersQueryOptionsProps = Pageable

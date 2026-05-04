@@ -4,25 +4,18 @@ import type { CategoryFormType } from "@/features/category/types";
 import { handleApiError } from "@/lib/utils";
 import { createCategory, deleteCategoryById, editCategoryById } from "../api";
 
-export function categoryMutationOptions({
-	isEdit,
-	categoryId,
-}: {
-	isEdit: boolean;
-	categoryId?: string;
-}) {
+export function createCategoryMutationOptions() {
 	return mutationOptions({
-		mutationFn: (value: CategoryFormType) => {
-			if (isEdit && categoryId) {
-				return editCategoryById(categoryId, value);
-			}
-
-			return createCategory(value);
-		},
+		mutationFn: createCategory,
+	});
+}
+export function updateCategoryMutationOptions(id: string) {
+	return mutationOptions({
+		mutationFn: (value: CategoryFormType) => editCategoryById(id, value),
 	});
 }
 
-export function categoryDeleteMutationOptions() {
+export function deleteCategoryMutationOptions() {
 	return mutationOptions({
 		mutationFn: deleteCategoryById,
 		onError: (error) => {

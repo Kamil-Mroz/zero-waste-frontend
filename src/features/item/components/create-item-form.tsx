@@ -13,19 +13,24 @@ import {
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { handleApiError } from "@/lib/utils";
 import { ITEM_CONDITION } from "../constants";
-import { itemFormOptions } from "../hooks/form-options";
-import type { ItemFormProps, ItemFormRequest } from "../types";
+import { createItemFormOptions } from "../hooks/form-options";
+import type { CreateItemFormProps } from "../types";
 
-export function ItemForm({
-	categories,
-	defaultValues,
-	onSubmit,
-}: ItemFormProps) {
+export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 	const form = useAppForm({
-		...itemFormOptions(defaultValues),
+		...createItemFormOptions(),
 		onSubmit: async ({ value }) => {
 			try {
-				await onSubmit(value as ItemFormRequest);
+				const formData = new FormData();
+				formData.append("title", value.title);
+				formData.append("description", value.description);
+				formData.append("condition", value.condition);
+				formData.append("city", value.city);
+				formData.append("categoryId", value.categoryId);
+				value.images.forEach((file: File) => {
+					formData.append("images", file);
+				});
+				await onSubmit(formData);
 				form.reset();
 			} catch (error) {
 				const message = handleApiError(error, form);
@@ -48,6 +53,7 @@ export function ItemForm({
 				</CardHeader>
 				<CardContent>
 					<form
+						encType="multipart/form-data"
 						onSubmit={(e) => {
 							e.preventDefault();
 							form.handleSubmit();
@@ -73,6 +79,10 @@ export function ItemForm({
 							<form.AppField name="city">
 								{(field) => <field.TextField label="City" />}
 							</form.AppField>
+							<form.AppField name="images">
+								{(field) => <field.FileField label="Images" />}
+							</form.AppField>
+
 							<div className=" grid grid-cols-2 gap-4">
 								<form.AppForm>
 									<form.ResetButton />

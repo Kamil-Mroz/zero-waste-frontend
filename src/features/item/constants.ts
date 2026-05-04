@@ -10,3 +10,15 @@ export const ITEM_QUERY_KEYS = {
 	byId: (id: string) => [...ITEM_QUERY_KEYS.all, id],
 	own: () => [...ITEM_QUERY_KEYS.all, "own"],
 } as const;
+
+export const itemDialogConfig = {
+	delete: {
+		title: "Delete Item",
+		description: "Permanently delete item. This action cannot be undone.",
+	},
+
+	empty: {
+		title: "",
+		description: "",
+	},
+} as const;

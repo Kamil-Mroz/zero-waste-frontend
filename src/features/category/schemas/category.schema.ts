@@ -11,6 +11,6 @@ export const categorySchema = z.object({
 });
 
 export const categorySearchSchema = z.object({
-	modal: z.enum(["create", "edit"]).optional().catch("create"),
+	modal: z.enum(["create", "edit", "delete"]).optional().catch("create"),
 	categoryId: z.uuid().optional().catch(""),
 });

@@ -9,6 +9,7 @@ import {
 	ShoppingBag,
 	User,
 } from "lucide-react";
+import type { Pageable } from "./types";
 
 export const NAV_LINKS = {
 	navMain: [
@@ -158,3 +159,10 @@ export const NAV_LINKS = {
 		},
 	],
 };
+
+export const PAGE_SIZES = [10, 20, 25, 30, 40, 50];
+
+export const DEFAULT_PAGEABLE: Pageable = {
+	page: 0,
+	size: PAGE_SIZES[1],
+} as const;

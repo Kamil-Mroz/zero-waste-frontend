@@ -4,7 +4,7 @@ import { CATEGORY_QUERY_KEYS } from "../constants";
 
 export const categoryQueryOptions = (id: string) => {
 	return queryOptions({
-		queryKey: CATEGORY_QUERY_KEYS.category(id),
+		queryKey: CATEGORY_QUERY_KEYS.byId(id),
 		queryFn: async () => fetchCategoryById(id),
 	});
 };

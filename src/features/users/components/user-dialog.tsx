@@ -1,7 +1,8 @@
 import { getRouteApi } from "@tanstack/react-router";
 import ResponsiveDialog from "@/features/shared/components/responsive-dialog";
+import { useFilters } from "@/features/shared/hooks/use-filters";
 import { usersDialogConfig } from "../constants";
-import { useUserSelectionStore } from "../store";
+import { useTableStore } from "../store";
 import { UserBanForm } from "./user-ban-form";
 import { UserCreateForm } from "./user-create-form";
 import { UserDeleteDialog } from "./user-delete-dialog";
@@ -9,9 +10,10 @@ import { UserUnbanForm } from "./user-unban-form";
 import { UserUpdateForm } from "./user-update-form";
 
 export function UsersDialog() {
-	const routeApi = getRouteApi("/_authenticated/admin/users/");
+	const routeId = "/_authenticated/admin/users/";
+	const routeApi = getRouteApi(routeId);
+	const { clearFilters } = useFilters(routeId);
 	const { modal, userId } = routeApi.useSearch();
-	const navigate = routeApi.useNavigate();
 	const isOpen = !!modal;
 	const isCreate = modal === "create";
 	const isEdit = modal === "edit";
@@ -19,17 +21,14 @@ export function UsersDialog() {
 	const isDelete = modal === "delete";
 	const isUnban = modal === "unban";
 
-	const selectedIds = useUserSelectionStore((s) => s.selectedIds);
+	const selectedIds = useTableStore((s) => s.selectedIds);
 
 	const ids = userId ? [userId] : selectedIds;
 
 	const config = usersDialogConfig[modal || "empty"];
 
-	const clear = useUserSelectionStore((s) => s.clear);
-
 	const close = () => {
-		clear();
-		navigate({ search: {} });
+		clearFilters(["modal", "userId"]);
 	};
 
 	return (

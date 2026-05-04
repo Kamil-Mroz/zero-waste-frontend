@@ -5,7 +5,6 @@ import { Spinner } from "@/features/shared/components/ui/spinner";
 
 import { USER_QUERY_KEYS } from "../constants";
 import { userDeleteMutationOptions } from "../hooks/mutation-options";
-import { useUserSelectionStore } from "../store";
 
 export function UserDeleteDialog({
 	onDone,
@@ -14,7 +13,6 @@ export function UserDeleteDialog({
 	ids: string[];
 	onDone: () => void;
 }) {
-	const clear = useUserSelectionStore((s) => s.clear);
 	const client = useQueryClient();
 	const router = useRouter();
 
@@ -29,7 +27,6 @@ export function UserDeleteDialog({
 			]);
 			await router.invalidate();
 
-			clear();
 			onDone();
 		},
 	});

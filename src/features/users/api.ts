@@ -1,14 +1,15 @@
 import { api } from "@/lib/axios";
+import type { Page } from "../shared/types";
 import type {
 	BanUserSchema,
 	CreateUserType,
 	UnbanUserSchema,
 	UpdateUserType,
 } from "./schemas/user.schema";
-import type { User } from "./types";
+import type { User, UsersQueryOptionsProps } from "./types";
 
-export const fetchUsers = async () => {
-	const res = await api.get<User[]>(`/api/v1/users`);
+export const fetchUsers = async (options: UsersQueryOptionsProps) => {
+	const res = await api.get<Page<User[]>>(`/api/v1/users`, { params: options });
 	return res.data;
 };
 

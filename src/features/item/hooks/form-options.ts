@@ -1,17 +1,33 @@
 import { formOptions } from "@tanstack/react-form";
-import { itemFormSchema } from "../schemas/item.schema";
-import type { ItemFormRequest } from "../types";
+import {
+	createItemFormSchema,
+	updateItemFormSchema,
+} from "../schemas/item.schema";
+import type { UpdateItemFormValues } from "../types";
 
-export const itemFormOptions = (defaultValues?: ItemFormRequest) =>
+export const createItemFormOptions = () =>
 	formOptions({
-		defaultValues: defaultValues ?? {
+		defaultValues: {
 			title: "Test item",
 			description: "This is a test item for dev",
 			condition: "NEW",
 			categoryId: "",
 			city: "Texas",
+			images: [] as File[],
 		},
 		validators: {
-			onSubmit: itemFormSchema,
+			onSubmit: createItemFormSchema,
+		},
+	});
+
+export const updateItemFormOptions = (
+	defaultValues: UpdateItemFormValues,
+	currentImageIds: string[],
+) =>
+	formOptions({
+		defaultValues: defaultValues,
+
+		validators: {
+			onSubmit: updateItemFormSchema(currentImageIds),
 		},
 	});

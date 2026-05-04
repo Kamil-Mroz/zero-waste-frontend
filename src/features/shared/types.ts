@@ -23,3 +23,16 @@ export type EmptyComponentProps = {
 export type ErrorLayoutProps = {
 	reset: () => void;
 } & PropsWithChildren;
+
+export type Page<T> = {
+	content: T;
+	page: number;
+	size: number;
+	totalElements: number;
+	totalPages: number;
+};
+
+export type Pageable = {
+	page: number;
+	size: number;
+};

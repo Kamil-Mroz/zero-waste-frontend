@@ -15,3 +15,20 @@ export const fetchItem = async (id: string) => {
 	const res = await api.get<ItemWithOwnerType>(`/api/v1/items/${id}`);
 	return res.data;
 };
+
+export const createItem = async (values: FormData) => {
+	const res = await api.post<ItemType>(`/api/v1/items`, values, {
+		headers: { "Content-Type": "multipart/form-data" },
+	});
+	return res.data;
+};
+export const updateItem = async (id: string, values: FormData) => {
+	const res = await api.put<ItemType>(`/api/v1/items/${id}`, values, {
+		headers: { "Content-Type": "multipart/form-data" },
+	});
+	return res.data;
+};
+
+export const deleteItem = async (id: string) => {
+	return api.delete(`/api/v1/items/${id}`);
+};

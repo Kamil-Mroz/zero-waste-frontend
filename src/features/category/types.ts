@@ -44,3 +44,15 @@ export type CategoryLeafItemProps = {
 export type CategoryActionsProps = {
 	category: CategoryTreeType;
 };
+export type CategoryDeleteDialogProps = {
+	id: string;
+	onDone: () => void;
+};
+export type CategoryUpdateDialogProps = {
+	id: string;
+	onDone: () => void;
+};
+
+export type CategoryCreateDialogProps = {
+	id?: string;
+};

@@ -2,6 +2,8 @@ import type { AnyFormApi } from "@tanstack/react-form";
 import { AxiosError } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { DEFAULT_PAGEABLE } from "@/features/shared/constants";
+import type { Pageable } from "@/features/shared/types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -32,4 +34,30 @@ export const handleApiError = (
 		return data.detail;
 	}
 	return "Something went wrong, please try again";
+};
+
+export const withDefaultPageable = (value?: Partial<Pageable>): Pageable => ({
+	page: value?.page ?? DEFAULT_PAGEABLE.page,
+	size: value?.size ?? DEFAULT_PAGEABLE.size,
+});
+
+export const cleanEmptyParams = <T extends Record<string, unknown>>(
+	search: T,
+) => {
+	const newSearch = { ...search };
+	Object.keys(newSearch).forEach((key) => {
+		const value = newSearch[key];
+		if (
+			value === undefined ||
+			value === "" ||
+			(typeof value === "number" && isNaN(value))
+		)
+			delete newSearch[key];
+	});
+
+	if (search.pageIndex === DEFAULT_PAGEABLE.page)
+		delete newSearch.pageIndex;
+	if (search.pageSize === DEFAULT_PAGEABLE.size) delete newSearch.pageSize;
+
+	return newSearch;
 };

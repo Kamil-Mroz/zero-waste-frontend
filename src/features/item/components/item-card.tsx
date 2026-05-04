@@ -3,6 +3,7 @@ import { Badge } from "@/features/shared/components/ui/badge";
 import { Button } from "@/features/shared/components/ui/button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
 import type { ItemCardProps } from "../types";
+import { ItemImage } from "./item-image";
 
 export function ItemCard({ item }: ItemCardProps) {
 	const navigate = useNavigate();
@@ -15,6 +16,7 @@ export function ItemCard({ item }: ItemCardProps) {
 			}
 		>
 			<CardContent className="p-4 space-y-2">
+				<ItemImage src={item.images?.[0]?.url} alt={item.title} />
 				<div className="flex justify-between items-start">
 					<h2 className="text-lg font-semibold">{item.title}</h2>
 					<Badge variant="secondary">{item.condition}</Badge>
