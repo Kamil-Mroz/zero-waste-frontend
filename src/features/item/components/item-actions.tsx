@@ -7,19 +7,18 @@ export function ItemActions({
 	item,
 	isAuthenticated,
 }: ItemActionsProps) {
+
+
 	return (
 		<div className="flex gap-2 pt-4">
-			{isOwner && (
+			{isOwner && item.state !== "GIVEN" && (
 				<>
 					<Button variant="warning" asChild>
 						<Link to="/marketplace/$itemId/edit" params={{ itemId: item.id }}>
 							Edit
 						</Link>
 					</Button>
-					<Button
-						variant="destructive"
-						asChild
-					>
+					<Button variant="destructive" asChild>
 						<Link
 							to="/marketplace/$itemId"
 							params={{ itemId: item.id }}
@@ -31,9 +30,17 @@ export function ItemActions({
 				</>
 			)}
 
-			{!isOwner && isAuthenticated && (
+			{!isOwner && isAuthenticated && item.state !== "GIVEN" && (
 				<>
-					<Button variant="success">I'm interested</Button>
+					<Button variant="success" asChild>
+						<Link
+							to="/marketplace/$itemId"
+							params={{ itemId: item.id }}
+							search={{ modal: "offer" }}
+						>
+							I'm interested
+						</Link>
+					</Button>
 					<Button variant="secondary">Report</Button>
 				</>
 			)}

@@ -1,9 +1,13 @@
 import type { z } from "zod/v4";
 import type { Category } from "../category/types";
 import type { SelectItems } from "../shared/components/form/select-field";
+import type { Pageable } from "../shared/types";
 import type { User } from "../users/types";
 import type {
+	baseItemSearchSchema,
 	createItemFormSchema,
+	itemStateSchema,
+	ownItemSearchSchema,
 	updateItemFormSchema,
 } from "./schemas/item.schema";
 
@@ -26,7 +30,7 @@ export type UpdateItemFormProps = {
 
 export type ItemConditionType = "NEW" | "REPAIRED" | "DAMAGED" | "OLD";
 
-export type ItemStateType = "AVAILABLE" | "GIVEN";
+export type ItemStateType = z.infer<typeof itemStateSchema>;
 
 export type ItemType = {
 	id: string;
@@ -66,4 +70,11 @@ export type ItemActionsProps = {
 export type ItemDeleteDialogProps = {
 	id: string;
 	onDone: () => void;
-};
+}
+export type ItemOfferDialogProps = {
+	id: string;
+	onDone: () => void;
+};;
+
+export type ItemsQueryOptions = z.infer<typeof baseItemSearchSchema>;
+export type OwnItemsQueryOptions = z.infer<typeof ownItemSearchSchema>;

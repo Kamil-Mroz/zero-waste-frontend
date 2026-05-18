@@ -2,6 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { Badge } from "@/features/shared/components/ui/badge";
 import { Button } from "@/features/shared/components/ui/button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
+import { cn } from "@/lib/utils";
 import type { ItemCardProps } from "../types";
 import { ItemImage } from "./item-image";
 
@@ -10,12 +11,20 @@ export function ItemCard({ item }: ItemCardProps) {
 	return (
 		<Card
 			key={item.id}
-			className="rounded-2xl shadow hover:shadow-md transition cursor-pointer  hover:scale-[102%]"
+			className={cn(
+				"rounded-2xl shadow hover:shadow-md transition cursor-pointer  hover:scale-[102%] border border-transparent relative overflow-hidden",
+				item.state === "GIVEN" ? "border-destructive" : "",
+			)}
 			onClick={() =>
 				navigate({ to: "/marketplace/$itemId", params: { itemId: item.id } })
 			}
 		>
 			<CardContent className="p-4 space-y-2">
+				{item.state === "GIVEN" && (
+					<span className="py-2 bg-destructive/40 absolute px-20 top-2.5 text-bold -right-19 rotate-45  text-center text-xl z-10">
+						GIVEN
+					</span>
+				)}
 				<ItemImage src={item.images?.[0]?.url} alt={item.title} />
 				<div className="flex justify-between items-start">
 					<h2 className="text-lg font-semibold">{item.title}</h2>
@@ -31,7 +40,7 @@ export function ItemCard({ item }: ItemCardProps) {
 					<span>{item.category.name}</span>
 				</div>
 
-				<div className="pt-2">
+				<div className="mt-auto pt-4">
 					<Button size="sm" asChild>
 						<Link to="/marketplace/$itemId" params={{ itemId: item.id }}>
 							View details

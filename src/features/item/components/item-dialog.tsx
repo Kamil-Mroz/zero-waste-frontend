@@ -3,6 +3,7 @@ import ResponsiveDialog from "@/features/shared/components/responsive-dialog";
 import { useFilters } from "@/features/shared/hooks/use-filters";
 import { itemDialogConfig } from "../constants";
 import { ItemDeleteDialog } from "./item-delete-dialog";
+import ItemOfferDialog from "./item-offer-dialog";
 
 export function ItemDialog() {
 	const routeId = "/marketplace/$itemId";
@@ -14,6 +15,7 @@ export function ItemDialog() {
 
 	const isOpen = !!modal;
 	const isDelete = modal === "delete";
+  const isOffer = modal === "offer";
 
 	const config = itemDialogConfig[modal ?? "empty"];
 
@@ -28,6 +30,7 @@ export function ItemDialog() {
 			description={config.description}
 		>
 			{isDelete && <ItemDeleteDialog onDone={close} id={itemId} />}
+			{isOffer && <ItemOfferDialog onDone={close} id={itemId} />}
 		</ResponsiveDialog>
 	);
 }

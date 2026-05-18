@@ -1,13 +1,23 @@
 import { api } from "@/lib/axios";
-import type { ItemType, ItemWithOwnerType } from "./types";
+import type { Page } from "../shared/types";
+import type {
+	ItemsQueryOptions,
+	ItemType,
+	ItemWithOwnerType,
+	OwnItemsQueryOptions,
+} from "./types";
 
-export const fetchOwnItems = async () => {
-	const res = await api.get<ItemType[]>(`/api/v1/items/own`);
+export const fetchOwnItems = async (search: Partial<OwnItemsQueryOptions>) => {
+	const res = await api.get<Page<ItemType[]>>(`/api/v1/items/own`, {
+		params: search,
+	});
 	return res.data;
 };
 
-export const fetchItems = async () => {
-	const res = await api.get<ItemType[]>(`/api/v1/items`);
+export const fetchItems = async (search: Partial<ItemsQueryOptions>) => {
+	const res = await api.get<Page<ItemType[]>>(`/api/v1/items`, {
+		params: search,
+	});
 	return res.data;
 };
 
@@ -31,4 +41,8 @@ export const updateItem = async (id: string, values: FormData) => {
 
 export const deleteItem = async (id: string) => {
 	return api.delete(`/api/v1/items/${id}`);
+};
+
+export const showInterestInItem = async (id: string) => {
+	return api.post(`/api/v1/interests/${id}`);
 };

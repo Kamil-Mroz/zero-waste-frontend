@@ -12,12 +12,18 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	useSidebar,
 } from "@/features/shared/components/ui/sidebar";
 import { NAV_LINKS } from "../constants";
+import { useIsMobile } from "../hooks/use-mobile";
 import type { NavItem } from "../types";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { user } = useAuth();
+
+	const { toggleSidebar } = useSidebar();
+	const isMobile = useIsMobile();
+
 	return (
 		<Sidebar
 			className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
@@ -27,7 +33,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton size="lg" asChild>
-							<Link to="/">
+							<Link
+								to="/"
+								onClick={() => {
+									if (isMobile) toggleSidebar();
+								}}
+							>
 								<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
 									<Command className="size-4" />
 								</div>
@@ -52,7 +63,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 					<SidebarMenu>
 						<SidebarMenuItem>
 							<SidebarMenuButton size="lg" asChild>
-								<Link to="/login">
+								<Link
+									to="/login"
+									onClick={() => {
+										if (isMobile) toggleSidebar();
+									}}
+								>
 									<LogIn />
 									Login
 								</Link>

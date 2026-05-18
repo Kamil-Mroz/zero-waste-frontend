@@ -53,6 +53,8 @@ export function UserTable<TData, TValue>({
 			setSelectedIds(ids);
 		},
 		manualPagination: true,
+		manualFiltering: true,
+		manualSorting: true,
 		autoResetPageIndex: false,
 
 		state: {

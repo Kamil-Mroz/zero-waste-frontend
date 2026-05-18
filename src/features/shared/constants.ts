@@ -160,7 +160,7 @@ export const NAV_LINKS = {
 	],
 };
 
-export const PAGE_SIZES = [10, 20, 25, 30, 40, 50];
+export const PAGE_SIZES = [10, 20, 25, 30, 40, 50, 100];
 
 export const DEFAULT_PAGEABLE: Pageable = {
 	page: 0,

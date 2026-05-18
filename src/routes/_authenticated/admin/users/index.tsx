@@ -11,15 +11,8 @@ import {
 	userQueryOptions,
 	usersQueryOptions,
 } from "@/features/users/hooks/query-options";
+import { userParamsSchema } from "@/features/users/schemas/user.schema";
 import { withDefaultPageable } from "@/lib/utils";
-
-const userParamsSchema = z.object({
-	modal: z
-		.enum(["create", "edit", "ban", "delete", "unban"])
-		.optional()
-		.catch("create"),
-	userId: z.uuid().optional().catch(""),
-});
 
 const usersSearchSchema = z.object({
 	...userParamsSchema.shape,
@@ -31,13 +24,11 @@ export const Route = createFileRoute("/_authenticated/admin/users/")({
 	validateSearch: usersSearchSchema,
 	loaderDeps: ({ search }) => ({ search }),
 	loader: async ({ context, deps: { search } }) => {
-		const pageable = withDefaultPageable(search);
-
 		const page = await context.queryClient.ensureQueryData(
-			usersQueryOptions(pageable),
+			usersQueryOptions(search),
 		);
 
-		if (page.totalPages > 0 && pageable.page >= page.totalPages) {
+		if (page.totalPages > 0 && search.page && search.page >= page.totalPages) {
 			throw redirect({
 				to: "/admin/users",
 				search: {
@@ -63,7 +54,9 @@ function RouteComponent() {
 
 	const pageable = withDefaultPageable(search);
 
-	const { data: page } = useSuspenseQuery(usersQueryOptions(pageable));
+	const { data: page } = useSuspenseQuery(usersQueryOptions(search));
+
+
 	return (
 		<div>
 			<UserTable

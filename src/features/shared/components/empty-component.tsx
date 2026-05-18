@@ -1,5 +1,4 @@
-import { Link } from "@tanstack/react-router";
-import { Button } from "@/features/shared/components/ui/button";
+import type { PropsWithChildren } from "react";
 import {
 	Empty,
 	EmptyContent,
@@ -9,7 +8,6 @@ import {
 	EmptyTitle,
 } from "@/features/shared/components/ui/empty";
 import type { EmptyComponentProps } from "../types";
-import type { PropsWithChildren } from "react";
 
 export function EmptyComponent(desc: EmptyComponentProps & PropsWithChildren) {
 	return (
@@ -22,9 +20,7 @@ export function EmptyComponent(desc: EmptyComponentProps & PropsWithChildren) {
 				<EmptyDescription>{desc.description}</EmptyDescription>
 			</EmptyHeader>
 
-				<EmptyContent>
-          {desc.children}
-				</EmptyContent>
+			<EmptyContent>{desc.children}</EmptyContent>
 		</Empty>
 	);
 }

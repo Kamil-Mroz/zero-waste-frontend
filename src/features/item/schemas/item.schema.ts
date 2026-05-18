@@ -1,4 +1,5 @@
 import { z } from "zod/v4";
+import { paginationSchema } from "@/features/shared/schemas/pagination.schema";
 
 export const createItemFormSchema = z.object({
 	title: z.string().nonempty("Title is required"),
@@ -57,3 +58,15 @@ export const updateItemFormSchema = (currentImageIds: string[]) =>
 				});
 			}
 		});
+
+export const baseItemSearchSchema = z.object({
+	...paginationSchema.shape,
+	text: z.string().optional().catch(""),
+	category: z.uuid().optional().catch(""),
+});
+
+export const itemStateSchema = z.enum(["AVAILABLE", "GIVEN", "PENDING"]);
+
+export const ownItemSearchSchema = baseItemSearchSchema.extend({
+	states: z.array(itemStateSchema).default(["AVAILABLE", "PENDING"]),
+});

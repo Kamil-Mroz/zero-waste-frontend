@@ -16,8 +16,6 @@ export type EmptyComponentProps = {
 	title: string;
 	description: string;
 	icon: LucideIcon;
-	linkTo?: string;
-	linkLabel?: string;
 };
 
 export type ErrorLayoutProps = {
@@ -35,4 +33,8 @@ export type Page<T> = {
 export type Pageable = {
 	page: number;
 	size: number;
+};
+export type MultiSelectOption<T extends string> = {
+	value: T;
+	label: string;
 };

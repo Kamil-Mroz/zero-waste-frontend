@@ -1,8 +1,10 @@
 import { z } from "zod/v4";
 import { registerSchema } from "@/features/auth/schemas/register.schema";
 
+export const roleSchema = z.enum(["ADMIN", "USER", "WRITER"]);
+
 export const createUserSchema = registerSchema.extend({
-	roles: z.array(z.enum(["ADMIN", "USER", "WRITER"])),
+	roles: z.array(roleSchema),
 });
 export type CreateUserType = z.infer<typeof createUserSchema>;
 
@@ -14,7 +16,7 @@ export const passwordSchema = z
 	);
 
 export const updateUserSchema = registerSchema.extend({
-	roles: z.array(z.enum(["ADMIN", "USER", "WRITER"])),
+	roles: z.array(roleSchema),
 	password: z
 		.string()
 		.transform((v) => v.trim())
@@ -49,4 +51,13 @@ export const unbanUserSchema = z.object({
 	ids: z.array(z.uuid()).min(1),
 	revokedReason: z.string().trim().nonempty("Reason required"),
 });
-export type UnbanUserSchema = z.infer<typeof unbanUserSchema>;
+
+export const userParamsSchema = z.object({
+	modal: z
+		.enum(["create", "edit", "ban", "delete", "unban"])
+		.optional()
+		.catch("create"),
+	userId: z.uuid().optional().catch(""),
+	text: z.string().optional().catch(""),
+	roles: z.array(roleSchema).optional().catch([]),
+});

@@ -7,7 +7,7 @@ import { itemQueryOptions } from "@/features/item/hooks/query-options";
 import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 const itemSearchSchema = z.object({
-	modal: z.enum(["delete"]).optional().catch("delete"),
+	modal: z.enum(["delete", "offer"]).optional().catch("delete"),
 });
 
 export const Route = createFileRoute("/marketplace/$itemId")({

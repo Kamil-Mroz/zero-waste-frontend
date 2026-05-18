@@ -26,7 +26,7 @@ export function CategoryBranchItem({ item }: CategoryTreeItemProps) {
 
 				<CategoryActions category={item} />
 			</div>
-			<CollapsibleContent className="mt-1 ml-5 style-lyra:ml-4">
+			<CollapsibleContent className="mt-1 ml-5 ">
 				<div className="flex flex-col gap-1">
 					{item.children.map((child) => (
 						<CategoryTreeItem key={child.id} item={child} />

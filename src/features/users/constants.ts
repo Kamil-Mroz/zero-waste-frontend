@@ -1,3 +1,6 @@
+import type { MultiSelectOption } from "../shared/types";
+import type { Roles } from "./types";
+
 export const USER_QUERY_KEYS = {
 	all: ["users"],
 	byId: (id: string) => [...USER_QUERY_KEYS.all, id],
@@ -40,3 +43,9 @@ export const usersDialogConfig = {
 		description: "",
 	},
 } as const;
+
+export const roleOptions: MultiSelectOption<Roles>[] = [
+	{ value: "ADMIN", label: "Admin" },
+	{ value: "WRITER", label: "Writer" },
+	{ value: "USER", label: "User" },
+] as const;

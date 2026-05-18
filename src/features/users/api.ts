@@ -3,10 +3,9 @@ import type { Page } from "../shared/types";
 import type {
 	BanUserSchema,
 	CreateUserType,
-	UnbanUserSchema,
 	UpdateUserType,
 } from "./schemas/user.schema";
-import type { User, UsersQueryOptionsProps } from "./types";
+import type { UnbanUserSchema, User, UsersQueryOptionsProps } from "./types";
 
 export const fetchUsers = async (options: UsersQueryOptionsProps) => {
 	const res = await api.get<Page<User[]>>(`/api/v1/users`, { params: options });

@@ -4,7 +4,7 @@ type ItemImageProps = {
 };
 export function ItemImage({ src, alt }: ItemImageProps) {
 	return (
-		<div>
+		<div className="mx-auto w-full h-56 overflow-hidden bg-muted flex items-center justify-center ">
 			{src ? (
 				<img
 					src={src}

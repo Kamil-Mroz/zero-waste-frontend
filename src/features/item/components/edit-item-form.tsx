@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Trash } from "lucide-react";
 import { useMemo } from "react";
 import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
@@ -104,44 +104,45 @@ export function EditItemForm({
 							</form.AppField>
 							<form.AppField name="removedImageIds">
 								{(field) => {
-									const images = item.images.filter(
-										(img) => !field.state.value.includes(img.id),
-									);
-									if (images.length === 0) {
-										return null;
-									}
+									if (item.images.length === 0) return null;
 									return (
 										<div className="space-y-3">
 											<p className="text-sm font-medium">Current images</p>
 
-											<div className="grid grid-cols-2 gap-3">
-												{images.map((img) => (
-													<div key={img.id} className="space-y-2">
-														<img
-															src={img.url}
-															alt={img.originalName}
-															className="h-28 w-full rounded-lg border object-cover"
-														/>
+											<div className="flex flex-wrap gap-3">
+												{item.images.map((img) => {
+													const isMarked = field.state.value.includes(img.id);
 
-														<Button
+													return (
+														<button
 															type="button"
-															variant="destructive"
-															size="sm"
-															className="w-full"
+															key={img.id}
 															onClick={() => {
-																field.handleChange([
-																	...field.state.value,
-																	img.id,
-																]);
-																form.setErrorMap({
-																	onSubmit: { fields: {} },
-																});
+																const next = isMarked
+																	? field.state.value.filter(
+																			(id) => id !== img.id,
+																		)
+																	: [...field.state.value, img.id];
+																field.handleChange(next);
+																form.setErrorMap({ onSubmit: { fields: {} } });
 															}}
+															className="relative h-28 w-28 rounded-lg border p-0 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary overflow-hidden"
 														>
-															Remove
-														</Button>
-													</div>
-												))}
+															<img
+																src={img.url}
+																alt={img.originalName}
+																className={`h-full w-full rounded-lg object-cover transition  ${isMarked ? "opacity-40 grayscale" : ""}`}
+															/>
+															{isMarked && (
+																<div className="absolute inset-0 flex items-center justify-center bg-black/40">
+																	<span className="text-xs font-medium text-destructive">
+																		<Trash />
+																	</span>
+																</div>
+															)}
+														</button>
+													);
+												})}
 											</div>
 										</div>
 									);

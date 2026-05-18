@@ -56,3 +56,8 @@ export type CategoryUpdateDialogProps = {
 export type CategoryCreateDialogProps = {
 	id?: string;
 };
+
+export type CategoryItemProps = {
+	category: CategoryTreeType;
+	onSelect: (id: string) => void;
+};

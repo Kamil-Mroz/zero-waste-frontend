@@ -16,11 +16,16 @@ import {
 	SidebarMenuSub,
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
+	useSidebar,
 } from "@/features/shared/components/ui/sidebar";
+import { useIsMobile } from "../hooks/use-mobile";
 import type { NavItem } from "../types";
 
 export function NavMain({ items }: { items: NavItem[] }) {
 	const { user, hasRole } = useAuth();
+
+	const { toggleSidebar } = useSidebar();
+	const isMobile = useIsMobile();
 
 	function canAccess(item: NavItem) {
 		if (!user) {
@@ -44,7 +49,12 @@ export function NavMain({ items }: { items: NavItem[] }) {
 						<Collapsible key={item.title} asChild defaultOpen={item?.isActive}>
 							<SidebarMenuItem>
 								<SidebarMenuButton asChild tooltip={item.title}>
-									<Link to={item.url}>
+									<Link
+										to={item.url}
+										onClick={() => {
+											if (isMobile) toggleSidebar();
+										}}
+									>
 										<item.icon />
 										<span>{item.title}</span>
 									</Link>
@@ -63,7 +73,12 @@ export function NavMain({ items }: { items: NavItem[] }) {
 													return canAccess(subItem) ? (
 														<SidebarMenuSubItem key={subItem.title}>
 															<SidebarMenuSubButton asChild>
-																<Link to={subItem.url}>
+																<Link
+																	to={subItem.url}
+																	onClick={() => {
+																		if (isMobile) toggleSidebar();
+																	}}
+																>
 																	<span>{subItem.title}</span>
 																</Link>
 															</SidebarMenuSubButton>

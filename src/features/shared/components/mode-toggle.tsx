@@ -1,4 +1,5 @@
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/features/shared/components/theme-provider";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	DropdownMenu,
@@ -6,7 +7,6 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/features/shared/components/ui/dropdown-menu";
-import { useTheme } from "@/features/shared/components/theme-provider";
 
 export function ModeToggle({ className }: React.ComponentProps<"button">) {
 	const { setTheme } = useTheme();
@@ -20,7 +20,7 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
 					<span className="sr-only">Toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent align="start">
 				<DropdownMenuItem onClick={() => setTheme("light")}>
 					Light
 				</DropdownMenuItem>

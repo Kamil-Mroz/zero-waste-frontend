@@ -47,19 +47,13 @@ export function FileField({ label }: { label: string }) {
 			/>
 			{isInvalid && <FieldError errors={errors} />}
 			{previews.length > 0 && (
-				<div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+				<div className="flex flex-wrap gap-3">
 					{previews.map((url, idx) => (
 						<img
 							key={url}
 							src={url}
 							alt={`preview-${idx}`}
-							style={{
-								width: 120,
-								height: 120,
-								objectFit: "cover",
-								borderRadius: 8,
-								border: "1px solid #ddd",
-							}}
+							className="size-28 rounded-lg border object-cover"
 						/>
 					))}
 				</div>

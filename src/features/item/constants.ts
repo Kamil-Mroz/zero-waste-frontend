@@ -1,3 +1,6 @@
+import type { MultiSelectOption } from "../shared/types";
+import type { ItemStateType } from "./types";
+
 export const ITEM_CONDITION = [
 	{ value: "NEW", label: "New" },
 	{ value: "REPAIRED", label: "Repaired" },
@@ -16,9 +19,18 @@ export const itemDialogConfig = {
 		title: "Delete Item",
 		description: "Permanently delete item. This action cannot be undone.",
 	},
-
+  offer:{
+    title: "Interested in this item?",
+    description: "The owner will be notified that you're interested in this item.",
+  },
 	empty: {
 		title: "",
 		description: "",
 	},
 } as const;
+
+export const stateOptions: MultiSelectOption<ItemStateType>[] = [
+	{ value: "AVAILABLE", label: "Available" },
+	{ value: "GIVEN", label: "Given" },
+	{ value: "PENDING", label: "Pending" },
+] as const;

@@ -17,9 +17,7 @@ export function DataTableViewOptions<TData>({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="outline" className="sm:ml-auto">
-					View
-				</Button>
+				<Button variant="outline">View</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
