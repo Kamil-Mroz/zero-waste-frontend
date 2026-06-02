@@ -1,6 +1,7 @@
 import { mutationOptions } from "@tanstack/react-query";
 import { toast } from "sonner";
 import type { CategoryFormType } from "@/features/category/types";
+import { appToast } from "@/features/shared/components/toast";
 import { handleApiError } from "@/lib/utils";
 import { createCategory, deleteCategoryById, editCategoryById } from "../api";
 
@@ -21,7 +22,7 @@ export function deleteCategoryMutationOptions() {
 		onError: (error) => {
 			const message = handleApiError(error);
 			if (message) {
-				toast.error(message);
+				appToast.error({ title: "Delete failed", description: message });
 			}
 		},
 	});

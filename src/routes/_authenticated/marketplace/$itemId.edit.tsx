@@ -11,6 +11,7 @@ import { ITEM_QUERY_KEYS } from "@/features/item/constants";
 import { updateItemMutationOptions } from "@/features/item/hooks/mutation-options";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
 import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
+import { appToast } from "@/features/shared/components/toast";
 
 export const Route = createFileRoute(
 	"/_authenticated/marketplace/$itemId/edit",
@@ -52,7 +53,8 @@ function RouteComponent() {
 	const mutation = useMutation({
 		...updateItemMutationOptions(itemId),
 		onSuccess: async (data) => {
-			toast.success("Item updated successfully");
+      appToast.success({title: "Item form", description: "Item updated successfully"})
+
 			await navigate({
 				to: "/marketplace/$itemId",
 				params: { itemId: data.id },

@@ -41,7 +41,7 @@ export const columns: ColumnDef<User>[] = [
 					size="sm"
 					className="pl-0 text-foreground"
 				>
-					<Link to="/admin/users/$userId" params={{ userId: user.id }}>
+					<Link to="/users/$userId" params={{ userId: user.id }}>
 						{user.firstName} {user.lastName}
 					</Link>
 				</Button>
@@ -76,6 +76,13 @@ export const columns: ColumnDef<User>[] = [
 		accessorKey: "hasActiveBan",
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Banned" />
+		),
+	},
+	{
+		id: "Expiration",
+		accessorKey: "bannedUntil",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Ban expiration" />
 		),
 	},
 	{

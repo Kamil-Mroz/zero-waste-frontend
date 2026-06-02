@@ -7,8 +7,6 @@ export function ItemActions({
 	item,
 	isAuthenticated,
 }: ItemActionsProps) {
-
-
 	return (
 		<div className="flex gap-2 pt-4">
 			{isOwner && item.state !== "GIVEN" && (
@@ -23,6 +21,7 @@ export function ItemActions({
 							to="/marketplace/$itemId"
 							params={{ itemId: item.id }}
 							search={{ modal: "delete" }}
+							replace={true}
 						>
 							Delete
 						</Link>
@@ -37,6 +36,7 @@ export function ItemActions({
 							to="/marketplace/$itemId"
 							params={{ itemId: item.id }}
 							search={{ modal: "offer" }}
+							replace={true}
 						>
 							I'm interested
 						</Link>

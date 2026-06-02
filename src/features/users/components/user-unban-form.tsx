@@ -8,6 +8,7 @@ import { USER_QUERY_KEYS } from "../constants";
 import { userUnbanFormOptions } from "../hooks/form-options";
 import { userUnbanMutationOptions } from "../hooks/mutation-options";
 import { unbanUserSchema } from "../schemas/user.schema";
+import { appToast } from "@/features/shared/components/toast";
 
 export function UserUnbanForm({
 	onDone,
@@ -43,7 +44,11 @@ export function UserUnbanForm({
 				onDone();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({
+						title: "Unban user",
+						description: message,
+					});
 			}
 		},
 	});

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -34,7 +35,11 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 				form.reset();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({
+						title: "Item form",
+						description: message,
+					});
 			}
 		},
 	});

@@ -9,6 +9,7 @@ import { categoriesQueryOptions } from "@/features/category/hooks/query-options"
 import { CreateItemForm } from "@/features/item/components/create-item-form";
 import { ITEM_QUERY_KEYS } from "@/features/item/constants";
 import { createItemMutationOptions } from "@/features/item/hooks/mutation-options";
+import { appToast } from "@/features/shared/components/toast";
 
 export const Route = createFileRoute("/_authenticated/marketplace/create")({
 	component: RouteComponent,
@@ -28,7 +29,10 @@ function RouteComponent() {
 	const mutation = useMutation({
 		...createItemMutationOptions(),
 		onSuccess: async (data) => {
-			toast.success("Item created successfully");
+			appToast.success({
+				title: "Item form",
+				description: "Item created successfully",
+			});
 
 			await navigate({
 				to: "/marketplace/$itemId",

@@ -11,6 +11,8 @@ import { CATEGORY_QUERY_KEYS } from "../constants";
 import { deleteCategoryMutationOptions } from "../hooks/mutation-options";
 import { categoryQueryOptions } from "../hooks/query-options";
 import type { CategoryDeleteDialogProps } from "../types";
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
+import { appToast } from "@/features/shared/components/toast";
 
 export function CategoryDeleteDialog({
 	id,
@@ -20,10 +22,12 @@ export function CategoryDeleteDialog({
 	const router = useRouter();
 	const { data: category } = useSuspenseQuery(categoryQueryOptions(id));
 
+  const isMobile = useIsMobile()
 	const mutation = useMutation({
 		...deleteCategoryMutationOptions(),
 		onSuccess: async (_, id) => {
-			toast.success("category deleted successfully");
+
+					appToast.success({ title: "Category delete", description: "Category deleted successfully" });
 
 			onDone();
 			await Promise.all([
@@ -40,14 +44,16 @@ export function CategoryDeleteDialog({
 		<div className="space-y-4">
 			<p>Category to delete: {category.name}</p>
 			<div className="grid grid-cols-2 gap-2">
+        {isMobile ? null:
 				<Button
-					variant="outline"
-					onClick={() => {
-						onDone();
-					}}
+        variant="outline"
+        onClick={() => {
+          onDone();
+        }}
 				>
 					Cancel
 				</Button>
+        }
 				<Button
 					variant="destructive"
 					onClick={() => mutation.mutate(category.id)}

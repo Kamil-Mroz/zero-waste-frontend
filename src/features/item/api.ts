@@ -43,6 +43,3 @@ export const deleteItem = async (id: string) => {
 	return api.delete(`/api/v1/items/${id}`);
 };
 
-export const showInterestInItem = async (id: string) => {
-	return api.post(`/api/v1/interests/${id}`);
-};

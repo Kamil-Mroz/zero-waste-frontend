@@ -33,10 +33,12 @@ export function useFilters<
 		}
 		navigate({
 			search: cleanEmptyParams(next) as TSearchParams,
+			replace: true,
 		});
 	};
 
-	const resetFilters = () => navigate({ search: {} as TSearchParams });
+	const resetFilters = () =>
+		navigate({ search: {} as TSearchParams, replace: true });
 
 	return { filters, setFilters, resetFilters, clearFilters };
 }

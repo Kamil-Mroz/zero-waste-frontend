@@ -11,6 +11,7 @@ import { userFormOptions } from "../hooks/form-options";
 import { userUpdateMutationOptions } from "../hooks/mutation-options";
 import { userQueryOptions } from "../hooks/query-options";
 import { type UpdateUserType, updateUserSchema } from "../schemas/user.schema";
+import { appToast } from "@/features/shared/components/toast";
 
 type UserUpdateForm = { onDone: () => void; userId: string };
 
@@ -37,7 +38,11 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 				onDone();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({
+						title: "User form",
+						description: message,
+					});
 			}
 		},
 	});

@@ -38,3 +38,16 @@ export type MultiSelectOption<T extends string> = {
 	value: T;
 	label: string;
 };
+
+export type CursorRequest = {
+	createdAt: string;
+	id: string;
+};
+export type CursorResponse<T> = {
+	items: T[];
+	nextCursor?: CursorRequest;
+	prevCursor?: CursorRequest;
+	hasMore: boolean;
+	hasPrev: boolean;
+};
+export type CursorDirection = "FORWARD" | "BACKWARD";

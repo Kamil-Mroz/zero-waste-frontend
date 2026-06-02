@@ -12,7 +12,7 @@ export function ItemCard({ item }: ItemCardProps) {
 		<Card
 			key={item.id}
 			className={cn(
-				"rounded-2xl shadow hover:shadow-md transition cursor-pointer  hover:scale-[102%] border border-transparent relative overflow-hidden",
+				"rounded-2xl shadow hover:shadow-md transition cursor-pointer max-w-sm mx-auto w-full hover:scale-[102%] border border-transparent relative overflow-hidden",
 				item.state === "GIVEN" ? "border-destructive" : "",
 			)}
 			onClick={() =>

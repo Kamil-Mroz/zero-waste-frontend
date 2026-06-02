@@ -25,6 +25,7 @@ export function CategoryActions({ category }: CategoryActionsProps) {
 					<Link
 						to="/admin/categories"
 						search={{ modal: "create", categoryId: category.id }}
+            replace={true}
 					>
 						Add
 					</Link>
@@ -36,6 +37,7 @@ export function CategoryActions({ category }: CategoryActionsProps) {
 							modal: "edit",
 							categoryId: category.id,
 						}}
+            replace={true}
 					>
 						Edit
 					</Link>
@@ -50,6 +52,7 @@ export function CategoryActions({ category }: CategoryActionsProps) {
 									modal: "delete",
 									categoryId: category.id,
 								}}
+            replace={true}
 							>
 								Delete
 							</Link>

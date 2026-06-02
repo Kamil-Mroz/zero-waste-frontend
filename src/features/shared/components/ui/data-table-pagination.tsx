@@ -24,8 +24,12 @@ export function DataTablePagination<TData>({
 	return (
 		<div className="flex flex-col items-center justify-between gap-2 px-2 lg:flex-row mt-2">
 			<div className="flex-1 text-sm text-muted-foreground">
-				{table.getFilteredSelectedRowModel().rows.length} of{" "}
-				{table.getFilteredRowModel().rows.length} row(s) selected.
+				{table.options.enableRowSelection ? (
+					<>
+						{table.getFilteredSelectedRowModel().rows.length} of{" "}
+						{table.getFilteredRowModel().rows.length} row(s) selected.
+					</>
+				) : null}
 			</div>
 			<div className="flex items-center flex-col gap-2 sm:flex-row space-x-6 lg:space-x-8">
 				<div className="flex items-center space-x-2">

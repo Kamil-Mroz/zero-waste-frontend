@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS } from "../constants";
@@ -42,7 +43,11 @@ export function UserBanForm({
 				onDone();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({
+						title: "Ban user",
+						description: message,
+					});
 			}
 		},
 	});

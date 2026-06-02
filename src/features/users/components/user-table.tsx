@@ -12,7 +12,7 @@ import { DataTablePagination } from "@/features/shared/components/ui/data-table-
 import { UserTableToolbar } from "@/features/users/components/user-table-toolbar";
 import { setSelectedIds, useTableStore } from "../store";
 
-interface UserTableProps<TData, TValue> {
+type UserTableProps<TData, TValue> = {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	pagination: PaginationState;
@@ -20,7 +20,7 @@ interface UserTableProps<TData, TValue> {
 		PaginationOptions,
 		"onPaginationChange" | "pageCount"
 	>;
-}
+};
 
 export function UserTable<TData, TValue>({
 	columns,
@@ -28,7 +28,9 @@ export function UserTable<TData, TValue>({
 	pagination,
 	paginationOptions,
 }: UserTableProps<TData, TValue>) {
-	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+		Expiration: false,
+	});
 	const [rowSelection, setRowSelection] = useState({});
 
 	const clearSelectionTrigger = useTableStore((s) => s.clearSelectionTrigger);
@@ -42,6 +44,7 @@ export function UserTable<TData, TValue>({
 		data,
 		columns,
 		getRowId: (row) => (row as { id: string }).id,
+
 		getCoreRowModel: getCoreRowModel(),
 		onColumnVisibilityChange: setColumnVisibility,
 		onRowSelectionChange: (updater) => {

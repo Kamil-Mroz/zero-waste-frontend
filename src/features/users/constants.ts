@@ -3,7 +3,7 @@ import type { Roles } from "./types";
 
 export const USER_QUERY_KEYS = {
 	all: ["users"],
-	byId: (id: string) => [...USER_QUERY_KEYS.all, id],
+	byId: (id: string) => [...USER_QUERY_KEYS.all, "detail", id],
 } as const;
 
 export const USER_ROLES = [

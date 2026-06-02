@@ -25,7 +25,7 @@ function RootComponent() {
 			<MainLayout>
 				<Outlet />
 			</MainLayout>
-			<Toaster />
+			<Toaster  />
 			<TanStackDevtools
 				config={{
 					position: "bottom-right",

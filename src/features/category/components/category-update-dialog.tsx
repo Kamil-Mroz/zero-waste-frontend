@@ -4,6 +4,7 @@ import {
 	useSuspenseQueries,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { appToast } from "@/features/shared/components/toast";
 import { CATEGORY_QUERY_KEYS } from "../constants";
 import { updateCategoryMutationOptions } from "../hooks/mutation-options";
 import {
@@ -26,7 +27,10 @@ export function CategoryUpdateDialog({
 	const mutation = useMutation({
 		...updateCategoryMutationOptions(id),
 		onSuccess: async () => {
-			toast.success("Category updated successfully");
+			appToast.success({
+				title: "Category update",
+				description: "Category updated successfully",
+			});
 			onDone();
 
 			await Promise.all([
@@ -40,7 +44,6 @@ export function CategoryUpdateDialog({
 					queryKey: CATEGORY_QUERY_KEYS.tree,
 				}),
 			]);
-
 		},
 	});
 

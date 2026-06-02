@@ -10,7 +10,8 @@ export const ITEM_CONDITION = [
 
 export const ITEM_QUERY_KEYS = {
 	all: ["items"],
-	byId: (id: string) => [...ITEM_QUERY_KEYS.all, id],
+	itemRoot: () => [...ITEM_QUERY_KEYS.all, "detail"],
+	byId: (id: string) => [...ITEM_QUERY_KEYS.itemRoot(), id],
 	own: () => [...ITEM_QUERY_KEYS.all, "own"],
 } as const;
 
@@ -19,10 +20,11 @@ export const itemDialogConfig = {
 		title: "Delete Item",
 		description: "Permanently delete item. This action cannot be undone.",
 	},
-  offer:{
-    title: "Interested in this item?",
-    description: "The owner will be notified that you're interested in this item.",
-  },
+	offer: {
+		title: "Interested in this item?",
+		description:
+			"The owner will be notified that you're interested in this item.",
+	},
 	empty: {
 		title: "",
 		description: "",

@@ -16,6 +16,8 @@ export type User = {
 	email: string;
 	phoneNumber: string;
 	hasActiveBan: boolean;
+	bannedUntil: string | null;
+	joinedAt: string;
 	roles: UserRoles;
 };
 export type UserFormProps = {
@@ -27,6 +29,3 @@ export type UsersQueryOptionsProps = Partial<
 >;
 
 export type UnbanUserSchema = z.infer<typeof unbanUserSchema>;
-
-
-

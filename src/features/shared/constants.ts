@@ -34,13 +34,8 @@ export const NAV_LINKS = {
 					private: true,
 				},
 				{
-					title: "Wishlist",
-					url: "/marketplace/wishlist",
-					private: true,
-				},
-				{
-					title: "History",
-					url: "/marketplace/history",
+					title: "Offers",
+					url: "/offers/own",
 					private: true,
 				},
 			],
@@ -65,16 +60,20 @@ export const NAV_LINKS = {
 				},
 			],
 		},
-
 		{
 			title: "Profile",
-			url: "/profile",
+			url: "/profile/",
 			icon: User,
 			private: true,
 			items: [
 				{
 					title: "My Profile",
-					url: "/profile",
+					url: "/profile/",
+				},
+				{
+					title: "Notifications",
+					url: "/notifications",
+					private: true,
 				},
 				{
 					title: "My Activity",

@@ -7,6 +7,9 @@ import {
 	updateUser,
 } from "../api";
 import type { UpdateUserType } from "../schemas/user.schema";
+import { handleApiError } from "@/lib/utils";
+import { toast } from "sonner";
+import { appToast } from "@/features/shared/components/toast";
 
 export function userCreateMutationOptions() {
 	return mutationOptions({
@@ -22,6 +25,12 @@ export function userUpdateMutationOptions(id: string) {
 export function userDeleteMutationOptions() {
 	return mutationOptions({
 		mutationFn: deleteUsers,
+		onError: (error) => {
+			const message = handleApiError(error);
+			if (message) {
+				appToast.error({ title: "Delete failed", description: message });
+			}
+		},
 	});
 }
 export function userBanMutationOptions() {

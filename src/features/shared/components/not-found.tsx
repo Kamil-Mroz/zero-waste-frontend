@@ -7,7 +7,7 @@ export function NotFound(props: NotFoundRouteProps) {
 			<p className="text-4xl font-bold">404</p>
 			<p className="text-lg">Page not found</p>
 			<Button asChild>
-				<Link to="/" className="">
+				<Link to="/marketplace" className="">
 					Go home
 				</Link>
 			</Button>

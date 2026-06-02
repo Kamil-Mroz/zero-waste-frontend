@@ -1,7 +1,8 @@
 import { mutationOptions } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { handleApiError } from "@/lib/utils";
-import { createItem, deleteItem, showInterestInItem, updateItem } from "../api";
+import { createItem, deleteItem, updateItem } from "../api";
+import { appToast } from "@/features/shared/components/toast";
 
 export function createItemMutationOptions() {
 	return mutationOptions({
@@ -21,19 +22,7 @@ export function deleteItemMutationOptions() {
 		onError: (error) => {
 			const message = handleApiError(error);
 			if (message) {
-				toast.error(message);
-			}
-		},
-	});
-}
-
-export function showInterestInItemMutationOptions(id: string) {
-	return mutationOptions({
-		mutationFn: () => showInterestInItem(id),
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				toast.error(message);
+				appToast.error({ title: "Delete failed", description: message });
 			}
 		},
 	});

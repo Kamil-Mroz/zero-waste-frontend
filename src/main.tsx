@@ -8,6 +8,7 @@ import { TooltipProvider } from "@/features/shared/components/ui/tooltip";
 import { ErrorComponent } from "./features/shared/components/error-component";
 import { NotFound } from "./features/shared/components/not-found";
 import { PendingComponent } from "./features/shared/components/pending";
+import WebsocketProvider from "./features/webSocket/components/websocket-provider";
 import { routeTree } from "./routeTree.gen";
 
 export const queryClient = new QueryClient();
@@ -44,9 +45,11 @@ function App() {
 		<ThemeProvider>
 			<QueryClientProvider client={queryClient}>
 				<AuthProvider>
-					<TooltipProvider>
-						<InnerApp />
-					</TooltipProvider>
+					<WebsocketProvider>
+						<TooltipProvider>
+							<InnerApp />
+						</TooltipProvider>
+					</WebsocketProvider>
 				</AuthProvider>
 			</QueryClientProvider>
 		</ThemeProvider>

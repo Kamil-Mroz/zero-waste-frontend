@@ -54,7 +54,6 @@ export function UserTableToolbar<TData>({
 						if (hasSearch) resetFilters();
 					}}
 					variant="outline"
-					size="sm"
 				>
 					Clear <X />
 				</Button>
@@ -96,7 +95,7 @@ export function UserTableToolbar<TData>({
 					</>
 				)}
 				<DataTableViewOptions table={table} />
-				<Button size="sm" asChild>
+				<Button asChild>
 					<Link
 						to="/admin/users"
 						search={(prev) => ({ ...prev, modal: "create" })}

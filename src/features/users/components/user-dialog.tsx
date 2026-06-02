@@ -1,4 +1,3 @@
-import { getRouteApi } from "@tanstack/react-router";
 import ResponsiveDialog from "@/features/shared/components/responsive-dialog";
 import { useFilters } from "@/features/shared/hooks/use-filters";
 import { usersDialogConfig } from "../constants";
@@ -11,9 +10,10 @@ import { UserUpdateForm } from "./user-update-form";
 
 export function UsersDialog() {
 	const routeId = "/_authenticated/admin/users/";
-	const routeApi = getRouteApi(routeId);
-	const { clearFilters } = useFilters(routeId);
-	const { modal, userId } = routeApi.useSearch();
+	const {
+		filters: { modal, userId },
+		clearFilters,
+	} = useFilters(routeId);
 	const isOpen = !!modal;
 	const isCreate = modal === "create";
 	const isEdit = modal === "edit";

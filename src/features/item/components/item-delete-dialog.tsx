@@ -6,15 +6,18 @@ import { Spinner } from "@/features/shared/components/ui/spinner";
 import { ITEM_QUERY_KEYS } from "../constants";
 import { deleteItemMutationOptions } from "../hooks/mutation-options";
 import type { ItemDeleteDialogProps } from "../types";
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
+import { appToast } from "@/features/shared/components/toast";
 
 export function ItemDeleteDialog({ id, onDone }: ItemDeleteDialogProps) {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+  const isMobile = useIsMobile()
 
 	const mutation = useMutation({
 		...deleteItemMutationOptions(),
 		onSuccess: async (_, id) => {
-			toast.success("Item deleted successfully");
+				appToast.success({ title: "Item delete", description: "Item delete successfully"});
 
 			await navigate({ to: "/marketplace/my-items", replace: true });
 
@@ -30,10 +33,12 @@ export function ItemDeleteDialog({ id, onDone }: ItemDeleteDialogProps) {
 	});
 	return (
 		<div className="space-y-4">
-			<div className="grid grid-cols-2 gap-2">
+			<div className="grid sm:grid-cols-2 gap-2">
+        {isMobile ? null :
 				<Button variant="outline" onClick={onDone}>
 					Cancel
 				</Button>
+        }
 				<Button
 					variant="destructive"
 					onClick={() => mutation.mutate(id)}

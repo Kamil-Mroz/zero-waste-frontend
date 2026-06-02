@@ -43,7 +43,7 @@ function RouteComponent() {
 
 				<div className="space-y-3">
 					<Button asChild className="w-full ">
-						<Link to="/">Go Home</Link>
+						<Link to="/marketplace">Go Home</Link>
 					</Button>
 
 					<Button variant="secondary" className="w-full ">

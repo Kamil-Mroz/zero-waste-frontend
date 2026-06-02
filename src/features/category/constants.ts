@@ -1,6 +1,6 @@
 export const CATEGORY_QUERY_KEYS = {
 	all: ["categories"],
-	byId: (id: string) => [...CATEGORY_QUERY_KEYS.all, id],
+	byId: (id: string) => [...CATEGORY_QUERY_KEYS.all,"detail", id],
 	tree: ["categoryTree"],
 } as const;
 

@@ -14,6 +14,7 @@ import { useAppForm } from "../../shared/components/form/form";
 import { FieldGroup } from "../../shared/components/ui/field";
 import { categoryFormOptions } from "../hooks/form-options";
 import type { CategoryFormProps } from "../types";
+import { appToast } from "@/features/shared/components/toast";
 
 export function CategoryForm({
 	defaultValues,
@@ -54,7 +55,8 @@ export function CategoryForm({
 				form.reset();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({ title: "Category form", description: message });
 			}
 		},
 	});

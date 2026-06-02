@@ -36,7 +36,7 @@ export default function MultiSelectMenu<T extends string>({
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button variant="outline" size="sm" className="h-full">
+				<Button variant="outline" className="h-full">
 					{title}
 
 					{value.length > 0 && (

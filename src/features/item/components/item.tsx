@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import GoBackButton from "@/features/shared/components/go-back-button";
 import { Button } from "@/features/shared/components/ui/button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -14,15 +14,11 @@ export function Item({ item }: ItemProps) {
 	const isAuthenticated = !!user;
 	const isOwner = isAuthenticated && user.id === item.owner.id;
 	const [activeImage, setActiveImage] = useState(item.images?.[0]?.url ?? null);
+	console.log(item.owner.id);
 
 	return (
 		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto p-4">
-			<Button asChild variant="secondary">
-				<Link to={isOwner ? "/marketplace/my-items" : "/marketplace"}>
-					<ChevronLeft />
-					<span>Go back</span>
-				</Link>
-			</Button>
+			<GoBackButton />
 			<Card
 				className={cn(
 					"rounded-2xl shadow w-full border border-transparent overflow-hidden relative",
@@ -37,7 +33,7 @@ export function Item({ item }: ItemProps) {
 					)}
 					<h1 className="text-2xl font-bold">{item.title}</h1>
 					<div className="space-y-3">
-						<div className="aspect-square w-full max-w-sm overflow-hidden rounded-2xl border">
+						<div className="aspect-square w-full max-w-sm overflow-hidden rounded-2xl border mx-auto">
 							{activeImage ? (
 								<img
 									src={activeImage}
@@ -83,9 +79,11 @@ export function Item({ item }: ItemProps) {
 
 					<div className="border-t pt-4">
 						<p className="font-medium">Owner</p>
-						<p>
-							{item.owner.firstName} {item.owner.lastName}
-						</p>
+						<Button variant="link">
+							<Link to="/users/$userId" params={{ userId: item.owner.id }}>
+								{item.owner.firstName} {item.owner.lastName}
+							</Link>
+						</Button>
 						<p className="text-sm">{item.owner.email}</p>
 					</div>
 

@@ -12,7 +12,7 @@ export function ErrorLayout({ children, reset }: ErrorLayoutProps) {
 						Retry
 					</Button>
 					<Button asChild>
-						<Link to="/">Go Home</Link>
+						<Link to="/marketplace">Go Home</Link>
 					</Button>
 				</div>
 			</div>

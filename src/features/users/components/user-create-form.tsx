@@ -8,6 +8,7 @@ import { USER_QUERY_KEYS, USER_ROLES } from "../constants";
 import { userFormOptions } from "../hooks/form-options";
 import { userCreateMutationOptions } from "../hooks/mutation-options";
 import { type CreateUserType, createUserSchema } from "../schemas/user.schema";
+import { appToast } from "@/features/shared/components/toast";
 
 export function UserCreateForm({ onDone }: { onDone: () => void }) {
 	const router = useRouter();
@@ -28,7 +29,11 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 				onDone();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({
+						title: "User form",
+						description: message,
+					});
 			}
 		},
 	});

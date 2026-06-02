@@ -16,6 +16,7 @@ import { handleApiError } from "@/lib/utils";
 import { ITEM_CONDITION } from "../constants";
 import { updateItemFormOptions } from "../hooks/form-options";
 import type { UpdateItemFormProps } from "../types";
+import { appToast } from "@/features/shared/components/toast";
 
 export function EditItemForm({
 	item,
@@ -57,7 +58,11 @@ export function EditItemForm({
 				form.reset();
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message)
+					appToast.error({
+						title: "Item form",
+						description: message,
+					});
 			}
 		},
 	});

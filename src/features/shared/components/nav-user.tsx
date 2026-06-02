@@ -31,7 +31,7 @@ import {
 import type { User } from "@/features/users/types";
 
 export function NavUser({ user }: { user: User }) {
-	const { isMobile } = useSidebar();
+	const { isMobile, toggleSidebar } = useSidebar();
 	const router = useRouter();
 	const { logout } = useAuth();
 	const navigate = useNavigate();
@@ -43,6 +43,7 @@ export function NavUser({ user }: { user: User }) {
 		await logout();
 		await router.invalidate();
 		await navigate({ to: "/login" });
+		if (isMobile) toggleSidebar();
 	};
 	return (
 		<SidebarMenu>

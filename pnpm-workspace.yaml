@@ -1,3 +1,4 @@
 allowBuilds:
   esbuild: true
-  msw: false
+  msw: true
+  lightningcss: true

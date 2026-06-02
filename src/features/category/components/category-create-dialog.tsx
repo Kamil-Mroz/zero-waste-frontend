@@ -5,6 +5,7 @@ import { CATEGORY_QUERY_KEYS } from "../constants";
 import { createCategoryMutationOptions } from "../hooks/mutation-options";
 import type { CategoryCreateDialogProps } from "../types";
 import { CategoryForm } from "./category-form";
+import { appToast } from "@/features/shared/components/toast";
 
 export function CategoryCreateDialog({ id }: CategoryCreateDialogProps) {
 	const queryClient = useQueryClient();
@@ -13,7 +14,8 @@ export function CategoryCreateDialog({ id }: CategoryCreateDialogProps) {
 	const mutation = useMutation({
 		...createCategoryMutationOptions(),
 		onSuccess: async () => {
-			toast.success("Category created successfully");
+
+					appToast.success({ title: "Category creation", description: "Category created successfully" });
 
 			await router.invalidate();
 
