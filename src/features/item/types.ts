@@ -1,11 +1,13 @@
 import type { z } from "zod/v4";
 import type { Category } from "../category/types";
 import type { SelectItems } from "../shared/components/form/select-field";
-import type { Pageable } from "../shared/types";
+import type { Page, Pageable } from "../shared/types";
 import type { User } from "../users/types";
 import type {
 	baseItemSearchSchema,
 	createItemFormSchema,
+	itemConditionSchema,
+	itemFormStateSchema,
 	itemStateSchema,
 	ownItemSearchSchema,
 	updateItemFormSchema,
@@ -28,7 +30,8 @@ export type UpdateItemFormProps = {
 	onSubmit: (values: FormData) => void;
 };
 
-export type ItemConditionType = "NEW" | "REPAIRED" | "DAMAGED" | "OLD";
+export type ItemConditionType = z.infer<typeof itemConditionSchema>;
+export type ItemFormStateType = z.infer<typeof itemFormStateSchema>;
 
 export type ItemStateType = z.infer<typeof itemStateSchema>;
 
@@ -51,6 +54,7 @@ export type Image = {
 
 export type ItemListProps = {
 	items: ItemType[];
+	isOwnItems?: boolean;
 };
 
 export type ItemCardProps = {
@@ -70,11 +74,11 @@ export type ItemActionsProps = {
 export type ItemDeleteDialogProps = {
 	id: string;
 	onDone: () => void;
-}
+};
 export type ItemOfferDialogProps = {
 	id: string;
 	onDone: () => void;
-};;
+};
 
 export type ItemsQueryOptions = z.infer<typeof baseItemSearchSchema>;
 export type OwnItemsQueryOptions = z.infer<typeof ownItemSearchSchema>;

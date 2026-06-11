@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Bell } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Popover,
@@ -11,14 +12,21 @@ import {
 	notificationPopupQueryOptions as notificationPopupQueryOptions,
 	unreadCountQueryOptions,
 } from "../hooks/query-options";
+import { NotificationListSkeleton } from "./notification-list-skeleton";
 import NotificationPopupList from "./notification-popup-list";
 
 function NotificationPopup() {
-	const { data: unreadData } = useQuery(unreadCountQueryOptions());
+	const { user } = useAuth();
+	const { data: unreadData } = useQuery({
+		...unreadCountQueryOptions(),
+		enabled: !!user,
+	});
 
-	const { data: popupData, refetch } = useQuery(
-		notificationPopupQueryOptions(),
-	);
+	const {
+		data: popupData,
+		refetch,
+		isLoading,
+	} = useQuery(notificationPopupQueryOptions());
 
 	const notifications = popupData?.items ?? [];
 	const unreadCount = unreadData?.unreadCount ?? 0;
@@ -44,10 +52,14 @@ function NotificationPopup() {
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent align="end" className="w-80">
-				<NotificationPopupList
-					notifications={notifications}
-					onClose={() => setIsOpen(false)}
-				/>
+				{isLoading ? (
+					<NotificationListSkeleton notificationCount={3} />
+				) : (
+					<NotificationPopupList
+						notifications={notifications}
+						onClose={() => setIsOpen(false)}
+					/>
+				)}
 			</PopoverContent>
 		</Popover>
 	);

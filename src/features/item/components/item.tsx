@@ -14,7 +14,6 @@ export function Item({ item }: ItemProps) {
 	const isAuthenticated = !!user;
 	const isOwner = isAuthenticated && user.id === item.owner.id;
 	const [activeImage, setActiveImage] = useState(item.images?.[0]?.url ?? null);
-	console.log(item.owner.id);
 
 	return (
 		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto p-4">
@@ -79,8 +78,8 @@ export function Item({ item }: ItemProps) {
 
 					<div className="border-t pt-4">
 						<p className="font-medium">Owner</p>
-						<Button variant="link">
-							<Link to="/users/$userId" params={{ userId: item.owner.id }}>
+						<Button variant="link" asChild className="px-0 text-foreground">
+							<Link to="/profile/$userId" params={{ userId: item.owner.id }}>
 								{item.owner.firstName} {item.owner.lastName}
 							</Link>
 						</Button>

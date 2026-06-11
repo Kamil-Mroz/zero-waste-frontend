@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS, USER_ROLES } from "../constants";
 import { userFormOptions } from "../hooks/form-options";
 import { userCreateMutationOptions } from "../hooks/mutation-options";
 import { type CreateUserType, createUserSchema } from "../schemas/user.schema";
-import { appToast } from "@/features/shared/components/toast";
 
 export function UserCreateForm({ onDone }: { onDone: () => void }) {
 	const router = useRouter();
@@ -56,7 +55,7 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 					{(field) => <field.TextField label="Email" type="email" />}
 				</form.AppField>
 				<form.AppField name="password">
-					{(field) => <field.TextField label="Password" type="password" />}
+					{(field) => <field.TextField label="Password" type="text" />}
 				</form.AppField>
 				<form.AppField name="phoneNumber">
 					{(field) => <field.TextField label="Phone number" />}

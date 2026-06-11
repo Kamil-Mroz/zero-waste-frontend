@@ -36,15 +36,17 @@ export default function MultiSelectMenu<T extends string>({
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button variant="outline" className="h-full">
-					{title}
+				<div className="lg:self-stretch">
+					<Button variant="outline" className="h-full">
+						{title}
 
-					{value.length > 0 && (
-						<Badge variant="outline" className="px-1 h-4">
-							{value.length}
-						</Badge>
-					)}
-				</Button>
+						{value.length > 0 && (
+							<Badge variant="outline" className="px-1 h-4">
+								{value.length}
+							</Badge>
+						)}
+					</Button>
+				</div>
 			</PopoverTrigger>
 
 			<PopoverContent align="start" className="p-0 max-w-">

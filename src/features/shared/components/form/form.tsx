@@ -3,6 +3,7 @@ import { CheckboxArrayField } from "./checkbox-array-field";
 import { DateField } from "./date-field";
 import { FileField } from "./file-field";
 import { InputField } from "./input-field";
+import RatingField from "./rating-field";
 import { ResetButton } from "./reset-button";
 import { SelectField } from "./select-field";
 import { SubmitButton } from "./submit-button";
@@ -21,6 +22,7 @@ export const { useAppForm, withForm } = createFormHook({
 		CheckboxArrayField,
 		DateField,
 		FileField,
+		RatingField,
 	},
 	formComponents: { SubmitButton, ResetButton },
 });

@@ -4,7 +4,7 @@ import {
 	useLayoutEffect,
 	useState,
 } from "react";
-import { toast } from "sonner";
+import { appToast } from "@/features/shared/components/toast";
 import type { Roles, UserRoles } from "@/features/users/types";
 import { api } from "@/lib/axios";
 import { AuthContext } from "../hooks/useAuth";
@@ -56,9 +56,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			(response) => response,
 			async (error) => {
 				const originalRequest = error.config;
+				const isAuthEndpoint = originalRequest.url?.includes("/auth/refresh");
+
 				if (
 					error.response?.status === 401 &&
-					error.response.data.detail === "Token invalid or expired"
+					!originalRequest._retry &&
+					!isAuthEndpoint
 				) {
 					try {
 						const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
@@ -73,7 +76,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
 						return Promise.reject(refreshError);
 					}
 				}
-
 				return Promise.reject(error);
 			},
 		);
@@ -106,7 +108,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			setUser(null);
 			setToken(null);
 		} catch {
-			toast.error("Something went wrong, please try again.");
+			appToast.error({
+				description: "Something went wrong, please try again.",
+			});
 		}
 	};
 	const hasRole = (role: Roles) => {

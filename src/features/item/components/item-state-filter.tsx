@@ -10,14 +10,12 @@ export function ItemStateFilter({
 	states: ItemStateType[];
 }) {
 	return (
-		<div>
-			<MultiSelectMenu
-				title="States"
-				options={stateOptions}
-				value={states}
-				onChange={onChange}
-				clearLabel="Reset"
-			/>
-		</div>
+		<MultiSelectMenu
+			title="States"
+			options={stateOptions}
+			value={states}
+			onChange={onChange}
+			clearLabel="Reset"
+		/>
 	);
 }

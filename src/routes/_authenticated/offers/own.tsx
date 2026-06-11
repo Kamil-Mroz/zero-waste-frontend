@@ -6,9 +6,10 @@ import OfferTable from "@/features/offer/components/offer-table";
 import { ownColumns } from "@/features/offer/hooks/columns";
 import { ownOffersQueryOptions } from "@/features/offer/hooks/query-options";
 import { offerSearchSchema } from "@/features/offer/schemas/offer.schema";
+import { DataTableSkeleton } from "@/features/shared/components/data-table-skeleton";
 import { useFilters } from "@/features/shared/hooks/use-filters";
 import type { Pageable } from "@/features/shared/types";
-import { withDefaultPageable } from "@/lib/utils";
+import { getValidPage, withDefaultPageable } from "@/lib/utils";
 
 const ownOffersSearchSchema = z.object({
 	...offerSearchSchema.shape,
@@ -18,21 +19,27 @@ const ownOffersSearchSchema = z.object({
 
 export const Route = createFileRoute("/_authenticated/offers/own")({
 	component: RouteComponent,
+	pendingComponent: DataTableSkeleton,
 	validateSearch: ownOffersSearchSchema,
 	staticData: {
 		getTitle: () => "Own",
 	},
-	loaderDeps: ({ search }) => ({ search }),
-	loader: async ({ context, deps: { search } }) => {
+	loaderDeps: ({ search }) => {
+		const { modal, offerId, page, size, status } = search;
+		return { modal, offerId, page, size, status };
+	},
+	loader: async ({ context, deps: search }) => {
 		const page = await context.queryClient.ensureQueryData(
 			ownOffersQueryOptions(search),
 		);
-		if (page.totalPages > 0 && search.page && search.page >= page.totalPages) {
+
+		const correctPage = getValidPage(search.page, page.totalPages);
+		if (correctPage) {
 			throw redirect({
 				to: "/offers/own",
 				search: {
 					...search,
-					page: page.totalPages - 1,
+					page: correctPage,
 				},
 				replace: true,
 			});

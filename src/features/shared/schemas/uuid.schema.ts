@@ -12,3 +12,7 @@ export const notificationParamSchema = z.object({
 export const userParamSchema = z.object({
 	userId: z.uuid({ error: "Invalid path param" }),
 });
+
+export const offerParamSchema = z.object({
+	offerId: z.uuid({ error: "Invalid path param" }),
+});

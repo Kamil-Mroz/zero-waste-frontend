@@ -2,8 +2,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
 import { cn } from "@/lib/utils";
-import { notificationConfig } from "../constants";
 import type { Notification } from "../types";
+import { notificationConfig } from "../constants";
 
 type NotificationCardProps = {
 	notification: Notification;

@@ -10,8 +10,9 @@ import { EditItemForm } from "@/features/item/components/edit-item-form";
 import { ITEM_QUERY_KEYS } from "@/features/item/constants";
 import { updateItemMutationOptions } from "@/features/item/hooks/mutation-options";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
-import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
+import type { ItemWithOwnerType } from "@/features/item/types";
 import { appToast } from "@/features/shared/components/toast";
+import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute(
 	"/_authenticated/marketplace/$itemId/edit",
@@ -32,10 +33,16 @@ export const Route = createFileRoute(
 		},
 	},
 	loader: async ({ context, params }) => {
-		const [item, _] = await Promise.all([
-			context.queryClient.ensureQueryData(itemQueryOptions(params.itemId)),
-			context.queryClient.ensureQueryData(categoriesQueryOptions()),
-		]);
+		let item: ItemWithOwnerType;
+		try {
+			const [data, _] = await Promise.all([
+				context.queryClient.ensureQueryData(itemQueryOptions(params.itemId)),
+				context.queryClient.ensureQueryData(categoriesQueryOptions()),
+			]);
+			item = data;
+		} catch {
+			throw notFound();
+		}
 		if (item.owner.id !== context.auth.user?.id) {
 			throw redirect({ to: "/marketplace" });
 		}
@@ -53,7 +60,10 @@ function RouteComponent() {
 	const mutation = useMutation({
 		...updateItemMutationOptions(itemId),
 		onSuccess: async (data) => {
-      appToast.success({title: "Item form", description: "Item updated successfully"})
+			appToast.success({
+				title: "Item form",
+				description: "Item updated successfully",
+			});
 
 			await navigate({
 				to: "/marketplace/$itemId",

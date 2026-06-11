@@ -1,4 +1,4 @@
-import { Bell, SidebarIcon } from "lucide-react";
+import { SidebarIcon } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import NotificationPopup from "@/features/notification/components/notification-popup";
 import { ModeToggle } from "@/features/shared/components/mode-toggle";

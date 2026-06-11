@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-
 import { Button } from "@/features/shared/components/ui/button";
+import { ScrollArea } from "@/features/shared/components/ui/scroll-area";
 import {
 	useMarkAllAsReadMutation,
 	useMarkAsReadMutation,
@@ -39,14 +39,17 @@ function NotificationPopupList({
 							Mark all as read
 						</Button>
 					)}
-					{notifications.map((n) => (
-						<NotificationPopupItem
-							key={n.id}
-							notification={n}
-							markAsRead={markAsReadMutation.mutate}
-							onClose={onClose}
-						/>
-					))}
+
+					<ScrollArea className="w-auto h-[400px]">
+						{notifications.map((n) => (
+							<NotificationPopupItem
+								key={n.id}
+								notification={n}
+								markAsRead={markAsReadMutation.mutate}
+								onClose={onClose}
+							/>
+						))}
+					</ScrollArea>
 				</>
 			)}
 			<Button

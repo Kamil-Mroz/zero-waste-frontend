@@ -1,10 +1,31 @@
 import { z } from "zod/v4";
 import { paginationSchema } from "@/features/shared/schemas/pagination.schema";
 
+export const baseItemSearchSchema = z.object({
+	...paginationSchema.shape,
+	text: z.string().optional().catch(""),
+	category: z.uuid().optional().catch(""),
+});
+
+export const itemStateSchema = z.enum(["AVAILABLE", "GIVEN", "PENDING"]);
+
+export const ownItemSearchSchema = baseItemSearchSchema.extend({
+	states: z.array(itemStateSchema).default(["AVAILABLE", "PENDING"]),
+});
+
+export const itemFormStateSchema = z.enum(["AVAILABLE", "PENDING"]);
+export const itemConditionSchema = z.enum([
+	"NEW",
+	"REPAIRED",
+	"DAMAGED",
+	"OLD",
+]);
+
 export const createItemFormSchema = z.object({
 	title: z.string().nonempty("Title is required"),
 	description: z.string().nonempty("Description is required"),
-	condition: z.enum(["NEW", "REPAIRED", "DAMAGED", "OLD"]),
+	condition: itemConditionSchema,
+	state: itemFormStateSchema,
 	categoryId: z.string().nonempty("Category is required"),
 	city: z.string().nonempty("City is required"),
 	images: z
@@ -26,7 +47,8 @@ export const updateItemFormSchema = (currentImageIds: string[]) =>
 		.object({
 			title: z.string().nonempty("Title is required"),
 			description: z.string().nonempty("Description is required"),
-			condition: z.enum(["NEW", "REPAIRED", "DAMAGED", "OLD"]),
+			condition: itemConditionSchema,
+			state: itemFormStateSchema,
 			categoryId: z.string().nonempty("Category is required"),
 			city: z.string().nonempty("City is required"),
 			images: z
@@ -58,15 +80,3 @@ export const updateItemFormSchema = (currentImageIds: string[]) =>
 				});
 			}
 		});
-
-export const baseItemSearchSchema = z.object({
-	...paginationSchema.shape,
-	text: z.string().optional().catch(""),
-	category: z.uuid().optional().catch(""),
-});
-
-export const itemStateSchema = z.enum(["AVAILABLE", "GIVEN", "PENDING"]);
-
-export const ownItemSearchSchema = baseItemSearchSchema.extend({
-	states: z.array(itemStateSchema).default(["AVAILABLE", "PENDING"]),
-});

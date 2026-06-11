@@ -1,6 +1,5 @@
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { type PropsWithChildren, useEffect } from "react";
-import { NOTIFICATIONS_QUERY_KEYS } from "@/features/notification/constants";
 import { invalidateNotificationQueries } from "@/features/notification/lib/invalidate-notification-queries";
 import { showNotificationToast } from "@/features/notification/lib/show-notification-toast";
 import type { Notification } from "@/features/notification/types";

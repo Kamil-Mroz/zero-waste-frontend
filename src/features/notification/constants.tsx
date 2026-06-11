@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
 	Ban,
 	CheckCircle2,
@@ -5,8 +6,10 @@ import {
 	Package,
 	XCircle,
 } from "lucide-react";
+import type { JSX, ReactNode } from "react";
 import { z } from "zod/v4";
-import type { NotificationType } from "./types";
+import { Button } from "../shared/components/ui/button";
+import type { Notification, NotificationType } from "./types";
 
 export const NOTIFICATIONS_QUERY_KEYS = {
 	all: ["notifications"] as const,
@@ -43,6 +46,7 @@ export const notificationConfig: Record<
 			| "secondary"
 			| "outline"
 			| "ghost";
+		render?: (notification: Notification) => ReactNode;
 	}
 > = {
 	OFFER_RECEIVED: {
@@ -50,6 +54,13 @@ export const notificationConfig: Record<
 		icon: Package,
 		className: "text-blue-500",
 		badgeVariant: "default",
+		render: (_) => {
+			return (
+				<Button asChild>
+					<Link to="/offers/received">View offer</Link>
+				</Button>
+			);
+		},
 	},
 
 	OFFER_ACCEPTED: {
@@ -57,6 +68,18 @@ export const notificationConfig: Record<
 		icon: CheckCircle2,
 		className: "text-green-500",
 		badgeVariant: "default",
+		render: (notification) => {
+			return (
+				<Button asChild>
+					<Link
+						to="/reviews/create/$offerId"
+						params={{ offerId: notification.referenceId }}
+					>
+						Leave a review
+					</Link>
+				</Button>
+			);
+		},
 	},
 
 	OFFER_REJECTED: {

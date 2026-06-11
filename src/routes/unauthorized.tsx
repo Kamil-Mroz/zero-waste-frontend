@@ -46,7 +46,7 @@ function RouteComponent() {
 						<Link to="/marketplace">Go Home</Link>
 					</Button>
 
-					<Button variant="secondary" className="w-full ">
+					<Button variant="secondary" className="w-full " asChild>
 						<Link to={redirect}>Try Again</Link>
 					</Button>
 				</div>

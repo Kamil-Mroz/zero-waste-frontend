@@ -1,15 +1,26 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { PublicUserProfile } from "@/features/profile/components/public-user-profile";
 import { publicUserProfileQueryOptions } from "@/features/profile/hooks/query-options";
 import { userParamSchema } from "@/features/shared/schemas/uuid.schema";
 
-export const Route = createFileRoute("/users/$userId")({
+export const Route = createFileRoute("/_authenticated/admin/users/$userId/")({
+	staticData: {
+		getTitle: () => "Profile",
+	},
 	component: RouteComponent,
 	beforeLoad: async ({ context, params }) => {
-		await context.queryClient.ensureQueryData(
-			publicUserProfileQueryOptions(params.userId),
-		);
+		if (params.userId === context.auth.user?.id) {
+			throw redirect({ to: "/profile" });
+		}
+
+		try {
+			await context.queryClient.ensureQueryData(
+				publicUserProfileQueryOptions(params.userId),
+			);
+		} catch {
+			throw notFound();
+		}
 	},
 	params: {
 		parse: (params) => {
@@ -26,9 +37,9 @@ export const Route = createFileRoute("/users/$userId")({
 
 function RouteComponent() {
 	const { userId } = Route.useParams();
-	const { data: user } = useSuspenseQuery(
+	const { data: profile } = useSuspenseQuery(
 		publicUserProfileQueryOptions(userId),
 	);
 
-	return <PublicUserProfile user={user} />;
+	return <PublicUserProfile profile={profile} userId={userId} />;
 }

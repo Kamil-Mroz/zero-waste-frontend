@@ -2,13 +2,13 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { CategoryDialog } from "@/features/category/components/category-dialog";
 import { CategoryList } from "@/features/category/components/category-list";
+import { CategoryTreeSkeleton } from "@/features/category/components/category-tree-skeleton";
 import {
 	categoriesQueryOptions,
 	categoryQueryOptions,
 	categoryTreeQueryOptions,
 } from "@/features/category/hooks/query-options";
 import { categorySearchSchema } from "@/features/category/schemas/category.schema";
-import { PendingComponent } from "@/features/shared/components/pending";
 
 export const Route = createFileRoute("/_authenticated/admin/categories/")({
 	component: RouteComponent,
@@ -17,28 +17,27 @@ export const Route = createFileRoute("/_authenticated/admin/categories/")({
 	},
 
 	validateSearch: categorySearchSchema,
-	loaderDeps: ({ search }) => ({ search }),
-	loader: async ({ context, deps: { search } }) => {
-		if (search.modal === "edit" && search.categoryId) {
+	loaderDeps: ({ search }) => ({
+		modal: search.modal,
+		categoryId: search.categoryId,
+	}),
+	loader: async ({ context, deps: { modal, categoryId } }) => {
+		if (modal === "edit" && categoryId) {
 			await Promise.all([
 				context.queryClient.ensureQueryData(categoryTreeQueryOptions()),
-				context.queryClient.ensureQueryData(
-					categoryQueryOptions(search.categoryId),
-				),
+				context.queryClient.ensureQueryData(categoryQueryOptions(categoryId)),
 				context.queryClient.ensureQueryData(categoriesQueryOptions()),
 			]);
-		} else if (search.modal === "delete" && search.categoryId) {
+		} else if (modal === "delete" && categoryId) {
 			await Promise.all([
 				context.queryClient.ensureQueryData(categoryTreeQueryOptions()),
-				context.queryClient.ensureQueryData(
-					categoryQueryOptions(search.categoryId),
-				),
+				context.queryClient.ensureQueryData(categoryQueryOptions(categoryId)),
 			]);
 		} else {
 			await context.queryClient.ensureQueryData(categoryTreeQueryOptions());
 		}
 	},
-	pendingComponent: PendingComponent,
+	pendingComponent: CategoryTreeSkeleton,
 });
 
 function RouteComponent() {

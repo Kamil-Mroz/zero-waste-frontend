@@ -21,59 +21,55 @@ export function UserTableRowsActions<TData>({
 	const id = (row.original as User).id;
 
 	return (
-		<>
-			{/* Dialog prompt */}
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button
-						variant="ghost"
-						size="icon"
-						className="size-8 data-[state=open]:bg-muted"
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button
+					variant="ghost"
+					size="icon"
+					className="size-8 data-[state=open]:bg-muted"
+				>
+					<MoreHorizontal />
+					<span className="sr-only">Open menu</span>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				<DropdownMenuItem asChild>
+					<Link
+						to="/admin/users"
+						search={(prev) => ({ ...prev, modal: "edit", userId: id })}
 					>
-						<MoreHorizontal />
-						<span className="sr-only">Open menu</span>
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="end">
+						Edit
+					</Link>
+				</DropdownMenuItem>
+				{(row.original as User).hasActiveBan ? (
 					<DropdownMenuItem asChild>
 						<Link
 							to="/admin/users"
-							search={(prev) => ({ ...prev, modal: "edit", userId: id })}
-              
+							search={(prev) => ({ ...prev, modal: "unban", userId: id })}
 						>
-							Edit
+							Unban
 						</Link>
 					</DropdownMenuItem>
-					{(row.original as User).hasActiveBan ? (
-						<DropdownMenuItem asChild>
-							<Link
-								to="/admin/users"
-								search={(prev) => ({ ...prev, modal: "unban", userId: id })}
-							>
-								Unban
-							</Link>
-						</DropdownMenuItem>
-					) : (
-						<DropdownMenuItem asChild>
-							<Link
-								to="/admin/users"
-								search={(prev) => ({ ...prev, modal: "ban", userId: id })}
-							>
-								Ban
-							</Link>
-						</DropdownMenuItem>
-					)}
-					<DropdownMenuSeparator />
-					<DropdownMenuItem variant="destructive" asChild>
+				) : (
+					<DropdownMenuItem asChild>
 						<Link
 							to="/admin/users"
-							search={(prev) => ({ ...prev, modal: "delete", userId: id })}
+							search={(prev) => ({ ...prev, modal: "ban", userId: id })}
 						>
-							Delete
+							Ban
 						</Link>
 					</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
-		</>
+				)}
+				<DropdownMenuSeparator />
+				<DropdownMenuItem variant="destructive" asChild>
+					<Link
+						to="/admin/users"
+						search={(prev) => ({ ...prev, modal: "delete", userId: id })}
+					>
+						Delete
+					</Link>
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 }

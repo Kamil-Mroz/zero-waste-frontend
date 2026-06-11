@@ -1,6 +1,7 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import {
 	Card,
 	CardContent,
@@ -29,7 +30,7 @@ export function LoginForm({ redirect = "/" }: { redirect?: string }) {
 				await navigate({ to: redirect, replace: true });
 			} catch (error) {
 				const message = handleApiError(error, form);
-				if (message) toast.error(message);
+				if (message) appToast.error({ description: message });
 			}
 		},
 	});

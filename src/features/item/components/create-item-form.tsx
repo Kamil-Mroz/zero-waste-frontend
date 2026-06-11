@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
-import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
@@ -13,7 +12,7 @@ import {
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { handleApiError } from "@/lib/utils";
-import { ITEM_CONDITION } from "../constants";
+import { ITEM_CONDITION, ITEM_STATE } from "../constants";
 import { createItemFormOptions } from "../hooks/form-options";
 import type { CreateItemFormProps } from "../types";
 
@@ -28,6 +27,7 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 				formData.append("condition", value.condition);
 				formData.append("city", value.city);
 				formData.append("categoryId", value.categoryId);
+				formData.append("state", value.state);
 				value.images.forEach((file: File) => {
 					formData.append("images", file);
 				});
@@ -74,6 +74,11 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 							<form.AppField name="condition">
 								{(field) => (
 									<field.SelectField label="Condition" items={ITEM_CONDITION} />
+								)}
+							</form.AppField>
+							<form.AppField name="state">
+								{(field) => (
+									<field.SelectField label="State" items={ITEM_STATE} />
 								)}
 							</form.AppField>
 							<form.AppField name="categoryId">

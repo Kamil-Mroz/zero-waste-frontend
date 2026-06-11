@@ -2,6 +2,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod/v4";
 import NotificationCard from "@/features/notification/components/notification-card";
+import { NotificationListSkeleton } from "@/features/notification/components/notification-list-skeleton";
 import NotificationToolbar from "@/features/notification/components/notification-toolbar";
 import { notificationTypeSchema } from "@/features/notification/constants";
 import { notificationHistoryQueryOptions } from "@/features/notification/hooks/query-options";
@@ -16,8 +17,12 @@ const notificationSearchSchema = z.object({
 
 export const Route = createFileRoute("/_authenticated/notifications/")({
 	component: RouteComponent,
+	pendingComponent: NotificationListSkeleton,
 	validateSearch: notificationSearchSchema,
-	loaderDeps: ({ search }) => ({ search }),
+	loaderDeps: ({ search }) => {
+		const { notificationType } = search;
+		return { notificationType };
+	},
 	beforeLoad: async ({ context, search }) => {
 		await context.queryClient.ensureInfiniteQueryData(
 			notificationHistoryQueryOptions(search.notificationType),
@@ -72,7 +77,9 @@ function RouteComponent() {
 					onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
 					className="space-y-2"
 				>
-					{isFetchingPreviousPage && <Spinner />}
+					{isFetchingPreviousPage && (
+						<NotificationListSkeleton notificationCount={4} />
+					)}
 
 					{notifications.map((notification) => (
 						<NotificationCard
@@ -81,7 +88,9 @@ function RouteComponent() {
 						/>
 					))}
 
-					{isFetchingNextPage && <Spinner />}
+					{isFetchingNextPage && (
+						<NotificationListSkeleton notificationCount={4} />
+					)}
 				</InfiniteScrollContainer>
 			)}
 			{isError && error && (

@@ -32,7 +32,7 @@ export const invalidateNotificationQueries = async (
 
 		case "OFFER_ACCEPTED": {
 			await queryClient.invalidateQueries({
-				queryKey: ITEM_QUERY_KEYS.itemRoot(),
+				queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
 			});
 
 			break;
@@ -40,7 +40,7 @@ export const invalidateNotificationQueries = async (
 
 		case "OFFER_REJECTED": {
 			await queryClient.invalidateQueries({
-				queryKey: ITEM_QUERY_KEYS.itemRoot(),
+				queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
 			});
 
 			break;

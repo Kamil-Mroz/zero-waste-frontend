@@ -34,7 +34,9 @@ export const notificationQueryOptions = (notificationId: string) =>
 
 export const notificationHistoryQueryOptions = (type?: NotificationType) =>
 	infiniteQueryOptions({
-		queryKey: NOTIFICATIONS_QUERY_KEYS.history(type),
+		queryKey: type
+			? NOTIFICATIONS_QUERY_KEYS.history(type)
+			: NOTIFICATIONS_QUERY_KEYS.historyRoot(),
 		queryFn: ({ pageParam }) =>
 			getNotificationHistory(
 				type,

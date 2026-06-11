@@ -1,4 +1,4 @@
-import { useNavigate, useRouter } from "@tanstack/react-router";
+import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import {
 	BadgeCheck,
 	Bell,
@@ -87,30 +87,25 @@ export function NavUser({ user }: { user: User }) {
 								</div>
 							</div>
 						</DropdownMenuLabel>
+
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem>
-								<Sparkles />
-								Upgrade to Pro
+							<DropdownMenuItem asChild>
+								<Link to="/profile">
+									<BadgeCheck />
+									Account
+								</Link>
+							</DropdownMenuItem>
+
+							<DropdownMenuItem asChild>
+								<Link to="/notifications">
+									<Bell />
+									Notifications
+								</Link>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuGroup>
-							<DropdownMenuItem>
-								<BadgeCheck />
-								Account
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<CreditCard />
-								Billing
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<Bell />
-								Notifications
-							</DropdownMenuItem>
-						</DropdownMenuGroup>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={onLogout}>
+						<DropdownMenuItem onClick={onLogout} variant="destructive">
 							<LogOut />
 							Log out
 						</DropdownMenuItem>

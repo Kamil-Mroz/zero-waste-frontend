@@ -12,18 +12,18 @@ export const Route = createFileRoute("/_authenticated/offers")({
 function RouteComponent() {
 	return (
 		<div className="grid gap-2">
-			<div className="flex gap-1 items-center justify-center">
-				<Link to="/offers/own">
+			<nav className="flex gap-1 items-center justify-center">
+				<Link to="/offers/own" replace={true}>
 					{({ isActive }) => (
 						<Button variant={isActive ? "default" : "outline"}>Own</Button>
 					)}
 				</Link>
-				<Link to="/offers/received">
+				<Link to="/offers/received" replace={true}>
 					{({ isActive }) => (
 						<Button variant={isActive ? "default" : "outline"}>Received</Button>
 					)}
 				</Link>
-			</div>
+			</nav>
 			<Outlet />
 		</div>
 	);

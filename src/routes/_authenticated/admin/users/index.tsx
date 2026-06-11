@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod/v4";
+import { DataTableSkeleton } from "@/features/shared/components/data-table-skeleton";
 import { useFilters } from "@/features/shared/hooks/use-filters";
 import { paginationSchema } from "@/features/shared/schemas/pagination.schema";
 import type { Pageable } from "@/features/shared/types";
@@ -12,7 +13,7 @@ import {
 	usersQueryOptions,
 } from "@/features/users/hooks/query-options";
 import { userParamsSchema } from "@/features/users/schemas/user.schema";
-import { withDefaultPageable } from "@/lib/utils";
+import { getValidPage, withDefaultPageable } from "@/lib/utils";
 
 const usersSearchSchema = z.object({
 	...userParamsSchema.shape,
@@ -21,41 +22,44 @@ const usersSearchSchema = z.object({
 
 export const Route = createFileRoute("/_authenticated/admin/users/")({
 	component: RouteComponent,
+	pendingComponent: DataTableSkeleton,
 	validateSearch: usersSearchSchema,
-	loaderDeps: ({ search }) => ({ search }),
-	loader: async ({ context, deps: { search } }) => {
+	loaderDeps: ({ search }) => {
+		const { modal, page, roles, size, text, userId } = search;
+		return { modal, page, roles, size, text, userId };
+	},
+	loader: async ({ context, deps: search }) => {
+		const { modal, userId, ...usersSearch } = search;
 		const page = await context.queryClient.ensureQueryData(
-			usersQueryOptions(search),
+			usersQueryOptions(usersSearch),
 		);
 
-		if (page.totalPages > 0 && search.page && search.page >= page.totalPages) {
+		const correctPage = getValidPage(search.page, page.totalPages);
+		if (correctPage) {
 			throw redirect({
-				to: "/admin/users",
+				to: ".",
 				search: {
 					...search,
-					page: page.totalPages - 1,
+					page: correctPage,
 				},
 				replace: true,
 			});
 		}
-		if (search.modal === "edit" && search.userId) {
-			await context.queryClient.ensureQueryData(
-				userQueryOptions(search.userId),
-			);
+		if (modal === "edit" && userId) {
+			await context.queryClient.ensureQueryData(userQueryOptions(userId));
 		}
 	},
 });
 
 function RouteComponent() {
-	const search = Route.useSearch();
+	const { modal, userId, ...userSearch } = Route.useSearch();
 
 	const routeId = "/_authenticated/admin/users/";
 	const { setFilters } = useFilters(routeId);
 
-	const pageable = withDefaultPageable(search);
+	const pageable = withDefaultPageable(userSearch);
 
-	const { data: page } = useSuspenseQuery(usersQueryOptions(search));
-
+	const { data: page } = useSuspenseQuery(usersQueryOptions(userSearch));
 
 	return (
 		<div>

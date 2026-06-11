@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
+import { NotificationCardSkeleton } from "@/features/notification/components/notification-card-skeleton";
 import NotificationDetailPage from "@/features/notification/components/notification-detail";
 import { notificationQueryOptions } from "@/features/notification/hooks/query-options";
 import { notificationParamSchema } from "@/features/shared/schemas/uuid.schema";
@@ -8,6 +9,7 @@ export const Route = createFileRoute(
 	"/_authenticated/notifications/$notificationId",
 )({
 	component: RouteComponent,
+	pendingComponent: NotificationCardSkeleton,
 	params: {
 		parse: (params) => {
 			const result = notificationParamSchema.safeParse(params);
@@ -20,9 +22,13 @@ export const Route = createFileRoute(
 		},
 	},
 	beforeLoad: async ({ context, params: { notificationId } }) => {
-		await context.queryClient.ensureQueryData(
-			notificationQueryOptions(notificationId),
-		);
+		try {
+			await context.queryClient.ensureQueryData(
+				notificationQueryOptions(notificationId),
+			);
+		} catch {
+			throw notFound();
+		}
 	},
 });
 

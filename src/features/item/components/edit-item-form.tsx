@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Trash } from "lucide-react";
 import { useMemo } from "react";
-import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -13,10 +13,9 @@ import {
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { handleApiError } from "@/lib/utils";
-import { ITEM_CONDITION } from "../constants";
+import { ITEM_CONDITION, ITEM_STATE } from "../constants";
 import { updateItemFormOptions } from "../hooks/form-options";
-import type { UpdateItemFormProps } from "../types";
-import { appToast } from "@/features/shared/components/toast";
+import type { ItemFormStateType, UpdateItemFormProps } from "../types";
 
 export function EditItemForm({
 	item,
@@ -33,6 +32,7 @@ export function EditItemForm({
 				city: item.city,
 				images: [],
 				removedImageIds: [],
+				state: item.state as ItemFormStateType,
 				categoryId: item.category.id,
 				condition: item.condition,
 				title: item.title,
@@ -48,6 +48,7 @@ export function EditItemForm({
 				formData.append("condition", value.condition);
 				formData.append("city", value.city);
 				formData.append("categoryId", value.categoryId);
+				formData.append("state", value.state);
 				value.images.forEach((file: File) => {
 					formData.append("images", file);
 				});
@@ -94,11 +95,21 @@ export function EditItemForm({
 							<form.AppField name="description">
 								{(field) => <field.TextareaField label="Description" />}
 							</form.AppField>
-							<form.AppField name="condition">
-								{(field) => (
-									<field.SelectField label="Condition" items={ITEM_CONDITION} />
-								)}
-							</form.AppField>
+							<div className="grid sm:grid-cols-2 gap-2">
+								<form.AppField name="condition">
+									{(field) => (
+										<field.SelectField
+											label="Condition"
+											items={ITEM_CONDITION}
+										/>
+									)}
+								</form.AppField>
+								<form.AppField name="state">
+									{(field) => (
+										<field.SelectField label="state" items={ITEM_STATE} />
+									)}
+								</form.AppField>
+							</div>
 							<form.AppField name="categoryId">
 								{(field) => (
 									<field.SelectField label="Category" items={categories} />

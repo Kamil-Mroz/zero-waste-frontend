@@ -72,7 +72,7 @@ function NotificationDetailPage({
 						<Link to="/notifications">Back</Link>
 					</Button>
 
-					<Button>View related item</Button>
+					{config.render?.(notification)}
 				</CardFooter>
 			</Card>
 		</div>

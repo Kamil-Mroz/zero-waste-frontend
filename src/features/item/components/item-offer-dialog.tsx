@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { showInterestInItemMutationOptions } from "@/features/offer/hooks/mutation-options";
 import { Button } from "@/features/shared/components/ui/button";
 import { Spinner } from "@/features/shared/components/ui/spinner";
-import { showInterestInItemMutationOptions } from "../hooks/mutation-options";
 import type { ItemOfferDialogProps } from "../types";
 
 function ItemOfferDialog({ id, onDone }: ItemOfferDialogProps) {

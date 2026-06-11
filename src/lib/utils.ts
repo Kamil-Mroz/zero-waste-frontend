@@ -1,9 +1,10 @@
 import type { AnyFormApi } from "@tanstack/react-form";
+import { redirect } from "@tanstack/react-router";
 import { AxiosError } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { DEFAULT_PAGEABLE } from "@/features/shared/constants";
-import type { Pageable } from "@/features/shared/types";
+import type { Page, Pageable } from "@/features/shared/types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -55,9 +56,16 @@ export const cleanEmptyParams = <T extends Record<string, unknown>>(
 			delete newSearch[key];
 	});
 
-	if (search.page === DEFAULT_PAGEABLE.page)
-		delete newSearch.page;
+	if (search.page === DEFAULT_PAGEABLE.page) delete newSearch.page;
 	if (search.size === DEFAULT_PAGEABLE.size) delete newSearch.size;
 
 	return newSearch;
 };
+
+export function getValidPage(page: number | undefined, totalPages: number) {
+	const lastPage = Math.max(0, totalPages - 1);
+	if (page !== undefined && page > lastPage) {
+		return lastPage;
+	}
+	return null;
+}

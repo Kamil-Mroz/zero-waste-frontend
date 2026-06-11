@@ -13,7 +13,7 @@ import { routeTree } from "./routeTree.gen";
 
 export const queryClient = new QueryClient();
 
-const router = createRouter({
+export const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
 	defaultPreloadStaleTime: 0,

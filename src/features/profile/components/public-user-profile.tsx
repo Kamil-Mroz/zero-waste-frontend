@@ -1,53 +1,25 @@
-import { Link } from "@tanstack/react-router";
-import { Button } from "@/features/shared/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "@/features/shared/components/ui/card";
-import type { PublicUser } from "../types";
+import type { PublicUserProfile as PublicUserProfileType } from "../types";
+import { ProfileItemsCard } from "./profile-items-card";
+import { ProfileReviewsCard } from "./profile-reviews-card";
 import { UserHeader } from "./user-header";
 
-type Props = {
-	user: PublicUser;
+type PublicUserProfileProps = {
+	profile: PublicUserProfileType;
+	userId: string;
 };
 
-export function PublicUserProfile({ user }: Props) {
+export function PublicUserProfile({ profile, userId }: PublicUserProfileProps) {
 	return (
-		<div className="mx-auto  w-full space-y-6 py-6">
+		<div className="mx-auto  w-full space-y-4 py-4">
 			<UserHeader
-				firstName={user.firstName}
-				lastName={user.lastName}
+				firstName={profile.firstName}
+				lastName={profile.lastName}
 				subtitle={`Member since ${new Date(
-					user.joinedAt,
+					profile.joinedAt,
 				).toLocaleDateString()}`}
 			/>
-
-			<Card>
-				<CardHeader>
-					<CardTitle>Items</CardTitle>
-				</CardHeader>
-
-				<CardContent className="flex items-center justify-between">
-					<div>
-						<p className="text-2xl font-bold">{user.itemCount}</p>
-
-						<p className="text-muted-foreground text-sm">Active listings</p>
-					</div>
-
-					<Button asChild>
-						<Link
-							to="/users/$userId/items"
-							params={{
-								userId: user.id,
-							}}
-						>
-							View Items
-						</Link>
-					</Button>
-				</CardContent>
-			</Card>
+			<ProfileReviewsCard reviews={profile.reviews} userId={userId} />
+			<ProfileItemsCard items={profile.items} userId={userId} />
 		</div>
 	);
 }

@@ -2,10 +2,11 @@ import type { RegisteredRouter, RouteIds } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import { type PropsWithChildren, Suspense } from "react";
 import { CategoryMenu } from "@/features/category/components/category-menu";
+import { CategoryMenuSkeleton } from "@/features/category/components/category-menu-skeleton";
 import { DebouncedInput } from "@/features/shared/components/debounced-input";
 import { Button } from "@/features/shared/components/ui/button";
 import { Field } from "@/features/shared/components/ui/field";
-import { Spinner } from "@/features/shared/components/ui/spinner";
+
 import { useFilters } from "@/features/shared/hooks/use-filters";
 
 export function ItemToolbar<
@@ -38,7 +39,7 @@ export function ItemToolbar<
 			</Field>
 
 			{children}
-			<Suspense fallback={<Spinner />}>
+			<Suspense fallback={<CategoryMenuSkeleton />}>
 				<CategoryMenu onSelect={onSelect} />
 			</Suspense>
 			{Object.values(filters).some((value) => value) && (

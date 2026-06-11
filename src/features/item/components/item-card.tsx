@@ -19,11 +19,17 @@ export function ItemCard({ item }: ItemCardProps) {
 				navigate({ to: "/marketplace/$itemId", params: { itemId: item.id } })
 			}
 		>
-			<CardContent className="p-4 space-y-2">
-				{item.state === "GIVEN" && (
+			<CardContent className="px-4 space-y-2">
+				{item.state === "GIVEN" ? (
 					<span className="py-2 bg-destructive/40 absolute px-20 top-2.5 text-bold -right-19 rotate-45  text-center text-xl z-10">
 						GIVEN
 					</span>
+				) : (
+					<Badge
+						variant={`${item.state === "AVAILABLE" ? "default" : "outline"}`}
+					>
+						{item.state}
+					</Badge>
 				)}
 				<ItemImage src={item.images?.[0]?.url} alt={item.title} />
 				<div className="flex justify-between items-start">

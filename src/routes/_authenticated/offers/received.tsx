@@ -1,14 +1,15 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod/v4";
+import OfferDialog from "@/features/offer/components/offer-dialog";
 import OfferTable from "@/features/offer/components/offer-table";
 import { receivedColumns } from "@/features/offer/hooks/columns";
 import { receivedOffersQueryOptions } from "@/features/offer/hooks/query-options";
 import { offerSearchSchema } from "@/features/offer/schemas/offer.schema";
+import { DataTableSkeleton } from "@/features/shared/components/data-table-skeleton";
 import { useFilters } from "@/features/shared/hooks/use-filters";
 import type { Pageable } from "@/features/shared/types";
-import { withDefaultPageable } from "@/lib/utils";
-import OfferDialog from "@/features/offer/components/offer-dialog";
+import { getValidPage, withDefaultPageable } from "@/lib/utils";
 
 const receivedOffersSearchSchema = z.object({
 	...offerSearchSchema.shape,
@@ -17,22 +18,28 @@ const receivedOffersSearchSchema = z.object({
 });
 export const Route = createFileRoute("/_authenticated/offers/received")({
 	component: RouteComponent,
-
+	pendingComponent: DataTableSkeleton,
 	staticData: {
 		getTitle: () => "Received",
 	},
 	validateSearch: receivedOffersSearchSchema,
-	loaderDeps: ({ search }) => ({ search }),
-	loader: async ({ context, deps: { search } }) => {
+	loaderDeps: ({ search }) => {
+		const { modal, offerId, page, size, status } = search;
+		return { modal, offerId, page, size, status };
+	},
+
+	loader: async ({ context, deps: search }) => {
 		const page = await context.queryClient.ensureQueryData(
 			receivedOffersQueryOptions(search),
 		);
-		if (page.totalPages > 0 && search.page && search.page >= page.totalPages) {
+
+		const correctPage = getValidPage(search.page, page.totalPages);
+		if (correctPage) {
 			throw redirect({
 				to: "/offers/received",
 				search: {
 					...search,
-					page: page.totalPages - 1,
+					page: correctPage,
 				},
 				replace: true,
 			});

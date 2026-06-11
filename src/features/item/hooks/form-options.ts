@@ -12,6 +12,7 @@ export const createItemFormOptions = () =>
 			description: "This is a test item for dev",
 			condition: "NEW",
 			categoryId: "",
+      state: "AVAILABLE",
 			city: "Texas",
 			images: [] as File[],
 		},

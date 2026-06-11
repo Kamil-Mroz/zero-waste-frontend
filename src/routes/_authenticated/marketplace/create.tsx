@@ -3,8 +3,7 @@ import {
 	useQueryClient,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
+import { createFileRoute } from "@tanstack/react-router";
 import { categoriesQueryOptions } from "@/features/category/hooks/query-options";
 import { CreateItemForm } from "@/features/item/components/create-item-form";
 import { ITEM_QUERY_KEYS } from "@/features/item/constants";

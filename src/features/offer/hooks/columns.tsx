@@ -137,9 +137,6 @@ export const ownColumns: ColumnDef<Offer>[] = [
 	},
 	{
 		id: "actions",
-		cell: ({ row }) =>
-			row.original.status === "PENDING" ? (
-				<OfferOwnTableRowsActions row={row} />
-			) : null,
+		cell: ({ row }) => <OfferOwnTableRowsActions row={row} />,
 	},
 ];

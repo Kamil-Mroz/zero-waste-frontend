@@ -20,14 +20,12 @@ import { PAGE_SIZES } from "@/features/shared/constants";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import type { Pageable } from "@/features/shared/types";
 
-export function ItemPagination({
+export function CustomPagination({
 	totalPages,
 	pageable,
-	link,
 }: {
 	totalPages: number;
 	pageable: Pageable;
-	link: string;
 }) {
 	const isMobile = useIsMobile();
 	const navigate = useNavigate();
@@ -40,7 +38,7 @@ export function ItemPagination({
 							<PaginationItem>
 								<Button asChild variant="ghost">
 									<Link
-										to={link}
+										to={"."}
 										search={(prev) => ({ ...prev, page: pageable.page - 1 })}
 									>
 										<ChevronLeftIcon data-icon="inline-start" />
@@ -50,8 +48,8 @@ export function ItemPagination({
 							</PaginationItem>
 							{!isMobile && (
 								<PaginationItem>
-									<Button variant={"ghost"} size={"icon"}>
-										<Link to={link} search={(prev) => ({ ...prev, page: 0 })}>
+									<Button variant={"ghost"} size={"icon"} asChild>
+										<Link to={"."} search={(prev) => ({ ...prev, page: 0 })}>
 											1
 										</Link>
 									</Button>
@@ -79,9 +77,9 @@ export function ItemPagination({
 						<>
 							{!isMobile && (
 								<PaginationItem>
-									<Button variant={"ghost"} size={"icon"}>
+									<Button variant={"ghost"} size={"icon"} asChild>
 										<Link
-											to={link}
+											to={"."}
 											search={(prev) => ({ ...prev, page: totalPages - 1 })}
 										>
 											{totalPages}
@@ -92,7 +90,7 @@ export function ItemPagination({
 							<PaginationItem>
 								<Button asChild variant="ghost">
 									<Link
-										to={link}
+										to={"."}
 										search={(prev) => ({ ...prev, page: pageable.page + 1 })}
 									>
 										<span className="hidden sm:block">Next</span>
@@ -110,7 +108,8 @@ export function ItemPagination({
 					value={`${pageable.size}`}
 					onValueChange={(value) =>
 						navigate({
-							to: link,
+							to: ".",
+							replace: true,
 							search: (prev) => ({ ...prev, size: value }),
 						})
 					}

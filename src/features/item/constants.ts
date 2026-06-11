@@ -7,15 +7,31 @@ export const ITEM_CONDITION = [
 	{ value: "DAMAGED", label: "Damaged" },
 	{ value: "OLD", label: "Old" },
 ] as const;
+export const ITEM_STATE = [
+	{ value: "AVAILABLE", label: "Available" },
+	{ value: "PENDING", label: "Pending" },
+] as const;
 
 export const ITEM_QUERY_KEYS = {
 	all: ["items"],
-	itemRoot: () => [...ITEM_QUERY_KEYS.all, "detail"],
-	byId: (id: string) => [...ITEM_QUERY_KEYS.itemRoot(), id],
+	itemDetailRoot: () => [...ITEM_QUERY_KEYS.all, "detail"],
+	itemOwnerRoot: () => [...ITEM_QUERY_KEYS.all, "owner"],
+	byId: (id: string) => [...ITEM_QUERY_KEYS.itemDetailRoot(), id],
+	byOwner: (id: string) => [...ITEM_QUERY_KEYS.itemOwnerRoot(), id],
 	own: () => [...ITEM_QUERY_KEYS.all, "own"],
 } as const;
 
 export const itemDialogConfig = {
+	hide: {
+		title: "Hide Item",
+		description:
+			"This item will no longer be visible to other users. You can publish it again later.",
+	},
+	publish: {
+		title: "Publish Item",
+		description:
+			"Make this item visible to others. You can edit or unpublish it later.",
+	},
 	delete: {
 		title: "Delete Item",
 		description: "Permanently delete item. This action cannot be undone.",

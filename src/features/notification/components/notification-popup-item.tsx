@@ -20,7 +20,7 @@ function NotificationPopupItem({
 	const Icon = config.icon;
 	return (
 		<Button
-			className="block w-full h-auto py-2 text-start"
+			className="block w-full h-auto py-2 text-start "
 			variant="ghost"
 			onClick={() => {
 				onClose();

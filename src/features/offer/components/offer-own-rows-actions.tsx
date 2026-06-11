@@ -1,22 +1,24 @@
-import type { Row } from "@tanstack/react-table";
-import type { Offer } from "../types";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/features/shared/components/ui/dropdown-menu";
-import { Button } from "@/features/shared/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import type { Row } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/features/shared/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/features/shared/components/ui/dropdown-menu";
+import type { Offer } from "../types";
 
 type DataTableRowActionsProps = {
 	row: Row<Offer>;
 };
 
-export function OfferOwnTableRowsActions({
-	row,
-}: DataTableRowActionsProps) {
+export function OfferOwnTableRowsActions({ row }: DataTableRowActionsProps) {
+	const offer = row.original;
 	const id = row.original.id;
 
 	return (
-		<>
-			{/* Dialog prompt */}
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button
@@ -29,20 +31,29 @@ export function OfferOwnTableRowsActions({
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
-					<DropdownMenuItem asChild variant={"destructive"}>
-						<Link
-							to="/offers/own"
-							search={(prev) => ({ ...prev, modal: "cancel", offerId: id })}
-
-						replace={true}
-						>
-							Cancel
-						</Link>
-					</DropdownMenuItem>
-
+					{offer.status === "PENDING" ? (
+						<DropdownMenuItem asChild variant={"destructive"}>
+							<Link
+								to="/offers/own"
+								search={(prev) => ({ ...prev, modal: "cancel", offerId: id })}
+								replace={true}
+							>
+								Cancel
+							</Link>
+						</DropdownMenuItem>
+					) : null}
+					{offer.status === "ACCEPTED" ? (
+						<DropdownMenuItem asChild>
+							<Link
+								to="/reviews"
+								search={(prev) => ({ ...prev, modal: "review", offerId: id })}
+								replace={true}
+							>
+								Leave review
+							</Link>
+						</DropdownMenuItem>
+					) : null}
 				</DropdownMenuContent>
 			</DropdownMenu>
-		</>
 	);
 }
-

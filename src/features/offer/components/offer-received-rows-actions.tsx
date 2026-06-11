@@ -21,8 +21,6 @@ export function OfferReceivedTableRowsActions({
 	const id = row.original.id;
 
 	return (
-		<>
-			{/* Dialog prompt */}
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button
@@ -59,6 +57,5 @@ export function OfferReceivedTableRowsActions({
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-		</>
 	);
 }

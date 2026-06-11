@@ -21,10 +21,7 @@ export function CategoryList({ categories }: CategoryListProps) {
 				icon={LayoutGrid}
 			>
 				<Button asChild>
-					<Link
-						to="/admin/categories"
-						search={{ modal: "create" }}
-					>
+					<Link to="/admin/categories" search={{ modal: "create" }}>
 						Add category
 					</Link>
 				</Button>
@@ -33,22 +30,17 @@ export function CategoryList({ categories }: CategoryListProps) {
 	}
 
 	return (
-		<div className="p-4">
-			<Card className=" w-full gap-2" size="sm">
-				<CardHeader>
-					<Button asChild>
-						<Link
-							to="/admin/categories"
-							search={{ modal: "create" }}
-						>
-							<Plus /> Add
-						</Link>
-					</Button>
-				</CardHeader>
-				<CardContent className="overflow-x-auto">
-					<CategoryTree items={categories} />
-				</CardContent>
-			</Card>
-		</div>
+		<Card className=" w-full gap-2" size="sm">
+			<CardHeader>
+				<Button asChild>
+					<Link to="/admin/categories" search={{ modal: "create" }}>
+						<Plus /> Add
+					</Link>
+				</Button>
+			</CardHeader>
+			<CardContent className="overflow-x-auto">
+				<CategoryTree items={categories} />
+			</CardContent>
+		</Card>
 	);
 }

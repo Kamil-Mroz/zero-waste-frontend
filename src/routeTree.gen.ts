@@ -13,9 +13,7 @@ import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as UnauthenticatedRouteImport } from './routes/_unauthenticated'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as UsersRouteRouteImport } from './routes/users/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as UsersIndexRouteImport } from './routes/users/index'
 import { Route as MarketplaceIndexRouteImport } from './routes/marketplace/index'
 import { Route as MarketplaceItemIdRouteImport } from './routes/marketplace/$itemId'
 import { Route as UnauthenticatedRegisterRouteImport } from './routes/_unauthenticated/register'
@@ -25,12 +23,15 @@ import { Route as AuthenticatedOffersRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAboutRouteImport } from './routes/_authenticated/about'
-import { Route as UsersUserIdRouteRouteImport } from './routes/users/$userId/route'
+import { Route as ProfileUserIdRouteRouteImport } from './routes/profile/$userId/route'
+import { Route as AuthenticatedReviewsRouteRouteImport } from './routes/_authenticated/reviews/route'
+import { Route as ProfileUserIdIndexRouteImport } from './routes/profile/$userId/index'
+import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedOffersIndexRouteImport } from './routes/_authenticated/offers/index'
 import { Route as AuthenticatedNotificationsIndexRouteImport } from './routes/_authenticated/notifications/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
-import { Route as UsersUserIdItemsRouteImport } from './routes/users/$userId/items'
-import { Route as AuthenticatedProfileCreateRouteImport } from './routes/_authenticated/profile.create'
+import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
+import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId/items'
 import { Route as AuthenticatedOffersReceivedRouteImport } from './routes/_authenticated/offers/received'
 import { Route as AuthenticatedOffersOwnRouteImport } from './routes/_authenticated/offers/own'
 import { Route as AuthenticatedNotificationsNotificationIdRouteImport } from './routes/_authenticated/notifications/$notificationId'
@@ -41,10 +42,16 @@ import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_au
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedReviewsLayoutRouteRouteImport } from './routes/_authenticated/reviews/_layout/route'
 import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/admin/categories/index'
+import { Route as AuthenticatedReviewsCreateOfferIdRouteImport } from './routes/_authenticated/reviews/create/$offerId'
+import { Route as AuthenticatedReviewsLayoutReceivedRouteImport } from './routes/_authenticated/reviews/_layout/received'
+import { Route as AuthenticatedReviewsLayoutGivenRouteImport } from './routes/_authenticated/reviews/_layout/given'
 import { Route as AuthenticatedMarketplaceItemIdEditRouteImport } from './routes/_authenticated/marketplace/$itemId.edit'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users/$userId'
+import { Route as AuthenticatedAdminUsersUserIdIndexRouteImport } from './routes/_authenticated/admin/users/$userId/index'
+import { Route as AuthenticatedAdminUsersUserIdItemsRouteImport } from './routes/_authenticated/admin/users/$userId/items'
 
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
@@ -64,20 +71,10 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UsersRouteRoute = UsersRouteRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const UsersIndexRoute = UsersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => UsersRouteRoute,
 } as any)
 const MarketplaceIndexRoute = MarketplaceIndexRouteImport.update({
   id: '/',
@@ -125,11 +122,28 @@ const AuthenticatedAboutRoute = AuthenticatedAboutRouteImport.update({
   path: '/about',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
-const UsersUserIdRouteRoute = UsersUserIdRouteRouteImport.update({
-  id: '/$userId',
-  path: '/$userId',
-  getParentRoute: () => UsersRouteRoute,
+const ProfileUserIdRouteRoute = ProfileUserIdRouteRouteImport.update({
+  id: '/profile/$userId',
+  path: '/profile/$userId',
+  getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedReviewsRouteRoute =
+  AuthenticatedReviewsRouteRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const ProfileUserIdIndexRoute = ProfileUserIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfileUserIdRouteRoute,
+} as any)
+const AuthenticatedReviewsIndexRoute =
+  AuthenticatedReviewsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedReviewsRouteRoute,
+  } as any)
 const AuthenticatedOffersIndexRoute =
   AuthenticatedOffersIndexRouteImport.update({
     id: '/',
@@ -147,17 +161,16 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const UsersUserIdItemsRoute = UsersUserIdItemsRouteImport.update({
+const ProfileUserIdReviewsRoute = ProfileUserIdReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => ProfileUserIdRouteRoute,
+} as any)
+const ProfileUserIdItemsRoute = ProfileUserIdItemsRouteImport.update({
   id: '/items',
   path: '/items',
-  getParentRoute: () => UsersUserIdRouteRoute,
+  getParentRoute: () => ProfileUserIdRouteRoute,
 } as any)
-const AuthenticatedProfileCreateRoute =
-  AuthenticatedProfileCreateRouteImport.update({
-    id: '/create',
-    path: '/create',
-    getParentRoute: () => AuthenticatedProfileRoute,
-  } as any)
 const AuthenticatedOffersReceivedRoute =
   AuthenticatedOffersReceivedRouteImport.update({
     id: '/received',
@@ -216,6 +229,11 @@ const AuthenticatedAdminCategoriesRoute =
     path: '/categories',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedReviewsLayoutRouteRoute =
+  AuthenticatedReviewsLayoutRouteRouteImport.update({
+    id: '/_layout',
+    getParentRoute: () => AuthenticatedReviewsRouteRoute,
+  } as any)
 const AuthenticatedAdminUsersIndexRoute =
   AuthenticatedAdminUsersIndexRouteImport.update({
     id: '/',
@@ -227,6 +245,24 @@ const AuthenticatedAdminCategoriesIndexRoute =
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedAdminCategoriesRoute,
+  } as any)
+const AuthenticatedReviewsCreateOfferIdRoute =
+  AuthenticatedReviewsCreateOfferIdRouteImport.update({
+    id: '/create/$offerId',
+    path: '/create/$offerId',
+    getParentRoute: () => AuthenticatedReviewsRouteRoute,
+  } as any)
+const AuthenticatedReviewsLayoutReceivedRoute =
+  AuthenticatedReviewsLayoutReceivedRouteImport.update({
+    id: '/received',
+    path: '/received',
+    getParentRoute: () => AuthenticatedReviewsLayoutRouteRoute,
+  } as any)
+const AuthenticatedReviewsLayoutGivenRoute =
+  AuthenticatedReviewsLayoutGivenRouteImport.update({
+    id: '/given',
+    path: '/given',
+    getParentRoute: () => AuthenticatedReviewsLayoutRouteRoute,
   } as any)
 const AuthenticatedMarketplaceItemIdEditRoute =
   AuthenticatedMarketplaceItemIdEditRouteImport.update({
@@ -240,22 +276,33 @@ const AuthenticatedAdminUsersUserIdRoute =
     path: '/$userId',
     getParentRoute: () => AuthenticatedAdminUsersRoute,
   } as any)
+const AuthenticatedAdminUsersUserIdIndexRoute =
+  AuthenticatedAdminUsersUserIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminUsersUserIdRoute,
+  } as any)
+const AuthenticatedAdminUsersUserIdItemsRoute =
+  AuthenticatedAdminUsersUserIdItemsRouteImport.update({
+    id: '/items',
+    path: '/items',
+    getParentRoute: () => AuthenticatedAdminUsersUserIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/users': typeof UsersRouteRouteWithChildren
   '/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
   '/unauthorized': typeof UnauthorizedRoute
-  '/users/$userId': typeof UsersUserIdRouteRouteWithChildren
+  '/reviews': typeof AuthenticatedReviewsLayoutRouteRouteWithChildren
+  '/profile/$userId': typeof ProfileUserIdRouteRouteWithChildren
   '/about': typeof AuthenticatedAboutRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/offers': typeof AuthenticatedOffersRouteWithChildren
-  '/profile': typeof AuthenticatedProfileRouteWithChildren
+  '/profile': typeof AuthenticatedProfileRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/marketplace/': typeof MarketplaceIndexRoute
-  '/users/': typeof UsersIndexRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
@@ -266,27 +313,33 @@ export interface FileRoutesByFullPath {
   '/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/offers/own': typeof AuthenticatedOffersOwnRoute
   '/offers/received': typeof AuthenticatedOffersReceivedRoute
-  '/profile/create': typeof AuthenticatedProfileCreateRoute
-  '/users/$userId/items': typeof UsersUserIdItemsRoute
+  '/profile/$userId/items': typeof ProfileUserIdItemsRoute
+  '/profile/$userId/reviews': typeof ProfileUserIdReviewsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/notifications/': typeof AuthenticatedNotificationsIndexRoute
   '/offers/': typeof AuthenticatedOffersIndexRoute
-  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
+  '/reviews/': typeof AuthenticatedReviewsIndexRoute
+  '/profile/$userId/': typeof ProfileUserIdIndexRoute
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRouteWithChildren
   '/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
+  '/reviews/given': typeof AuthenticatedReviewsLayoutGivenRoute
+  '/reviews/received': typeof AuthenticatedReviewsLayoutReceivedRoute
+  '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
   '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
+  '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
+  '/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/users/$userId': typeof UsersUserIdRouteRouteWithChildren
   '/about': typeof AuthenticatedAboutRoute
   '/marketplace': typeof MarketplaceIndexRoute
-  '/profile': typeof AuthenticatedProfileRouteWithChildren
+  '/profile': typeof AuthenticatedProfileRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
-  '/users': typeof UsersIndexRoute
+  '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
@@ -295,35 +348,40 @@ export interface FileRoutesByTo {
   '/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/offers/own': typeof AuthenticatedOffersOwnRoute
   '/offers/received': typeof AuthenticatedOffersReceivedRoute
-  '/profile/create': typeof AuthenticatedProfileCreateRoute
-  '/users/$userId/items': typeof UsersUserIdItemsRoute
+  '/profile/$userId/items': typeof ProfileUserIdItemsRoute
+  '/profile/$userId/reviews': typeof ProfileUserIdReviewsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/notifications': typeof AuthenticatedNotificationsIndexRoute
   '/offers': typeof AuthenticatedOffersIndexRoute
-  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
+  '/profile/$userId': typeof ProfileUserIdIndexRoute
   '/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
+  '/reviews/given': typeof AuthenticatedReviewsLayoutGivenRoute
+  '/reviews/received': typeof AuthenticatedReviewsLayoutReceivedRoute
+  '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesIndexRoute
   '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
+  '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
+  '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/users': typeof UsersRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_unauthenticated': typeof UnauthenticatedRouteWithChildren
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/unauthorized': typeof UnauthorizedRoute
-  '/users/$userId': typeof UsersUserIdRouteRouteWithChildren
+  '/_authenticated/reviews': typeof AuthenticatedReviewsRouteRouteWithChildren
+  '/profile/$userId': typeof ProfileUserIdRouteRouteWithChildren
   '/_authenticated/about': typeof AuthenticatedAboutRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
   '/_authenticated/offers': typeof AuthenticatedOffersRouteWithChildren
-  '/_authenticated/profile': typeof AuthenticatedProfileRouteWithChildren
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_unauthenticated/login': typeof UnauthenticatedLoginRoute
   '/_unauthenticated/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/marketplace/': typeof MarketplaceIndexRoute
-  '/users/': typeof UsersIndexRoute
+  '/_authenticated/reviews/_layout': typeof AuthenticatedReviewsLayoutRouteRouteWithChildren
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
@@ -334,24 +392,31 @@ export interface FileRoutesById {
   '/_authenticated/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/_authenticated/offers/own': typeof AuthenticatedOffersOwnRoute
   '/_authenticated/offers/received': typeof AuthenticatedOffersReceivedRoute
-  '/_authenticated/profile/create': typeof AuthenticatedProfileCreateRoute
-  '/users/$userId/items': typeof UsersUserIdItemsRoute
+  '/profile/$userId/items': typeof ProfileUserIdItemsRoute
+  '/profile/$userId/reviews': typeof ProfileUserIdReviewsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/notifications/': typeof AuthenticatedNotificationsIndexRoute
   '/_authenticated/offers/': typeof AuthenticatedOffersIndexRoute
-  '/_authenticated/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRoute
+  '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
+  '/profile/$userId/': typeof ProfileUserIdIndexRoute
+  '/_authenticated/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRouteWithChildren
   '/_authenticated/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
+  '/_authenticated/reviews/_layout/given': typeof AuthenticatedReviewsLayoutGivenRoute
+  '/_authenticated/reviews/_layout/received': typeof AuthenticatedReviewsLayoutReceivedRoute
+  '/_authenticated/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/_authenticated/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
   '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
+  '/_authenticated/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
+  '/_authenticated/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/users'
     | '/marketplace'
     | '/unauthorized'
-    | '/users/$userId'
+    | '/reviews'
+    | '/profile/$userId'
     | '/about'
     | '/admin'
     | '/offers'
@@ -360,7 +425,6 @@ export interface FileRouteTypes {
     | '/register'
     | '/marketplace/$itemId'
     | '/marketplace/'
-    | '/users/'
     | '/admin/categories'
     | '/admin/dashboard'
     | '/admin/users'
@@ -371,27 +435,33 @@ export interface FileRouteTypes {
     | '/notifications/$notificationId'
     | '/offers/own'
     | '/offers/received'
-    | '/profile/create'
-    | '/users/$userId/items'
+    | '/profile/$userId/items'
+    | '/profile/$userId/reviews'
     | '/admin/'
     | '/notifications/'
     | '/offers/'
+    | '/reviews/'
+    | '/profile/$userId/'
     | '/admin/users/$userId'
     | '/marketplace/$itemId/edit'
+    | '/reviews/given'
+    | '/reviews/received'
+    | '/reviews/create/$offerId'
     | '/admin/categories/'
     | '/admin/users/'
+    | '/admin/users/$userId/items'
+    | '/admin/users/$userId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/unauthorized'
-    | '/users/$userId'
     | '/about'
     | '/marketplace'
     | '/profile'
     | '/login'
     | '/register'
     | '/marketplace/$itemId'
-    | '/users'
+    | '/reviews'
     | '/admin/dashboard'
     | '/marketplace/create'
     | '/marketplace/history'
@@ -400,24 +470,29 @@ export interface FileRouteTypes {
     | '/notifications/$notificationId'
     | '/offers/own'
     | '/offers/received'
-    | '/profile/create'
-    | '/users/$userId/items'
+    | '/profile/$userId/items'
+    | '/profile/$userId/reviews'
     | '/admin'
     | '/notifications'
     | '/offers'
-    | '/admin/users/$userId'
+    | '/profile/$userId'
     | '/marketplace/$itemId/edit'
+    | '/reviews/given'
+    | '/reviews/received'
+    | '/reviews/create/$offerId'
     | '/admin/categories'
     | '/admin/users'
+    | '/admin/users/$userId/items'
+    | '/admin/users/$userId'
   id:
     | '__root__'
     | '/'
-    | '/users'
     | '/_authenticated'
     | '/_unauthenticated'
     | '/marketplace'
     | '/unauthorized'
-    | '/users/$userId'
+    | '/_authenticated/reviews'
+    | '/profile/$userId'
     | '/_authenticated/about'
     | '/_authenticated/admin'
     | '/_authenticated/marketplace'
@@ -427,7 +502,7 @@ export interface FileRouteTypes {
     | '/_unauthenticated/register'
     | '/marketplace/$itemId'
     | '/marketplace/'
-    | '/users/'
+    | '/_authenticated/reviews/_layout'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/users'
@@ -438,24 +513,31 @@ export interface FileRouteTypes {
     | '/_authenticated/notifications/$notificationId'
     | '/_authenticated/offers/own'
     | '/_authenticated/offers/received'
-    | '/_authenticated/profile/create'
-    | '/users/$userId/items'
+    | '/profile/$userId/items'
+    | '/profile/$userId/reviews'
     | '/_authenticated/admin/'
     | '/_authenticated/notifications/'
     | '/_authenticated/offers/'
+    | '/_authenticated/reviews/'
+    | '/profile/$userId/'
     | '/_authenticated/admin/users/$userId'
     | '/_authenticated/marketplace/$itemId/edit'
+    | '/_authenticated/reviews/_layout/given'
+    | '/_authenticated/reviews/_layout/received'
+    | '/_authenticated/reviews/create/$offerId'
     | '/_authenticated/admin/categories/'
     | '/_authenticated/admin/users/'
+    | '/_authenticated/admin/users/$userId/items'
+    | '/_authenticated/admin/users/$userId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  UsersRouteRoute: typeof UsersRouteRouteWithChildren
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   UnauthenticatedRoute: typeof UnauthenticatedRouteWithChildren
   MarketplaceRoute: typeof MarketplaceRouteWithChildren
   UnauthorizedRoute: typeof UnauthorizedRoute
+  ProfileUserIdRouteRoute: typeof ProfileUserIdRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -488,26 +570,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/users/': {
-      id: '/users/'
-      path: '/'
-      fullPath: '/users/'
-      preLoaderRoute: typeof UsersIndexRouteImport
-      parentRoute: typeof UsersRouteRoute
     }
     '/marketplace/': {
       id: '/marketplace/'
@@ -572,12 +640,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAboutRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/users/$userId': {
-      id: '/users/$userId'
-      path: '/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof UsersUserIdRouteRouteImport
-      parentRoute: typeof UsersRouteRoute
+    '/profile/$userId': {
+      id: '/profile/$userId'
+      path: '/profile/$userId'
+      fullPath: '/profile/$userId'
+      preLoaderRoute: typeof ProfileUserIdRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/reviews': {
+      id: '/_authenticated/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof AuthenticatedReviewsRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/profile/$userId/': {
+      id: '/profile/$userId/'
+      path: '/'
+      fullPath: '/profile/$userId/'
+      preLoaderRoute: typeof ProfileUserIdIndexRouteImport
+      parentRoute: typeof ProfileUserIdRouteRoute
+    }
+    '/_authenticated/reviews/': {
+      id: '/_authenticated/reviews/'
+      path: '/'
+      fullPath: '/reviews/'
+      preLoaderRoute: typeof AuthenticatedReviewsIndexRouteImport
+      parentRoute: typeof AuthenticatedReviewsRouteRoute
     }
     '/_authenticated/offers/': {
       id: '/_authenticated/offers/'
@@ -600,19 +689,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/users/$userId/items': {
-      id: '/users/$userId/items'
-      path: '/items'
-      fullPath: '/users/$userId/items'
-      preLoaderRoute: typeof UsersUserIdItemsRouteImport
-      parentRoute: typeof UsersUserIdRouteRoute
+    '/profile/$userId/reviews': {
+      id: '/profile/$userId/reviews'
+      path: '/reviews'
+      fullPath: '/profile/$userId/reviews'
+      preLoaderRoute: typeof ProfileUserIdReviewsRouteImport
+      parentRoute: typeof ProfileUserIdRouteRoute
     }
-    '/_authenticated/profile/create': {
-      id: '/_authenticated/profile/create'
-      path: '/create'
-      fullPath: '/profile/create'
-      preLoaderRoute: typeof AuthenticatedProfileCreateRouteImport
-      parentRoute: typeof AuthenticatedProfileRoute
+    '/profile/$userId/items': {
+      id: '/profile/$userId/items'
+      path: '/items'
+      fullPath: '/profile/$userId/items'
+      preLoaderRoute: typeof ProfileUserIdItemsRouteImport
+      parentRoute: typeof ProfileUserIdRouteRoute
     }
     '/_authenticated/offers/received': {
       id: '/_authenticated/offers/received'
@@ -684,6 +773,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/reviews/_layout': {
+      id: '/_authenticated/reviews/_layout'
+      path: ''
+      fullPath: '/reviews'
+      preLoaderRoute: typeof AuthenticatedReviewsLayoutRouteRouteImport
+      parentRoute: typeof AuthenticatedReviewsRouteRoute
+    }
     '/_authenticated/admin/users/': {
       id: '/_authenticated/admin/users/'
       path: '/'
@@ -697,6 +793,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/categories/'
       preLoaderRoute: typeof AuthenticatedAdminCategoriesIndexRouteImport
       parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    }
+    '/_authenticated/reviews/create/$offerId': {
+      id: '/_authenticated/reviews/create/$offerId'
+      path: '/create/$offerId'
+      fullPath: '/reviews/create/$offerId'
+      preLoaderRoute: typeof AuthenticatedReviewsCreateOfferIdRouteImport
+      parentRoute: typeof AuthenticatedReviewsRouteRoute
+    }
+    '/_authenticated/reviews/_layout/received': {
+      id: '/_authenticated/reviews/_layout/received'
+      path: '/received'
+      fullPath: '/reviews/received'
+      preLoaderRoute: typeof AuthenticatedReviewsLayoutReceivedRouteImport
+      parentRoute: typeof AuthenticatedReviewsLayoutRouteRoute
+    }
+    '/_authenticated/reviews/_layout/given': {
+      id: '/_authenticated/reviews/_layout/given'
+      path: '/given'
+      fullPath: '/reviews/given'
+      preLoaderRoute: typeof AuthenticatedReviewsLayoutGivenRouteImport
+      parentRoute: typeof AuthenticatedReviewsLayoutRouteRoute
     }
     '/_authenticated/marketplace/$itemId/edit': {
       id: '/_authenticated/marketplace/$itemId/edit'
@@ -712,33 +829,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersUserIdRouteImport
       parentRoute: typeof AuthenticatedAdminUsersRoute
     }
+    '/_authenticated/admin/users/$userId/': {
+      id: '/_authenticated/admin/users/$userId/'
+      path: '/'
+      fullPath: '/admin/users/$userId/'
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersUserIdRoute
+    }
+    '/_authenticated/admin/users/$userId/items': {
+      id: '/_authenticated/admin/users/$userId/items'
+      path: '/items'
+      fullPath: '/admin/users/$userId/items'
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdItemsRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersUserIdRoute
+    }
   }
 }
 
-interface UsersUserIdRouteRouteChildren {
-  UsersUserIdItemsRoute: typeof UsersUserIdItemsRoute
+interface AuthenticatedReviewsLayoutRouteRouteChildren {
+  AuthenticatedReviewsLayoutGivenRoute: typeof AuthenticatedReviewsLayoutGivenRoute
+  AuthenticatedReviewsLayoutReceivedRoute: typeof AuthenticatedReviewsLayoutReceivedRoute
 }
 
-const UsersUserIdRouteRouteChildren: UsersUserIdRouteRouteChildren = {
-  UsersUserIdItemsRoute: UsersUserIdItemsRoute,
+const AuthenticatedReviewsLayoutRouteRouteChildren: AuthenticatedReviewsLayoutRouteRouteChildren =
+  {
+    AuthenticatedReviewsLayoutGivenRoute: AuthenticatedReviewsLayoutGivenRoute,
+    AuthenticatedReviewsLayoutReceivedRoute:
+      AuthenticatedReviewsLayoutReceivedRoute,
+  }
+
+const AuthenticatedReviewsLayoutRouteRouteWithChildren =
+  AuthenticatedReviewsLayoutRouteRoute._addFileChildren(
+    AuthenticatedReviewsLayoutRouteRouteChildren,
+  )
+
+interface AuthenticatedReviewsRouteRouteChildren {
+  AuthenticatedReviewsLayoutRouteRoute: typeof AuthenticatedReviewsLayoutRouteRouteWithChildren
+  AuthenticatedReviewsIndexRoute: typeof AuthenticatedReviewsIndexRoute
+  AuthenticatedReviewsCreateOfferIdRoute: typeof AuthenticatedReviewsCreateOfferIdRoute
 }
 
-const UsersUserIdRouteRouteWithChildren =
-  UsersUserIdRouteRoute._addFileChildren(UsersUserIdRouteRouteChildren)
+const AuthenticatedReviewsRouteRouteChildren: AuthenticatedReviewsRouteRouteChildren =
+  {
+    AuthenticatedReviewsLayoutRouteRoute:
+      AuthenticatedReviewsLayoutRouteRouteWithChildren,
+    AuthenticatedReviewsIndexRoute: AuthenticatedReviewsIndexRoute,
+    AuthenticatedReviewsCreateOfferIdRoute:
+      AuthenticatedReviewsCreateOfferIdRoute,
+  }
 
-interface UsersRouteRouteChildren {
-  UsersUserIdRouteRoute: typeof UsersUserIdRouteRouteWithChildren
-  UsersIndexRoute: typeof UsersIndexRoute
-}
-
-const UsersRouteRouteChildren: UsersRouteRouteChildren = {
-  UsersUserIdRouteRoute: UsersUserIdRouteRouteWithChildren,
-  UsersIndexRoute: UsersIndexRoute,
-}
-
-const UsersRouteRouteWithChildren = UsersRouteRoute._addFileChildren(
-  UsersRouteRouteChildren,
-)
+const AuthenticatedReviewsRouteRouteWithChildren =
+  AuthenticatedReviewsRouteRoute._addFileChildren(
+    AuthenticatedReviewsRouteRouteChildren,
+  )
 
 interface AuthenticatedAdminCategoriesRouteChildren {
   AuthenticatedAdminCategoriesIndexRoute: typeof AuthenticatedAdminCategoriesIndexRoute
@@ -755,14 +898,33 @@ const AuthenticatedAdminCategoriesRouteWithChildren =
     AuthenticatedAdminCategoriesRouteChildren,
   )
 
+interface AuthenticatedAdminUsersUserIdRouteChildren {
+  AuthenticatedAdminUsersUserIdItemsRoute: typeof AuthenticatedAdminUsersUserIdItemsRoute
+  AuthenticatedAdminUsersUserIdIndexRoute: typeof AuthenticatedAdminUsersUserIdIndexRoute
+}
+
+const AuthenticatedAdminUsersUserIdRouteChildren: AuthenticatedAdminUsersUserIdRouteChildren =
+  {
+    AuthenticatedAdminUsersUserIdItemsRoute:
+      AuthenticatedAdminUsersUserIdItemsRoute,
+    AuthenticatedAdminUsersUserIdIndexRoute:
+      AuthenticatedAdminUsersUserIdIndexRoute,
+  }
+
+const AuthenticatedAdminUsersUserIdRouteWithChildren =
+  AuthenticatedAdminUsersUserIdRoute._addFileChildren(
+    AuthenticatedAdminUsersUserIdRouteChildren,
+  )
+
 interface AuthenticatedAdminUsersRouteChildren {
-  AuthenticatedAdminUsersUserIdRoute: typeof AuthenticatedAdminUsersUserIdRoute
+  AuthenticatedAdminUsersUserIdRoute: typeof AuthenticatedAdminUsersUserIdRouteWithChildren
   AuthenticatedAdminUsersIndexRoute: typeof AuthenticatedAdminUsersIndexRoute
 }
 
 const AuthenticatedAdminUsersRouteChildren: AuthenticatedAdminUsersRouteChildren =
   {
-    AuthenticatedAdminUsersUserIdRoute: AuthenticatedAdminUsersUserIdRoute,
+    AuthenticatedAdminUsersUserIdRoute:
+      AuthenticatedAdminUsersUserIdRouteWithChildren,
     AuthenticatedAdminUsersIndexRoute: AuthenticatedAdminUsersIndexRoute,
   }
 
@@ -828,33 +990,24 @@ const AuthenticatedOffersRouteChildren: AuthenticatedOffersRouteChildren = {
 const AuthenticatedOffersRouteWithChildren =
   AuthenticatedOffersRoute._addFileChildren(AuthenticatedOffersRouteChildren)
 
-interface AuthenticatedProfileRouteChildren {
-  AuthenticatedProfileCreateRoute: typeof AuthenticatedProfileCreateRoute
-}
-
-const AuthenticatedProfileRouteChildren: AuthenticatedProfileRouteChildren = {
-  AuthenticatedProfileCreateRoute: AuthenticatedProfileCreateRoute,
-}
-
-const AuthenticatedProfileRouteWithChildren =
-  AuthenticatedProfileRoute._addFileChildren(AuthenticatedProfileRouteChildren)
-
 interface AuthenticatedRouteChildren {
+  AuthenticatedReviewsRouteRoute: typeof AuthenticatedReviewsRouteRouteWithChildren
   AuthenticatedAboutRoute: typeof AuthenticatedAboutRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedMarketplaceRoute: typeof AuthenticatedMarketplaceRouteWithChildren
   AuthenticatedOffersRoute: typeof AuthenticatedOffersRouteWithChildren
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRouteWithChildren
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedNotificationsNotificationIdRoute: typeof AuthenticatedNotificationsNotificationIdRoute
   AuthenticatedNotificationsIndexRoute: typeof AuthenticatedNotificationsIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedReviewsRouteRoute: AuthenticatedReviewsRouteRouteWithChildren,
   AuthenticatedAboutRoute: AuthenticatedAboutRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedMarketplaceRoute: AuthenticatedMarketplaceRouteWithChildren,
   AuthenticatedOffersRoute: AuthenticatedOffersRouteWithChildren,
-  AuthenticatedProfileRoute: AuthenticatedProfileRouteWithChildren,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedNotificationsNotificationIdRoute:
     AuthenticatedNotificationsNotificationIdRoute,
   AuthenticatedNotificationsIndexRoute: AuthenticatedNotificationsIndexRoute,
@@ -892,13 +1045,28 @@ const MarketplaceRouteWithChildren = MarketplaceRoute._addFileChildren(
   MarketplaceRouteChildren,
 )
 
+interface ProfileUserIdRouteRouteChildren {
+  ProfileUserIdItemsRoute: typeof ProfileUserIdItemsRoute
+  ProfileUserIdReviewsRoute: typeof ProfileUserIdReviewsRoute
+  ProfileUserIdIndexRoute: typeof ProfileUserIdIndexRoute
+}
+
+const ProfileUserIdRouteRouteChildren: ProfileUserIdRouteRouteChildren = {
+  ProfileUserIdItemsRoute: ProfileUserIdItemsRoute,
+  ProfileUserIdReviewsRoute: ProfileUserIdReviewsRoute,
+  ProfileUserIdIndexRoute: ProfileUserIdIndexRoute,
+}
+
+const ProfileUserIdRouteRouteWithChildren =
+  ProfileUserIdRouteRoute._addFileChildren(ProfileUserIdRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  UsersRouteRoute: UsersRouteRouteWithChildren,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   UnauthenticatedRoute: UnauthenticatedRouteWithChildren,
   MarketplaceRoute: MarketplaceRouteWithChildren,
   UnauthorizedRoute: UnauthorizedRoute,
+  ProfileUserIdRouteRoute: ProfileUserIdRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
