@@ -16,9 +16,9 @@ export const ITEM_QUERY_KEYS = {
 	all: ["items"],
 	itemDetailRoot: () => [...ITEM_QUERY_KEYS.all, "detail"],
 	itemOwnerRoot: () => [...ITEM_QUERY_KEYS.all, "owner"],
-	byId: (id: string) => [...ITEM_QUERY_KEYS.itemDetailRoot(), id],
 	byOwner: (id: string) => [...ITEM_QUERY_KEYS.itemOwnerRoot(), id],
 	own: () => [...ITEM_QUERY_KEYS.all, "own"],
+	byId: (id: string) => [...ITEM_QUERY_KEYS.itemDetailRoot(), id],
 } as const;
 
 export const itemDialogConfig = {

@@ -3,6 +3,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { appToast } from "@/features/shared/components/toast";
 import { handleApiError } from "@/lib/utils";
+import { REVIEW_QUERY_KEYS } from "../constants";
 import { createReviewFormSchema } from "../schemas";
 import { useCreateReviewMutation } from "./mutation-options";
 
@@ -25,7 +26,7 @@ export const useCreateReviewForm = (offerId: string) => {
 				await mutation.mutateAsync(value);
 
 				await Promise.all([
-					// client.invalidateQueries({ queryKey: USER_QUERY_KEYS.byId(id) }),
+					client.invalidateQueries({ queryKey: REVIEW_QUERY_KEYS.givenRoot() }),
 				]);
 				await router.invalidate();
 

@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/features/shared/components/ui/card";
 import { Skeleton } from "@/features/shared/components/ui/skeleton";
 export function NotificationCardSkeleton() {
 	return (
-		<Card className="my-10">
+		<Card className="">
 			<CardContent className="p-4">
 				<div className="flex items-start gap-3">
 					<Skeleton className="size-5 mt-1 rounded-full" />

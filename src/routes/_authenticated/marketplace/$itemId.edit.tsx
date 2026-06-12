@@ -4,13 +4,13 @@ import {
 	useSuspenseQueries,
 } from "@tanstack/react-query";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { categoriesQueryOptions } from "@/features/category/hooks/query-options";
 import { EditItemForm } from "@/features/item/components/edit-item-form";
 import { ITEM_QUERY_KEYS } from "@/features/item/constants";
 import { updateItemMutationOptions } from "@/features/item/hooks/mutation-options";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
 import type { ItemWithOwnerType } from "@/features/item/types";
+import { PROFILE_QUERY_KEYS } from "@/features/profile/constants";
 import { appToast } from "@/features/shared/components/toast";
 import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
 
@@ -74,6 +74,7 @@ function RouteComponent() {
 				queryClient.invalidateQueries({
 					queryKey: ITEM_QUERY_KEYS.byId(itemId),
 				}),
+				queryClient.invalidateQueries({ queryKey: PROFILE_QUERY_KEYS.own() }),
 			]);
 		},
 	});

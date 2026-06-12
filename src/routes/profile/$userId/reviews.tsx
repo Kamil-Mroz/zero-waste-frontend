@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { NotificationListSkeleton } from "@/features/notification/components/notification-list-skeleton";
 import { ReviewList } from "@/features/review/components/review-list";
 import { userReviewsQueryOptions } from "@/features/review/hooks/query-options";
 import GoBackButton from "@/features/shared/components/go-back-button";
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/profile/$userId/reviews")({
 	staticData: {
 		getTitle: () => "Reviews",
 	},
+	pendingComponent: NotificationListSkeleton,
 	component: RouteComponent,
 	validateSearch: paginationSchema,
 	beforeLoad: async ({ context, params, search }) => {
