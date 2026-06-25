@@ -11,38 +11,41 @@ import { Toaster } from "@/features/shared/components/ui/sonner";
 import { queryClient } from "@/main";
 
 interface MyRouterContext {
-	auth: AuthState;
-	queryClient: QueryClient;
+  auth: AuthState;
+  queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	component: RootComponent,
+  component: RootComponent,
 });
 
 function RootComponent() {
-	return (
-		<>
-			<MainLayout>
-				<Outlet />
-			</MainLayout>
-			<Toaster />
-			<TanStackDevtools
-				config={{
-					position: "bottom-right",
-					defaultOpen: false,
-				}}
-				plugins={[
-					{
-						name: "TanStack Router",
-						render: <TanStackRouterDevtoolsPanel />,
-					},
-					{
-						name: "TanStack Query",
-						render: <ReactQueryDevtoolsPanel client={queryClient} />,
-					},
-					formDevtoolsPlugin(),
-				]}
-			/>
-		</>
-	);
+  return (
+    <>
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
+      <Toaster />
+
+
+      <TanStackDevtools
+        config={{
+          position: "bottom-right",
+          defaultOpen: false,
+        }}
+        plugins={[
+          {
+            name: "TanStack Router",
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+          {
+            name: "TanStack Query",
+            render: <ReactQueryDevtoolsPanel client={queryClient} />,
+          },
+          formDevtoolsPlugin(),
+        ]}
+      />
+
+    </>
+  );
 }

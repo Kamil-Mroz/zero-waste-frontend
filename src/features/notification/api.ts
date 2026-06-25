@@ -8,26 +8,23 @@ import type { Notification, NotificationType } from "./types";
 
 export const getUnreadCount = async () => {
 	const res = await api.get<{ unreadCount: number }>(
-		`/api/v1/notifications/unread-count`,
+		`/v1/notifications/unread-count`,
 	);
 	return res.data;
 };
 
 export const getNotificationPopup = async () => {
-	const res = await api.get<CursorResponse<Notification>>(
-		"/api/v1/notifications",
-		{
-			params: {
-				limit: 20,
-			},
+	const res = await api.get<CursorResponse<Notification>>("/v1/notifications", {
+		params: {
+			limit: 20,
 		},
-	);
+	});
 	return res.data;
 };
 
 export const getNotification = async (notificationId: string) => {
 	const res = await api.get<Notification>(
-		`/api/v1/notifications/${notificationId}`,
+		`/v1/notifications/${notificationId}`,
 	);
 	return res.data;
 };
@@ -37,26 +34,23 @@ export const getNotificationHistory = async (
 	cursor?: CursorRequest,
 	direction: CursorDirection = "FORWARD",
 ) => {
-	const res = await api.get<CursorResponse<Notification>>(
-		"/api/v1/notifications",
-		{
-			params: {
-				limit: 20,
-				createdAt: cursor?.createdAt,
-				id: cursor?.id,
-				direction,
-				notificationType,
-			},
+	const res = await api.get<CursorResponse<Notification>>("/v1/notifications", {
+		params: {
+			limit: 20,
+			createdAt: cursor?.createdAt,
+			id: cursor?.id,
+			direction,
+			notificationType,
 		},
-	);
+	});
 	return res.data;
 };
 
 export const markAllNotificationsAsRead = async () => {
-	const res = await api.patch("/api/v1/notifications/read-all");
+	const res = await api.patch("/v1/notifications/read-all");
 	return res.data;
 };
 export const markNotificationsAsRead = async (id: string) => {
-	const res = await api.patch(`/api/v1/notifications/${id}/read`);
+	const res = await api.patch(`/v1/notifications/${id}/read`);
 	return res.data;
 };

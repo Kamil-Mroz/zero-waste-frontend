@@ -7,7 +7,7 @@ import { useWebSocketService, WebSocketContext } from "../hooks/useWebSocket";
 
 function WebsocketProvider({ children }: PropsWithChildren) {
 	const queryClient = useQueryClient();
-	const websocket = useWebSocketService("http://localhost:8080/ws");
+	const websocket = useWebSocketService("/ws");
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: depends on the connection state
 	useEffect(() => {

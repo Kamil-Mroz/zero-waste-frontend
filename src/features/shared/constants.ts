@@ -14,82 +14,6 @@ import type { Pageable } from "./types";
 export const NAV_LINKS = {
 	navMain: [
 		{
-			title: "Marketplace",
-			url: "/marketplace",
-			icon: ShoppingBag,
-			isActive: true,
-			items: [
-				{
-					title: "Browse Items",
-					url: "/marketplace",
-				},
-				{
-					title: "Create Listing",
-					url: "/marketplace/create",
-					private: true,
-				},
-				{
-					title: "My Listings",
-					url: "/marketplace/my-items",
-					private: true,
-				},
-				{
-					title: "Offers",
-					url: "/offers/own",
-					private: true,
-				},
-			],
-		},
-		{
-			title: "Eco Hub",
-			url: "/eco",
-			icon: Leaf,
-			items: [
-				{
-					title: "Blog",
-					url: "/eco/blog",
-				},
-				{
-					title: "Quizzes",
-					url: "/eco/quizzes",
-				},
-				{
-					title: "My Progress",
-					url: "/eco/progress",
-					private: true,
-				},
-			],
-		},
-		{
-			title: "Profile",
-			url: "/profile/",
-			icon: User,
-			private: true,
-			items: [
-				{
-					title: "My Profile",
-					url: "/profile/",
-				},
-				{
-					title: "Notifications",
-					url: "/notifications",
-					private: true,
-				},
-				{
-					title: "My Activity",
-					url: "/profile/activity",
-				},
-				{
-					title: "Saved Items",
-					url: "/profile/saved",
-				},
-				{
-					title: "Settings",
-					url: "/profile/settings",
-				},
-			],
-		},
-		{
 			title: "Admin",
 			url: "/admin/dashboard",
 			icon: Shield,
@@ -124,6 +48,91 @@ export const NAV_LINKS = {
 				{
 					title: "Reports",
 					url: "/admin/reports",
+				},
+			],
+		},
+		{
+			title: "Marketplace",
+			url: "/marketplace",
+			icon: ShoppingBag,
+			isActive: true,
+			items: [
+				{
+					title: "Browse Items",
+					url: "/marketplace",
+				},
+				{
+					title: "Create Listing",
+					url: "/marketplace/create",
+					private: true,
+				},
+				{
+					title: "My Listings",
+					url: "/marketplace/my-items",
+					private: true,
+				},
+				{
+					title: "Offers",
+					url: "/offers/own",
+					private: true,
+				},
+			],
+		},
+		{
+			title: "Eco Hub",
+			url: "/eco-hub",
+			icon: Leaf,
+			isActive: true,
+			items: [
+				{
+					title: "Blogs",
+					url: "/eco-hub/blogs",
+				},
+				{
+					title: "My blogs",
+					url: "/eco-hub/blogs/own",
+					private: true,
+					role: "WRITER",
+				},
+				{
+					title: "Quizzes",
+					url: "/eco-hub/quizzes",
+				},
+				{
+					title: "My quizzes",
+					url: "/eco-hub/quizzes/own",
+					private: true,
+					role: "WRITER",
+				},
+			],
+		},
+		{
+			title: "Profile",
+			url: "/profile/",
+			icon: User,
+
+			isActive: true,
+			private: true,
+			items: [
+				{
+					title: "My Profile",
+					url: "/profile/",
+				},
+				{
+					title: "Notifications",
+					url: "/notifications",
+				},
+				{
+					title: "My Activity",
+					url: "/profile/activity",
+				},
+				{
+					title: "Reviews",
+					url: "/reviews/received",
+				},
+				{
+					title: "Settings",
+					url: "/profile/settings",
 				},
 			],
 		},

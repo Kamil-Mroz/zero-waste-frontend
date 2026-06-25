@@ -15,6 +15,7 @@ import {
 	useSidebar,
 } from "@/features/shared/components/ui/sidebar";
 import { NAV_LINKS } from "../constants";
+
 import { useIsMobile } from "../hooks/use-mobile";
 import type { NavItem } from "../types";
 

@@ -29,7 +29,7 @@ export function ProfileReviewsCard({
 				<CardTitle>Reviews</CardTitle>
 				<Button asChild>
 					<Link
-						to={isOwnProfile ? "/reviews" : "/profile/$userId/reviews"}
+						to={isOwnProfile ? "/reviews/received" : "/profile/$userId/reviews"}
 						params={isOwnProfile ? {} : { userId }}
 					>
 						{isOwnProfile ? "My reviews" : "View All"}

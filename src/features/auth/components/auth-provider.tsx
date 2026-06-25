@@ -23,7 +23,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	useEffect(() => {
 		const fetchMe = async () => {
 			try {
-				const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
+				const res = await api.post<AuthResponse>("/v1/auth/refresh");
 				setToken(res.data.accessToken);
 
 				setUser(res.data.user);
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			(response) => response,
 			async (error) => {
 				const originalRequest = error.config;
-				const isAuthEndpoint = originalRequest.url?.includes("/auth/refresh");
+				const isAuthEndpoint = originalRequest.url?.includes("/auth/");
 
 				if (
 					error.response?.status === 401 &&
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 					!isAuthEndpoint
 				) {
 					try {
-						const res = await api.post<AuthResponse>("/api/v1/auth/refresh");
+						const res = await api.post<AuthResponse>("/v1/auth/refresh");
 						setToken(res.data.accessToken);
 						setUser(res.data.user);
 						originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
@@ -93,18 +93,18 @@ export function AuthProvider({ children }: PropsWithChildren) {
 		);
 	}
 	const register = async (data: RegisterRequest) => {
-		await api.post("/api/v1/auth/register", data);
+		await api.post("/v1/auth/register", data);
 	};
 
 	const login = async (data: LoginRequest) => {
-		const res = await api.post<AuthResponse>("/api/v1/auth/login", data);
+		const res = await api.post<AuthResponse>("/v1/auth/login", data);
 		setToken(res.data.accessToken);
 		setUser(res.data.user);
 	};
 
 	const logout = async () => {
 		try {
-			await api.post("/api/v1/auth/logout");
+			await api.post("/v1/auth/logout");
 			setUser(null);
 			setToken(null);
 		} catch {

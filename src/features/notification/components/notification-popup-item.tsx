@@ -26,6 +26,7 @@ function NotificationPopupItem({
 				onClose();
 				if (!notification.read) markAsRead(notification.id);
 			}}
+			asChild
 		>
 			<Link
 				to={"/notifications/$notificationId"}
