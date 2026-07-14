@@ -10,7 +10,7 @@ type PublicUserProfileProps = {
 
 export function PublicUserProfile({ profile, userId }: PublicUserProfileProps) {
 	return (
-		<div className="mx-auto  w-full space-y-4 py-4">
+		<div className="mx-auto  w-full space-y-4">
 			<UserHeader
 				firstName={profile.firstName}
 				lastName={profile.lastName}

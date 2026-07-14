@@ -13,7 +13,7 @@ type Props = {
 
 export function OwnProfile({ user }: Props) {
 	return (
-		<div className="mx-auto w-full space-y-4 py-4">
+		<div className="mx-auto w-full space-y-4">
 			<UserHeader
 				firstName={user.firstName}
 				lastName={user.lastName}

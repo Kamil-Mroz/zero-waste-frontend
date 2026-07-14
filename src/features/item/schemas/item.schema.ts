@@ -28,6 +28,18 @@ export const createItemFormSchema = z.object({
 	state: itemFormStateSchema,
 	categoryId: z.string().nonempty("Category is required"),
 	city: z.string().nonempty("City is required"),
+	thumbnail: z
+		.discriminatedUnion("type", [
+			z.object({
+				type: z.literal("existing"),
+				id: z.uuid(),
+			}),
+			z.object({
+				type: z.literal("new"),
+				file: z.file(),
+			}),
+		])
+		.nullable(),
 	images: z
 		.array(z.instanceof(File))
 		.refine(
@@ -51,6 +63,19 @@ export const updateItemFormSchema = (currentImageIds: string[]) =>
 			state: itemFormStateSchema,
 			categoryId: z.string().nonempty("Category is required"),
 			city: z.string().nonempty("City is required"),
+
+			thumbnail: z
+				.discriminatedUnion("type", [
+					z.object({
+						type: z.literal("existing"),
+						id: z.uuid(),
+					}),
+					z.object({
+						type: z.literal("new"),
+						file: z.file(),
+					}),
+				])
+				.nullable(),
 			images: z
 				.array(z.instanceof(File))
 				.refine(

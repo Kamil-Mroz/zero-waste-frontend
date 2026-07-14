@@ -14,48 +14,10 @@ import type { Pageable } from "./types";
 export const NAV_LINKS = {
 	navMain: [
 		{
-			title: "Admin",
-			url: "/admin/dashboard",
-			icon: Shield,
-			private: true,
-			role: "ADMIN",
-			isActive: false,
-			items: [
-				{
-					title: "Dashboard",
-					url: "/admin/dashboard",
-				},
-				{
-					title: "Manage Users",
-					url: "/admin/users",
-				},
-				{
-					title: "Manage Listings",
-					url: "/admin/listings",
-				},
-				{
-					title: "Manage categories",
-					url: "/admin/categories",
-				},
-				{
-					title: "Manage Blog",
-					url: "/admin/blog",
-				},
-				{
-					title: "Manage Quizzes",
-					url: "/admin/quizzes",
-				},
-				{
-					title: "Reports",
-					url: "/admin/reports",
-				},
-			],
-		},
-		{
 			title: "Marketplace",
 			url: "/marketplace",
 			icon: ShoppingBag,
-			isActive: false,
+			isActive: true,
 			items: [
 				{
 					title: "Browse Items",
@@ -107,11 +69,49 @@ export const NAV_LINKS = {
 			],
 		},
 		{
+			title: "Admin",
+			url: "/admin/dashboard",
+			icon: Shield,
+			private: true,
+			role: "ADMIN",
+			isActive: true,
+			items: [
+				{
+					title: "Dashboard",
+					url: "/admin/dashboard",
+				},
+				{
+					title: "Manage Users",
+					url: "/admin/users",
+				},
+				{
+					title: "Manage Listings",
+					url: "/admin/listings",
+				},
+				{
+					title: "Manage categories",
+					url: "/admin/categories",
+				},
+				{
+					title: "Manage Blog",
+					url: "/admin/blog",
+				},
+				{
+					title: "Manage Quizzes",
+					url: "/admin/quizzes",
+				},
+				{
+					title: "Reports",
+					url: "/admin/reports",
+				},
+			],
+		},
+		{
 			title: "Profile",
 			url: "/profile/",
 			icon: User,
 
-			isActive: false,
+			isActive: true,
 			private: true,
 			items: [
 				{
@@ -121,10 +121,6 @@ export const NAV_LINKS = {
 				{
 					title: "Notifications",
 					url: "/notifications",
-				},
-				{
-					title: "My Activity",
-					url: "/profile/activity",
 				},
 				{
 					title: "Reviews",

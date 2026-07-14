@@ -31,7 +31,7 @@ export function ItemCard({ item }: ItemCardProps) {
 						{item.state}
 					</Badge>
 				)}
-				<ItemImage src={item.images?.[0]?.url} alt={item.title} />
+				<ItemImage src={item.thumbnail?.url} alt={item.title} />
 				<div className="flex justify-between items-start">
 					<h2 className="text-lg font-semibold">{item.title}</h2>
 					<Badge variant="secondary">{item.condition}</Badge>

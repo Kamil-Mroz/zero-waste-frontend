@@ -13,9 +13,9 @@ export function ProfileItemCard({ item }: ProfileItemCardProps) {
 			className="hover:bg-muted flex items-center gap-3 rounded-md p-2 transition group"
 		>
 			<div className="bg-muted transition group-hover:border-background border h-14 w-14 overflow-hidden rounded-md">
-				{item.images[0] ? (
+				{item.thumbnail ? (
 					<img
-						src={item.images[0].url}
+						src={item.thumbnail.url}
 						alt={item.title}
 						className="h-full w-full object-cover"
 					/>

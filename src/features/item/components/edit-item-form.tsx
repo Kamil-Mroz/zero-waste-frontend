@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Trash } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useMemo } from "react";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { ImagePickerField } from "@/features/shared/components/form/image-picker-field";
 import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import {
@@ -37,6 +38,7 @@ export function EditItemForm({
 				condition: item.condition,
 				title: item.title,
 				description: item.description,
+				thumbnail: null,
 			},
 			currentImageIds,
 		),
@@ -49,12 +51,30 @@ export function EditItemForm({
 				formData.append("city", value.city);
 				formData.append("categoryId", value.categoryId);
 				formData.append("state", value.state);
+
+				const remainingImages = item.images.filter(
+					(i) => !value.removedImageIds.includes(i.id),
+				);
+
+				if (value.images.length === 0 && remainingImages.length === 0) {
+				} else if (value.thumbnail?.type === "existing") {
+					formData.append("thumbnailExistingImageId", value.thumbnail.id);
+				} else if (value.thumbnail?.type === "new") {
+					const index = value.images.indexOf(value.thumbnail.file);
+					if (index >= 0) {
+						formData.append("thumbnailIndex", index.toString());
+					}
+				} else if (remainingImages.length > 0) {
+					formData.append("thumbnailExistingImageId", remainingImages[0].id);
+				}
+
 				value.images.forEach((file: File) => {
 					formData.append("images", file);
 				});
 				value.removedImageIds.forEach((id) => {
 					formData.append("removedImageIds", id);
 				});
+
 				await onSubmit(formData);
 				form.reset();
 			} catch (error) {
@@ -118,52 +138,37 @@ export function EditItemForm({
 							<form.AppField name="city">
 								{(field) => <field.TextField label="City" />}
 							</form.AppField>
-							<form.AppField name="removedImageIds">
-								{(field) => {
-									if (item.images.length === 0) return null;
-									return (
-										<div className="space-y-3">
-											<p className="text-sm font-medium">Current images</p>
-
-											<div className="flex flex-wrap gap-3">
-												{item.images.map((img) => {
-													const isMarked = field.state.value.includes(img.id);
-
-													return (
-														<button
-															type="button"
-															key={img.id}
-															onClick={() => {
-																const next = isMarked
-																	? field.state.value.filter(
-																			(id) => id !== img.id,
-																		)
-																	: [...field.state.value, img.id];
-																field.handleChange(next);
-																form.setErrorMap({ onSubmit: { fields: {} } });
-															}}
-															className="relative h-28 w-28 rounded-lg border p-0 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary overflow-hidden"
-														>
-															<img
-																src={img.url}
-																alt={img.originalName}
-																className={`h-full w-full rounded-lg object-cover transition  ${isMarked ? "opacity-40 grayscale" : ""}`}
-															/>
-															{isMarked && (
-																<div className="absolute inset-0 flex items-center justify-center bg-black/40">
-																	<span className="text-xs font-medium text-destructive">
-																		<Trash />
-																	</span>
-																</div>
-															)}
-														</button>
-													);
-												})}
-											</div>
-										</div>
-									);
-								}}
-							</form.AppField>
+							<form.Subscribe
+								selector={(state) => ({
+									images: state.values.images,
+									removed: state.values.removedImageIds,
+									thumbnail: state.values.thumbnail,
+								})}
+							>
+								{({ images, removed, thumbnail }) => (
+									<ImagePickerField
+										existingImages={item.images}
+										newImages={images}
+										removedImageIds={removed}
+										onRemoveExisting={(id) => {
+											const next = removed.includes(id)
+												? removed.filter((x) => x !== id)
+												: [...removed, id];
+											form.setFieldValue("removedImageIds", next);
+										}}
+										onRemoveNew={(file) =>
+											form.setFieldValue(
+												"images",
+												images.filter((x) => x !== file),
+											)
+										}
+										thumbnail={thumbnail}
+										onSelectThumbnail={(value) =>
+											form.setFieldValue("thumbnail", value)
+										}
+									/>
+								)}
+							</form.Subscribe>
 
 							<form.AppField name="images">
 								{(field) => <field.FileField label="Add images" />}

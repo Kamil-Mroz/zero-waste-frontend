@@ -45,6 +45,7 @@ export type ItemType = {
 	category: Category;
 	owner: User | null;
 	images: Image[];
+	thumbnail: Image | null;
 };
 export type Image = {
 	id: string;

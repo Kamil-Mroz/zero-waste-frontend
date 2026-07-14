@@ -1,4 +1,5 @@
 import { formOptions } from "@tanstack/react-form";
+import type { ThumbnailValue } from "@/features/shared/components/form/image-picker-field";
 import {
 	createItemFormSchema,
 	updateItemFormSchema,
@@ -12,9 +13,10 @@ export const createItemFormOptions = () =>
 			description: "This is a test item for dev",
 			condition: "NEW",
 			categoryId: "",
-      state: "AVAILABLE",
+			state: "AVAILABLE",
 			city: "Texas",
 			images: [] as File[],
+			thumbnail: null as ThumbnailValue,
 		},
 		validators: {
 			onSubmit: createItemFormSchema,

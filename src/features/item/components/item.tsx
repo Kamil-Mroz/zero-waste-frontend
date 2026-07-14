@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import GoBackButton from "@/features/shared/components/go-back-button";
 import { Button } from "@/features/shared/components/ui/button";
@@ -13,7 +13,8 @@ export function Item({ item }: ItemProps) {
 
 	const isAuthenticated = !!user;
 	const isOwner = isAuthenticated && user.id === item.owner.id;
-	const [activeImage, setActiveImage] = useState(item.images?.[0]?.url ?? null);
+	const [activeImage, setActiveImage] = useState(item.thumbnail?.url ?? null);
+	const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
 	return (
 		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto p-4">
@@ -51,7 +52,13 @@ export function Item({ item }: ItemProps) {
 									<button
 										key={img.id}
 										type="button"
-										onMouseEnter={() => setActiveImage(img.url)}
+										ref={(el) => {
+											buttonRefs.current[img.id] = el;
+										}}
+										onMouseEnter={() => {
+											setActiveImage(img.url);
+											buttonRefs.current[img.id]?.focus();
+										}}
 										onFocus={() => setActiveImage(img.url)}
 										onClick={() => setActiveImage(img.url)}
 										className="h-20 w-20 shrink-0 overflow-hidden rounded-lg border p-0 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"

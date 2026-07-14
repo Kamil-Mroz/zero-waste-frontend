@@ -6,6 +6,7 @@ import { InputField } from "./input-field";
 import RatingField from "./rating-field";
 import { ResetButton } from "./reset-button";
 import { SelectField } from "./select-field";
+import { ThumbnailField } from "./thumbnail-field";
 import { SubmitButton } from "./submit-button";
 import { TextareaField } from "./textarea-field";
 
@@ -18,6 +19,7 @@ export const { useAppForm, withForm } = createFormHook({
 	fieldComponents: {
 		TextField: InputField,
 		SelectField,
+		ThumbnailField,
 		TextareaField,
 		CheckboxArrayField,
 		DateField,

@@ -65,10 +65,6 @@ function RouteComponent() {
 				description: "Item updated successfully",
 			});
 
-			await navigate({
-				to: "/marketplace/$itemId",
-				params: { itemId: data.id },
-			});
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() }),
 				queryClient.invalidateQueries({
@@ -76,6 +72,11 @@ function RouteComponent() {
 				}),
 				queryClient.invalidateQueries({ queryKey: PROFILE_QUERY_KEYS.own() }),
 			]);
+
+			await navigate({
+				to: "/marketplace/$itemId",
+				params: { itemId: data.id },
+			});
 		},
 	});
 

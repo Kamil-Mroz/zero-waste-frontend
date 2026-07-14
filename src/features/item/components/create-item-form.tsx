@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { ImagePickerField } from "@/features/shared/components/form/image-picker-field";
 import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import {
@@ -28,9 +29,18 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 				formData.append("city", value.city);
 				formData.append("categoryId", value.categoryId);
 				formData.append("state", value.state);
+
 				value.images.forEach((file: File) => {
 					formData.append("images", file);
 				});
+				let thumbnailIndex = null;
+				if (!value.thumbnail && value.images.length > 0) {
+					formData.append("thumbnailIndex", "0");
+				} else if (value.thumbnail?.type === "new") {
+					thumbnailIndex = value.images.indexOf(value.thumbnail.file);
+					formData.append("thumbnailIndex", thumbnailIndex.toString());
+				}
+
 				await onSubmit(formData);
 				form.reset();
 			} catch (error) {
@@ -92,6 +102,28 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 							<form.AppField name="images">
 								{(field) => <field.FileField label="Images" />}
 							</form.AppField>
+							<form.Subscribe
+								selector={(state) => ({
+									images: state.values.images,
+									thumbnail: state.values.thumbnail,
+								})}
+							>
+								{({ images, thumbnail }) => (
+									<ImagePickerField
+										newImages={images}
+										onRemoveNew={(file) =>
+											form.setFieldValue(
+												"images",
+												images.filter((x) => x !== file),
+											)
+										}
+										thumbnail={thumbnail}
+										onSelectThumbnail={(value) =>
+											form.setFieldValue("thumbnail", value)
+										}
+									/>
+								)}
+							</form.Subscribe>
 
 							<div className=" grid grid-cols-2 gap-4">
 								<form.AppForm>
