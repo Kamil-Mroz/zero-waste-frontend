@@ -1,10 +1,10 @@
 import type { AnyFormApi } from "@tanstack/react-form";
-import { redirect } from "@tanstack/react-router";
 import { AxiosError } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { CategoryTreeType } from "@/features/category/types";
 import { DEFAULT_PAGEABLE } from "@/features/shared/constants";
-import type { Page, Pageable } from "@/features/shared/types";
+import type { Pageable } from "@/features/shared/types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -51,7 +51,7 @@ export const cleanEmptyParams = <T extends Record<string, unknown>>(
 		if (
 			value === undefined ||
 			value === "" ||
-			(typeof value === "number" && isNaN(value))
+			(typeof value === "number" && Number.isNaN(value))
 		)
 			delete newSearch[key];
 	});
@@ -69,3 +69,12 @@ export function getValidPage(page: number | undefined, totalPages: number) {
 	}
 	return null;
 }
+
+export const flattenCategories = (
+	categories: CategoryTreeType[],
+): CategoryTreeType[] => {
+	return categories.flatMap((category) => [
+		category,
+		...flattenCategories(category.children),
+	]);
+};

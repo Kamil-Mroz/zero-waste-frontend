@@ -2,7 +2,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { PublicUserProfile } from "@/features/profile/components/public-user-profile";
 import { publicUserProfileQueryOptions } from "@/features/profile/hooks/query-options";
-import { userParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/_authenticated/admin/users/$userId/")({
 	staticData: {
@@ -22,17 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin/users/$userId/")({
 			throw notFound();
 		}
 	},
-	params: {
-		parse: (params) => {
-			const result = userParamSchema.safeParse(params);
-			if (!result.success) {
-				throw notFound();
-			}
-			return {
-				userId: result.data.userId,
-			};
-		},
-	},
+
 });
 
 function RouteComponent() {

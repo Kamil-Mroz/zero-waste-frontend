@@ -12,7 +12,7 @@ import { itemQueryOptions } from "@/features/item/hooks/query-options";
 import type { ItemWithOwnerType } from "@/features/item/types";
 import { PROFILE_QUERY_KEYS } from "@/features/profile/constants";
 import { appToast } from "@/features/shared/components/toast";
-import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
+import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute(
 	"/_authenticated/marketplace/$itemId/edit",
@@ -23,12 +23,12 @@ export const Route = createFileRoute(
 	},
 	params: {
 		parse: (params) => {
-			const result = itemParamSchema.safeParse(params);
+			const result = idParamSchema.safeParse({ id: params.itemId });
 			if (!result.success) {
 				throw notFound();
 			}
 			return {
-				itemId: result.data.itemId,
+				itemId: result.data.id,
 			};
 		},
 	},

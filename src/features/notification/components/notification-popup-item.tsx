@@ -31,8 +31,11 @@ function NotificationPopupItem({
 			<Link
 				to={"/notifications/$notificationId"}
 				params={{ notificationId: notification.id }}
-				className="flex gap-2 w-full"
+				className="flex gap-2 w-full relative"
 			>
+				{!notification.read && (
+					<span className="bg-destructive/40 size-2.5 absolute top-1 left-1 rounded-full animate-pulse" />
+				)}
 				<Icon className={cn("mt-1 size-4 shrink-0", config.className)} />
 
 				<div className="min-w-0 flex-1">
@@ -44,11 +47,6 @@ function NotificationPopupItem({
 						{config.label}
 					</p>
 				</div>
-				{!notification.read && (
-					<Badge variant="destructive" className="shrink-0">
-						new
-					</Badge>
-				)}
 			</Link>
 		</Button>
 	);

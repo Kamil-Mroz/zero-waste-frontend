@@ -5,7 +5,7 @@ import { Item } from "@/features/item/components/item";
 import { ItemDetailSkeleton } from "@/features/item/components/item-detail-skeleton";
 import { ItemDialog } from "@/features/item/components/item-dialog";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
-import { itemParamSchema } from "@/features/shared/schemas/uuid.schema";
+import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 const itemSearchSchema = z.object({
 	modal: z
@@ -27,12 +27,12 @@ export const Route = createFileRoute("/marketplace/$itemId")({
 	pendingComponent: ItemDetailSkeleton,
 	params: {
 		parse: (params) => {
-			const result = itemParamSchema.safeParse(params);
+			const result = idParamSchema.safeParse({ id: params.itemId });
 			if (!result.success) {
 				throw notFound();
 			}
 			return {
-				itemId: result.data.itemId,
+				itemId: result.data.id,
 			};
 		},
 	},

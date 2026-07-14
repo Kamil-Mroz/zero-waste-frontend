@@ -10,7 +10,7 @@ type ProfileItemCardProps = {
 
 export function ProfileReviewCard({ review }: ProfileItemCardProps) {
 	return (
-		<div className="border-b pb-4 last:border-none">
+		<div className="border-b pb-4 last:border-none ">
 			<div className="mb-2 flex items-center gap-3">
 				<Avatar>
 					<AvatarFallback>

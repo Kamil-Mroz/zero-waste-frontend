@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import CreateBlogForm from "@/features/blog/components/create-blog-form";
+import BlogForm from "@/features/blog/components/blog-form";
+import GoBackButton from "@/features/shared/components/go-back-button";
 
 export const Route = createFileRoute(
 	"/_authenticated/_writer/eco-hub/blogs/create",
@@ -9,8 +10,11 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
 	return (
-		<div>
-			<CreateBlogForm />
+		<div className="grid items-center h-full">
+			<div className="space-y-2">
+				<GoBackButton />
+				<BlogForm />
+			</div>
 		</div>
 	);
 }

@@ -39,7 +39,6 @@ import { Route as AuthenticatedNotificationsIndexRouteImport } from './routes/_a
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
 import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId/items'
-import { Route as EcoHubBlogsBlogsIdRouteImport } from './routes/eco-hub/blogs/$blogsId'
 import { Route as AuthenticatedOffersReceivedRouteImport } from './routes/_authenticated/offers/received'
 import { Route as AuthenticatedOffersOwnRouteImport } from './routes/_authenticated/offers/own'
 import { Route as AuthenticatedNotificationsNotificationIdRouteImport } from './routes/_authenticated/notifications/$notificationId'
@@ -52,6 +51,7 @@ import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedReviewsLayoutRouteRouteImport } from './routes/_authenticated/reviews/_layout/route'
 import { Route as AuthenticatedWriterEcoHubRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/route'
+import { Route as EcoHubBlogsBlogIdIndexRouteImport } from './routes/eco-hub/blogs/$blogId.index'
 import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/admin/categories/index'
 import { Route as AuthenticatedReviewsCreateOfferIdRouteImport } from './routes/_authenticated/reviews/create/$offerId'
@@ -64,6 +64,8 @@ import { Route as AuthenticatedAdminUsersUserIdItemsRouteImport } from './routes
 import { Route as AuthenticatedWriterEcoHubQuizzesOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/quizzes/own'
 import { Route as AuthenticatedWriterEcoHubBlogsOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/own'
 import { Route as AuthenticatedWriterEcoHubBlogsCreateRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/create'
+import { Route as AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/route'
+import { Route as AuthenticatedWriterEcoHubBlogsBlogIdEditRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
 
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
   id: '/unauthorized',
@@ -218,11 +220,6 @@ const ProfileUserIdItemsRoute = ProfileUserIdItemsRouteImport.update({
   path: '/items',
   getParentRoute: () => ProfileUserIdRouteRoute,
 } as any)
-const EcoHubBlogsBlogsIdRoute = EcoHubBlogsBlogsIdRouteImport.update({
-  id: '/$blogsId',
-  path: '/$blogsId',
-  getParentRoute: () => EcoHubBlogsRouteRoute,
-} as any)
 const AuthenticatedOffersReceivedRoute =
   AuthenticatedOffersReceivedRouteImport.update({
     id: '/received',
@@ -292,6 +289,11 @@ const AuthenticatedWriterEcoHubRouteRoute =
     path: '/eco-hub',
     getParentRoute: () => AuthenticatedWriterRouteRoute,
   } as any)
+const EcoHubBlogsBlogIdIndexRoute = EcoHubBlogsBlogIdIndexRouteImport.update({
+  id: '/$blogId/',
+  path: '/$blogId/',
+  getParentRoute: () => EcoHubBlogsRouteRoute,
+} as any)
 const AuthenticatedAdminUsersIndexRoute =
   AuthenticatedAdminUsersIndexRouteImport.update({
     id: '/',
@@ -364,6 +366,18 @@ const AuthenticatedWriterEcoHubBlogsCreateRoute =
     path: '/blogs/create',
     getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
   } as any)
+const AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute =
+  AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport.update({
+    id: '/blogs/$blogId',
+    path: '/blogs/$blogId',
+    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
+  } as any)
+const AuthenticatedWriterEcoHubBlogsBlogIdEditRoute =
+  AuthenticatedWriterEcoHubBlogsBlogIdEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -393,7 +407,6 @@ export interface FileRoutesByFullPath {
   '/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/offers/own': typeof AuthenticatedOffersOwnRoute
   '/offers/received': typeof AuthenticatedOffersReceivedRoute
-  '/eco-hub/blogs/$blogsId': typeof EcoHubBlogsBlogsIdRoute
   '/profile/$userId/items': typeof ProfileUserIdItemsRoute
   '/profile/$userId/reviews': typeof ProfileUserIdReviewsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -410,11 +423,14 @@ export interface FileRoutesByFullPath {
   '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
   '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
+  '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
+  '/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
+  '/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -435,7 +451,6 @@ export interface FileRoutesByTo {
   '/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/offers/own': typeof AuthenticatedOffersOwnRoute
   '/offers/received': typeof AuthenticatedOffersReceivedRoute
-  '/eco-hub/blogs/$blogsId': typeof EcoHubBlogsBlogsIdRoute
   '/profile/$userId/items': typeof ProfileUserIdItemsRoute
   '/profile/$userId/reviews': typeof ProfileUserIdReviewsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -450,11 +465,13 @@ export interface FileRoutesByTo {
   '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesIndexRoute
   '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
+  '/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdIndexRoute
+  '/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -491,7 +508,6 @@ export interface FileRoutesById {
   '/_authenticated/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/_authenticated/offers/own': typeof AuthenticatedOffersOwnRoute
   '/_authenticated/offers/received': typeof AuthenticatedOffersReceivedRoute
-  '/eco-hub/blogs/$blogsId': typeof EcoHubBlogsBlogsIdRoute
   '/profile/$userId/items': typeof ProfileUserIdItemsRoute
   '/profile/$userId/reviews': typeof ProfileUserIdReviewsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -508,11 +524,14 @@ export interface FileRoutesById {
   '/_authenticated/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/_authenticated/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
   '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
+  '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
+  '/_authenticated/_writer/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   '/_authenticated/_writer/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   '/_authenticated/_writer/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   '/_authenticated/_writer/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/_authenticated/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/_authenticated/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
+  '/_authenticated/_writer/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -544,7 +563,6 @@ export interface FileRouteTypes {
     | '/notifications/$notificationId'
     | '/offers/own'
     | '/offers/received'
-    | '/eco-hub/blogs/$blogsId'
     | '/profile/$userId/items'
     | '/profile/$userId/reviews'
     | '/admin/'
@@ -561,11 +579,14 @@ export interface FileRouteTypes {
     | '/reviews/create/$offerId'
     | '/admin/categories/'
     | '/admin/users/'
+    | '/eco-hub/blogs/$blogId/'
+    | '/eco-hub/blogs/$blogId'
     | '/eco-hub/blogs/create'
     | '/eco-hub/blogs/own'
     | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
     | '/admin/users/$userId/'
+    | '/eco-hub/blogs/$blogId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -586,7 +607,6 @@ export interface FileRouteTypes {
     | '/notifications/$notificationId'
     | '/offers/own'
     | '/offers/received'
-    | '/eco-hub/blogs/$blogsId'
     | '/profile/$userId/items'
     | '/profile/$userId/reviews'
     | '/admin'
@@ -601,11 +621,13 @@ export interface FileRouteTypes {
     | '/reviews/create/$offerId'
     | '/admin/categories'
     | '/admin/users'
+    | '/eco-hub/blogs/$blogId'
     | '/eco-hub/blogs/create'
     | '/eco-hub/blogs/own'
     | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
     | '/admin/users/$userId'
+    | '/eco-hub/blogs/$blogId/edit'
   id:
     | '__root__'
     | '/'
@@ -641,7 +663,6 @@ export interface FileRouteTypes {
     | '/_authenticated/notifications/$notificationId'
     | '/_authenticated/offers/own'
     | '/_authenticated/offers/received'
-    | '/eco-hub/blogs/$blogsId'
     | '/profile/$userId/items'
     | '/profile/$userId/reviews'
     | '/_authenticated/admin/'
@@ -658,11 +679,14 @@ export interface FileRouteTypes {
     | '/_authenticated/reviews/create/$offerId'
     | '/_authenticated/admin/categories/'
     | '/_authenticated/admin/users/'
+    | '/eco-hub/blogs/$blogId/'
+    | '/_authenticated/_writer/eco-hub/blogs/$blogId'
     | '/_authenticated/_writer/eco-hub/blogs/create'
     | '/_authenticated/_writer/eco-hub/blogs/own'
     | '/_authenticated/_writer/eco-hub/quizzes/own'
     | '/_authenticated/admin/users/$userId/items'
     | '/_authenticated/admin/users/$userId/'
+    | '/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -887,13 +911,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileUserIdItemsRouteImport
       parentRoute: typeof ProfileUserIdRouteRoute
     }
-    '/eco-hub/blogs/$blogsId': {
-      id: '/eco-hub/blogs/$blogsId'
-      path: '/$blogsId'
-      fullPath: '/eco-hub/blogs/$blogsId'
-      preLoaderRoute: typeof EcoHubBlogsBlogsIdRouteImport
-      parentRoute: typeof EcoHubBlogsRouteRoute
-    }
     '/_authenticated/offers/received': {
       id: '/_authenticated/offers/received'
       path: '/received'
@@ -977,6 +994,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/eco-hub'
       preLoaderRoute: typeof AuthenticatedWriterEcoHubRouteRouteImport
       parentRoute: typeof AuthenticatedWriterRouteRoute
+    }
+    '/eco-hub/blogs/$blogId/': {
+      id: '/eco-hub/blogs/$blogId/'
+      path: '/$blogId'
+      fullPath: '/eco-hub/blogs/$blogId/'
+      preLoaderRoute: typeof EcoHubBlogsBlogIdIndexRouteImport
+      parentRoute: typeof EcoHubBlogsRouteRoute
     }
     '/_authenticated/admin/users/': {
       id: '/_authenticated/admin/users/'
@@ -1062,17 +1086,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsCreateRouteImport
       parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
     }
+    '/_authenticated/_writer/eco-hub/blogs/$blogId': {
+      id: '/_authenticated/_writer/eco-hub/blogs/$blogId'
+      path: '/blogs/$blogId'
+      fullPath: '/eco-hub/blogs/$blogId'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport
+      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
+    }
+    '/_authenticated/_writer/eco-hub/blogs/$blogId/edit': {
+      id: '/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
+      path: '/edit'
+      fullPath: '/eco-hub/blogs/$blogId/edit'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRouteImport
+      parentRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute
+    }
   }
 }
 
 interface EcoHubBlogsRouteRouteChildren {
-  EcoHubBlogsBlogsIdRoute: typeof EcoHubBlogsBlogsIdRoute
   EcoHubBlogsIndexRoute: typeof EcoHubBlogsIndexRoute
+  EcoHubBlogsBlogIdIndexRoute: typeof EcoHubBlogsBlogIdIndexRoute
 }
 
 const EcoHubBlogsRouteRouteChildren: EcoHubBlogsRouteRouteChildren = {
-  EcoHubBlogsBlogsIdRoute: EcoHubBlogsBlogsIdRoute,
   EcoHubBlogsIndexRoute: EcoHubBlogsIndexRoute,
+  EcoHubBlogsBlogIdIndexRoute: EcoHubBlogsBlogIdIndexRoute,
 }
 
 const EcoHubBlogsRouteRouteWithChildren =
@@ -1105,7 +1143,23 @@ const EcoHubRouteRouteWithChildren = EcoHubRouteRoute._addFileChildren(
   EcoHubRouteRouteChildren,
 )
 
+interface AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteChildren {
+  AuthenticatedWriterEcoHubBlogsBlogIdEditRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
+}
+
+const AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteChildren: AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteChildren =
+  {
+    AuthenticatedWriterEcoHubBlogsBlogIdEditRoute:
+      AuthenticatedWriterEcoHubBlogsBlogIdEditRoute,
+  }
+
+const AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren =
+  AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute._addFileChildren(
+    AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteChildren,
+  )
+
 interface AuthenticatedWriterEcoHubRouteRouteChildren {
+  AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   AuthenticatedWriterEcoHubBlogsCreateRoute: typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   AuthenticatedWriterEcoHubBlogsOwnRoute: typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   AuthenticatedWriterEcoHubQuizzesOwnRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
@@ -1113,6 +1167,8 @@ interface AuthenticatedWriterEcoHubRouteRouteChildren {
 
 const AuthenticatedWriterEcoHubRouteRouteChildren: AuthenticatedWriterEcoHubRouteRouteChildren =
   {
+    AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute:
+      AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren,
     AuthenticatedWriterEcoHubBlogsCreateRoute:
       AuthenticatedWriterEcoHubBlogsCreateRoute,
     AuthenticatedWriterEcoHubBlogsOwnRoute:

@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Badge } from "@/features/shared/components/ui/badge";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Sheet,
@@ -9,11 +10,18 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/features/shared/components/ui/sheet";
+import { flattenCategories } from "@/lib/utils";
 import { categoryTreeQueryOptions } from "../hooks/query-options";
 import { CategoryItem } from "./category-item";
 
-type CategoryMenuProps = { onSelect: (id: string) => void };
-export function CategoryMenu({ onSelect }: CategoryMenuProps) {
+type CategoryMenuProps = {
+	onSelect: (id: string) => void;
+	selectedCategoryId?: string;
+};
+export function CategoryMenu({
+	onSelect,
+	selectedCategoryId,
+}: CategoryMenuProps) {
 	const { data: categories } = useSuspenseQuery(categoryTreeQueryOptions());
 	const [open, setIsOpen] = useState(false);
 
@@ -21,6 +29,19 @@ export function CategoryMenu({ onSelect }: CategoryMenuProps) {
 		onSelect(id);
 		setIsOpen(false);
 	};
+	const flatCategories = useMemo(
+		() => flattenCategories(categories),
+		[categories],
+	);
+	const categoryMap = useMemo(() => {
+		return new Map(
+			flatCategories.map((category) => [category.id, category.name]),
+		);
+	}, [flatCategories]);
+
+	const selectedCategoryName = selectedCategoryId
+		? categoryMap.get(selectedCategoryId)
+		: null;
 
 	return (
 		<Sheet open={open} onOpenChange={(open) => setIsOpen(open)}>
@@ -28,11 +49,14 @@ export function CategoryMenu({ onSelect }: CategoryMenuProps) {
 				<SheetTrigger asChild>
 					<Button
 						variant={"outline"}
-						className="h-full"
+						className="h-full flex items-center gap-1"
 						size="lg"
 						onClick={() => setIsOpen((prev) => !prev)}
 					>
 						Categories
+						{selectedCategoryName ? (
+							<Badge variant="outline">{selectedCategoryName}</Badge>
+						) : null}
 					</Button>
 				</SheetTrigger>
 			</div>

@@ -5,15 +5,20 @@ import {
 	CardTitle,
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
-import { useCreateBlogForm } from "../hooks/form-options";
+import { useBlogForm } from "../hooks/form-options";
+import type { BlogType } from "../types";
 
-function CreateBlogForm() {
-	const form = useCreateBlogForm();
+type BlogFormProps = {
+	blog?: BlogType;
+};
+
+function BlogForm({ blog }: BlogFormProps) {
+	const form = useBlogForm(blog);
 	return (
-		<div className="grid place-items-center h-full">
-			<Card className="mx-auto w-full max-w-md">
+		<div className="">
+			<Card className="">
 				<CardHeader>
-					<CardTitle>Blog creator</CardTitle>
+					<CardTitle>Blog form</CardTitle>
 				</CardHeader>
 				<CardContent>
 					<form
@@ -38,7 +43,7 @@ function CreateBlogForm() {
 									<form.ResetButton />
 								</form.AppForm>
 								<form.AppForm>
-									<form.SubmitButton label="Create" />
+									<form.SubmitButton label={blog ? "Update" : "Create"} />
 								</form.AppForm>
 							</div>
 						</FieldGroup>
@@ -48,4 +53,4 @@ function CreateBlogForm() {
 		</div>
 	);
 }
-export default CreateBlogForm;
+export default BlogForm;

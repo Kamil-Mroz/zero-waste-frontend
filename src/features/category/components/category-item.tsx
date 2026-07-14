@@ -5,7 +5,6 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/features/shared/components/ui/collapsible";
-import { Separator } from "@/features/shared/components/ui/separator";
 import type { CategoryItemProps } from "../types";
 
 export function CategoryItem({ category, onSelect }: CategoryItemProps) {
@@ -13,7 +12,7 @@ export function CategoryItem({ category, onSelect }: CategoryItemProps) {
 	if (hasChildren)
 		return (
 			<div className="w-full space-y-1">
-				<Collapsible className="w-full">
+				<Collapsible className="w-full" defaultOpen={true}>
 					<div className="flex items-center w-full">
 						<CollapsibleTrigger asChild>
 							<Button variant="ghost" className="group" size="sm">
@@ -41,7 +40,6 @@ export function CategoryItem({ category, onSelect }: CategoryItemProps) {
 						</div>
 					</CollapsibleContent>
 				</Collapsible>
-				<Separator />
 			</div>
 		);
 	return (
@@ -49,7 +47,7 @@ export function CategoryItem({ category, onSelect }: CategoryItemProps) {
 			onClick={() => onSelect(category.id)}
 			variant="ghost"
 			size="sm"
-			className="justify-start"
+			className="justify-start w-full"
 		>
 			{category.name}
 		</Button>

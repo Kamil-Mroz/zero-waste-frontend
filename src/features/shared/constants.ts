@@ -19,7 +19,7 @@ export const NAV_LINKS = {
 			icon: Shield,
 			private: true,
 			role: "ADMIN",
-			isActive: true,
+			isActive: false,
 			items: [
 				{
 					title: "Dashboard",
@@ -55,7 +55,7 @@ export const NAV_LINKS = {
 			title: "Marketplace",
 			url: "/marketplace",
 			icon: ShoppingBag,
-			isActive: true,
+			isActive: false,
 			items: [
 				{
 					title: "Browse Items",
@@ -111,7 +111,7 @@ export const NAV_LINKS = {
 			url: "/profile/",
 			icon: User,
 
-			isActive: true,
+			isActive: false,
 			private: true,
 			items: [
 				{

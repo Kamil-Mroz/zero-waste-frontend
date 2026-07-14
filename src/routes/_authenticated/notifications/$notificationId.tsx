@@ -3,7 +3,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { NotificationCardSkeleton } from "@/features/notification/components/notification-card-skeleton";
 import NotificationDetailPage from "@/features/notification/components/notification-detail";
 import { notificationQueryOptions } from "@/features/notification/hooks/query-options";
-import { notificationParamSchema } from "@/features/shared/schemas/uuid.schema";
+import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute(
 	"/_authenticated/notifications/$notificationId",
@@ -12,12 +12,12 @@ export const Route = createFileRoute(
 	pendingComponent: NotificationCardSkeleton,
 	params: {
 		parse: (params) => {
-			const result = notificationParamSchema.safeParse(params);
+			const result = idParamSchema.safeParse({ id: params.notificationId });
 			if (!result.success) {
 				throw notFound();
 			}
 			return {
-				notificationId: result.data.notificationId,
+				notificationId: result.data.id,
 			};
 		},
 	},

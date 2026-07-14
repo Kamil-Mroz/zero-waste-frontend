@@ -1,18 +1,18 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ReviewCreateForm } from "@/features/review/components/review-create-form";
-import { offerParamSchema } from "@/features/shared/schemas/uuid.schema";
+import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/_authenticated/reviews/create/$offerId")(
 	{
 		component: RouteComponent,
 		params: {
 			parse: (params) => {
-				const result = offerParamSchema.safeParse(params);
+				const result = idParamSchema.safeParse({ id: params.offerId });
 				if (!result.success) {
 					throw notFound();
 				}
 				return {
-					offerId: result.data.offerId,
+					offerId: result.data.id,
 				};
 			},
 		},

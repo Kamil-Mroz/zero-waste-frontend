@@ -1,4 +1,13 @@
 import type { z } from "zod/v4";
-import type { createBlogFormSchema } from "./schemas";
+import type { User } from "../users/types";
+import type { blogFormSchema } from "./schemas";
 
-export type CreateBlogFormValues = z.infer<typeof createBlogFormSchema>;
+export type BlogFormValues = z.infer<typeof blogFormSchema>;
+
+export type BlogType = {
+	id: string;
+	author: User;
+	title: string;
+	content: string;
+	description: string;
+};

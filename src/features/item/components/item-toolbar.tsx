@@ -40,7 +40,10 @@ export function ItemToolbar<
 
 			{children}
 			<Suspense fallback={<CategoryMenuSkeleton />}>
-				<CategoryMenu onSelect={onSelect} />
+				<CategoryMenu
+					onSelect={onSelect}
+					selectedCategoryId={filters.category}
+				/>
 			</Suspense>
 			{Object.values(filters).some((value) => value) && (
 				<div>

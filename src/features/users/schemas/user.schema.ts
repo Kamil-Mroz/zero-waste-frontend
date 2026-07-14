@@ -43,9 +43,7 @@ export const banUserSchema = z.object({
 });
 export type BanUserSchema = z.infer<typeof banUserSchema>;
 
-export const userParamSchema = z.object({
-	userId: z.uuid(),
-});
+
 
 export const unbanUserSchema = z.object({
 	ids: z.array(z.uuid()).min(1),
