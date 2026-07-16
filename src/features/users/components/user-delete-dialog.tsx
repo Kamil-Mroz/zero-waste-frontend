@@ -2,10 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { Button } from "@/features/shared/components/ui/button";
 import { Spinner } from "@/features/shared/components/ui/spinner";
-
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import { USER_QUERY_KEYS } from "../constants";
 import { userDeleteMutationOptions } from "../hooks/mutation-options";
-import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 
 export function UserDeleteDialog({
 	onDone,
@@ -17,7 +16,7 @@ export function UserDeleteDialog({
 	const client = useQueryClient();
 	const router = useRouter();
 
-  const isMobile = useIsMobile()
+	const isMobile = useIsMobile();
 	const mutation = useMutation({
 		...userDeleteMutationOptions(),
 		onSuccess: async () => {
@@ -38,12 +37,12 @@ export function UserDeleteDialog({
 			<p>
 				{ids.length === 1 ? "1 user selected" : `${ids.length} users selected.`}
 			</p>
-			<div className="grid sm:grid-cols-2 gap-2">
-        {isMobile ? null :
-				<Button variant="outline" onClick={onDone}>
-					Cancel
-				</Button>
-        }
+			<div className="grid md:grid-cols-2 gap-2">
+				{isMobile ? null : (
+					<Button variant="outline" onClick={onDone}>
+						Cancel
+					</Button>
+				)}
 				<Button
 					variant="destructive"
 					onClick={() => mutation.mutate(ids)}

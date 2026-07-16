@@ -56,16 +56,16 @@ export const NAV_LINKS = {
 					private: true,
 					role: "WRITER",
 				},
-				{
-					title: "Quizzes",
-					url: "/eco-hub/quizzes",
-				},
-				{
-					title: "My quizzes",
-					url: "/eco-hub/quizzes/own",
-					private: true,
-					role: "WRITER",
-				},
+				// {
+				// 	title: "Quizzes",
+				// 	url: "/eco-hub/quizzes",
+				// },
+				// {
+				// 	title: "My quizzes",
+				// 	url: "/eco-hub/quizzes/own",
+				// 	private: true,
+				// 	role: "WRITER",
+				// },
 			],
 		},
 		{

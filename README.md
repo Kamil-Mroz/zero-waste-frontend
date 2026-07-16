@@ -1,204 +1,146 @@
-Welcome to your new TanStack Start app! 
+# Zero Waste Frontend
 
-# Getting Started
+React-based SPA for the Zero Waste community platform — peer-to-peer item sharing, trading, and eco-awareness.
 
-To run this application:
+## Summary
+
+The frontend provides a full UI for the Zero Waste platform: authentication, item marketplace with category browsing, profile management, reviews and ratings, blog writing (Eco Hub), real-time WebSocket notifications, trade offers, and an admin dashboard for managing users and categories.
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React 19 | UI framework |
+| TanStack Start / Vite | Build tool + SSR |
+| TanStack Router | File-based routing |
+| TanStack Query | Server state / caching |
+| TanStack Form + Zod | Form handling + validation |
+| TanStack Table | Data tables |
+| Tailwind CSS 4 | Styling |
+| shadcn/ui + Radix UI | Component primitives |
+| Biome | Linting + formatting |
+| Zustand | Client state management |
+| SockJS + STOMP | WebSocket client for real-time notifications |
+| Axios | HTTP client |
+| Lucide React | Icons |
+| Sonner | Toast notifications |
+
+## Prerequisites
+
+- Node.js 20+
+- pnpm 10+
+
+## Installation
 
 ```bash
+cd zero-waste-frontend
 pnpm install
+```
+
+## Configuration
+
+| Variable | Default | Description |
+|---|---|---|
+| `VITE_API_URL` | `/api` | Backend API base URL |
+
+The dev server proxies `/api` and `/ws` to `http://localhost:8080` (see `vite.config.ts`).
+
+## Running
+
+### Development
+
+```bash
 pnpm dev
 ```
 
-# Building For Production
+Frontend runs on **http://localhost:3000**.
 
-To build this application for production:
+### Build
 
 ```bash
 pnpm build
 ```
 
-## Testing
+Outputs static files to `dist/` for Nginx deployment.
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
-
-```bash
-pnpm test
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `pnpm add @tailwindcss/vite tailwindcss --dev`
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
+### Preview
 
 ```bash
-pnpm lint
-pnpm format
-pnpm check
+pnpm preview
 ```
 
+## Scripts
 
+| Script | Command |
+|---|---|
+| `dev` | `vite dev --port 3000` |
+| `build` | `vite build` |
+| `preview` | `vite preview` |
+| `test` | `vitest run` |
+| `lint` | `biome lint` |
+| `format` | `biome format` |
+| `check` | `biome check` |
 
-## Routing
+## Docker
 
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
+```bash
+docker build -t zero-waste-frontend .
+docker run -p 80:80 zero-waste-frontend
 ```
 
-Then anywhere in your JSX you can use it like so:
+Multi-stage build: Node builder → Nginx static server. Nginx proxies `/api` and `/ws` to `backend:8080`.
 
-```tsx
-<Link to="/about">About</Link>
+## Project Structure
+
+```
+src/
+├── features/
+│   ├── auth/            # Login, register, auth context
+│   ├── blog/            # Blog listing, detail views
+│   ├── category/        # Category tree, browsing
+│   ├── item/            # Item cards, detail, forms
+│   ├── notification/    # Notification list, unread badge
+│   ├── offer/           # Trade offer creation, management
+│   ├── profile/         # Profile views, edit form
+│   ├── review/          # Review forms, rating breakdown
+│   ├── shared/          # Shared components, utils
+│   ├── users/           # User management UI
+│   └── webSocket/       # SockJS/STOMP connection setup
+├── lib/
+│   ├── axios.ts         # Axios instance with auth interceptors
+│   └── utils.ts         # Shared utilities
+├── routes/
+│   ├── __root.tsx       # Root layout shell
+│   ├── _unauthenticated/ # login, register
+│   ├── _authenticated/   # Protected routes
+│   │   ├── about.tsx
+│   │   ├── admin.tsx     # Admin dashboard
+│   │   ├── marketplace.tsx
+│   │   ├── offers.tsx
+│   │   ├── profile.tsx
+│   │   ├── notifications.tsx
+│   │   ├── reviews.tsx
+│   │   └── admin/        # User + category management
+│   ├── _writer/          # Writer mode
+│   │   └── eco-hub/     # Blog + quiz creation
+│   ├── eco-hub/          # Public blog + quiz listing
+│   ├── marketplace/      # Item listing + detail
+│   ├── profile/$userId/  # Public user profile
+│   ├── index.tsx         # Home page
+│   └── unauthorized.tsx
+├── types/               # TypeScript type definitions
+├── main.tsx             # App entry point
+└── styles.css           # Global styles
 ```
 
-This will create a link that will navigate to the `/about` route.
+## Key Features
 
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+- **Authentication** — JWT login/register with refresh token flow
+- **Marketplace** — Browse items by category, item detail pages, create/edit listings
+- **Trade Offers** — Create and manage item swap offers between users
+- **Profiles** — Own profile with item summary + review stats; public user profiles
+- **Reviews & Ratings** — Write reviews, view rating breakdowns
+- **Eco Hub** — Blog posts and eco-quizzes for community education
+- **Admin Dashboard** — Manage users (ban/unban) and categories
+- **Real-time Notifications** — WebSocket (STOMP via SockJS) for live alerts
+- **Responsive UI** — shadcn/ui components with Tailwind CSS

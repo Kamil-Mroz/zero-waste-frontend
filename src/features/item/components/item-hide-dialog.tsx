@@ -42,7 +42,7 @@ export function ItemHideDialog({ id, onDone }: ItemDeleteDialogProps) {
 	});
 	return (
 		<div className="space-y-4">
-			<div className="grid sm:grid-cols-2 gap-2">
+			<div className="grid md:grid-cols-2 gap-2">
 				{isMobile ? null : (
 					<Button variant="outline" onClick={onDone}>
 						Cancel
