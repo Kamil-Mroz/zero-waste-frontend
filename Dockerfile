@@ -35,8 +35,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --chown=nginx:nginx --from=builder /app/dist /usr/share/nginx/html
 
 RUN mkdir -p /var/cache/nginx \
-    && chown -R nginx:nginx /var/cache/nginx \
-    && chown -R nginx:nginx /var/run
+  && chown -R nginx:nginx /var/cache/nginx \
+  && chown -R nginx:nginx /var/run
 # Use a non-root user for security best practices
 USER nginx
 

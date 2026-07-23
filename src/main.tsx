@@ -45,15 +45,16 @@ function App() {
 		<ThemeProvider>
 			<QueryClientProvider client={queryClient}>
 				<AuthProvider>
-						<TooltipProvider>
+					<TooltipProvider>
+						<WebsocketProvider>
 							<InnerApp />
-						</TooltipProvider>
+						</WebsocketProvider>
+					</TooltipProvider>
 				</AuthProvider>
 			</QueryClientProvider>
 		</ThemeProvider>
 	);
 }
-
 
 function InnerApp() {
 	const auth = useAuth();
