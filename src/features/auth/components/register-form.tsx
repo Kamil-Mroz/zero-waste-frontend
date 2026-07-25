@@ -23,11 +23,12 @@ export function RegisterForm() {
 		...registerFormOpts(),
 		onSubmit: async ({ value }) => {
 			try {
-				await auth.register(value);
-				form.reset();
-				toast.success("Account created successfully");
-				route.invalidate();
-				await navigate({ to: "/login", replace: true });
+				// await auth.register(value);
+				// form.reset();
+				// toast.success("Account created successfully");
+				// route.invalidate();
+				// await navigate({ to: "/login", replace: true });
+				toast.info("Registration disabled for now");
 			} catch (error) {
 				const message = handleApiError(error, form);
 				if (message) appToast.error({ description: message });

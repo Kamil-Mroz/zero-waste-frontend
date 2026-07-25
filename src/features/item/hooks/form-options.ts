@@ -9,12 +9,12 @@ import type { UpdateItemFormValues } from "../types";
 export const createItemFormOptions = () =>
 	formOptions({
 		defaultValues: {
-			title: "Test item",
-			description: "This is a test item for dev",
-			condition: "NEW",
+			title: "",
+			description: "",
+			condition: "",
 			categoryId: "",
 			state: "AVAILABLE",
-			city: "Texas",
+			city: "",
 			images: [] as File[],
 			thumbnail: null as ThumbnailValue,
 		},

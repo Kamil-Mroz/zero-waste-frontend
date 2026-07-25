@@ -34,15 +34,12 @@ export const useWebSocketService = (webSocketUrl: string) => {
 		}
 
 		const client = new Client({
-			webSocketFactory: () =>
-				new WebSocket(
-					`${window.location.protocol === "https" ? "wss" : "ws"}://${window.location.host}/ws`,
-				),
+			webSocketFactory: () => new WebSocket(`wss://${window.location.host}/ws`),
 
 			connectHeaders: {
 				Authorization: `Bearer ${token}`,
 			},
-			debug: (str) => console.log("[WS]", str),
+			// debug: (str) => console.log("[WS]", str),
 
 			reconnectDelay: 5000,
 			heartbeatIncoming: 4000,
@@ -50,7 +47,7 @@ export const useWebSocketService = (webSocketUrl: string) => {
 			forceBinaryWSFrames: true,
 			appendMissingNULLonIncoming: true,
 			onConnect: () => {
-				console.log("Websocket connected");
+				// console.log("Websocket connected");
 				setIsConnected(true);
 			},
 			onStompError: (frame) => {

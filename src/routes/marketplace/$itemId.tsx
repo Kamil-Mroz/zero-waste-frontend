@@ -52,7 +52,7 @@ function RouteComponent() {
 
 	const { data: item } = useSuspenseQuery(itemQueryOptions(itemId));
 
-	console.log(item);
+	// console.log(item);
 	return (
 		<>
 			<Item item={item} />

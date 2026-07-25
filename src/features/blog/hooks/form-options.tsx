@@ -35,7 +35,7 @@ export const useBlogForm = (blog?: BlogType) => {
 									queryKey: BLOG_QUERY_KEYS.byId(blog.id),
 								}),
 							]
-						: []),
+						: [])
 				]);
 				await router.invalidate();
 
