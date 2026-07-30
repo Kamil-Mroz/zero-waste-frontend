@@ -13,7 +13,8 @@ export function ErrorComponent({ error }: ErrorComponentProps) {
 	const router = useRouter();
 	const queryClientErrorBoundary = useQueryErrorResetBoundary();
 
-	const isDev = process.env.NODE_ENV !== "production";
+	const isDev = import.meta.env.DEV;
+
 	useEffect(() => {
 		queryClientErrorBoundary.reset();
 	}, [queryClientErrorBoundary]);
@@ -55,35 +56,4 @@ export function ErrorComponent({ error }: ErrorComponentProps) {
 			</div>
 		</div>
 	);
-
-	// if (typeof error === "object" && error !== null && "status" in error) {
-	// 	const err = error as {
-	// 		status: number;
-	// 		message: string;
-	// 		errors?: Record<string, { message: string }>;
-	// 	};
-
-	// 	return (
-	// 		<div>
-	// 			<div className="text-center">
-	// 				<h2 className="text-6xl">{err.status}</h2>
-	// 				<p className="text-xl">{err.message}</p>
-	// 			</div>
-
-	// 			{err.errors &&
-	// 				Object.entries(err.errors).map(([key, val]) => (
-	// 					<p key={key}>
-	// 						{key}: {val.message}
-	// 					</p>
-	// 				))}
-	// 		</div>
-	// 	);
-	// }
-
-	// return (
-	// 	<div className="text-center">
-	// 		<h2 className="text-6xl">Unexpected error</h2>
-	// 		<p className="text-xl">{(error as Error)?.message}</p>
-	// 	</div>
-	// );
 }

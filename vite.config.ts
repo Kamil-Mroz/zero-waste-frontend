@@ -19,11 +19,11 @@ const config = defineConfig(({ mode }) => {
 		server: {
 			proxy: {
 				"/api": {
-					target: env.VITE_BACKEND_URL,
+					target: env.VITE_BASE_API_URL,
 					changeOrigin: true,
 				},
 				"/ws": {
-					target: env.VITE_BACKEND_URL,
+					target: env.VITE_BASE_API_URL,
 					ws: true,
 				},
 			},

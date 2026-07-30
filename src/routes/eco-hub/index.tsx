@@ -16,13 +16,13 @@ function RouteComponent() {
 				<Link to="/eco-hub/blogs">Explore Blogs</Link>
 			</Button>
 
-			<Button
+			{/* <Button
 				asChild
 				className="h-auto text-2xl border border-muted"
 				variant="ghost"
 			>
 				<Link to="/eco-hub/quizzes">Explore Quizzes</Link>
-			</Button>
+			</Button> */}
 		</div>
 	);
 }

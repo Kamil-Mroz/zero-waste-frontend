@@ -14,6 +14,7 @@ import type { SubscriptionCallback } from "../types";
 export const useWebSocketService = (webSocketUrl: string) => {
 	const { token, user } = useAuth();
 	const subscriptionsRef = useRef(new Map<string, StompSubscription>());
+	const isDev = import.meta.env.DEV;
 
 	const clientRef = useRef<Client | null>(null);
 	const [isConnected, setIsConnected] = useState(false);
@@ -34,7 +35,10 @@ export const useWebSocketService = (webSocketUrl: string) => {
 		}
 
 		const client = new Client({
-			webSocketFactory: () => new WebSocket(`wss://${window.location.host}/ws`),
+			webSocketFactory: () =>
+				new WebSocket(
+					`${isDev ? "ws" : "wss"}://${window.location.host}/ws`,
+				),
 
 			connectHeaders: {
 				Authorization: `Bearer ${token}`,
