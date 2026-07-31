@@ -1,5 +1,4 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { appToast } from "@/features/shared/components/toast";
 import {
@@ -16,7 +15,7 @@ import { loginFormOpts } from "../hooks/form-options";
 import { useAuth } from "../hooks/useAuth";
 
 export function LoginForm({ redirect = "/" }: { redirect?: string }) {
-	const auth = useAuth();
+	const { login } = useAuth();
 	const route = useRouter();
 	const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ export function LoginForm({ redirect = "/" }: { redirect?: string }) {
 		...loginFormOpts(),
 		onSubmit: async ({ value }) => {
 			try {
-				await auth.login(value);
+				await login(value);
 				form.reset();
 				await route.invalidate();
 				await navigate({ to: redirect, replace: true });

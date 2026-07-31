@@ -20,6 +20,9 @@ export type User = {
 	joinedAt: string;
 	roles: UserRoles;
 };
+
+export type UserSummary = Pick<User, "email" | "id" | "firstName" | "lastName">;
+
 export type UserFormProps = {
 	defaultValues?: CreateUserType;
 };

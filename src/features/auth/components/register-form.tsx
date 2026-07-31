@@ -16,14 +16,14 @@ import { registerFormOpts } from "../hooks/form-options";
 import { useAuth } from "../hooks/useAuth";
 
 export function RegisterForm() {
-	const auth = useAuth();
+	const {register} = useAuth();
 	const navigate = useNavigate();
 	const route = useRouter();
 	const form = useAppForm({
 		...registerFormOpts(),
 		onSubmit: async ({ value }) => {
 			try {
-				// await auth.register(value);
+				// await register(value);
 				// form.reset();
 				// toast.success("Account created successfully");
 				// route.invalidate();

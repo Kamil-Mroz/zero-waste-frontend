@@ -1,4 +1,4 @@
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery,  } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { Package } from "lucide-react";
 import { useEffect } from "react";

@@ -36,9 +36,7 @@ export const useWebSocketService = (webSocketUrl: string) => {
 
 		const client = new Client({
 			webSocketFactory: () =>
-				new WebSocket(
-					`${isDev ? "ws" : "wss"}://${window.location.host}/ws`,
-				),
+				new WebSocket(`${isDev ? "ws" : "wss"}://${window.location.host}/ws`),
 
 			connectHeaders: {
 				Authorization: `Bearer ${token}`,
@@ -55,7 +53,8 @@ export const useWebSocketService = (webSocketUrl: string) => {
 				setIsConnected(true);
 			},
 			onStompError: (frame) => {
-				console.error("Websocket error:", frame.headers.message);
+				if (import.meta.env.DEV)
+					console.error("Websocket error:", frame.headers.message);
 			},
 		});
 

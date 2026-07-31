@@ -1,8 +1,7 @@
 import type { z } from "zod/v4";
 import type { Category } from "../category/types";
 import type { SelectItems } from "../shared/components/form/select-field";
-import type { Page, Pageable } from "../shared/types";
-import type { User } from "../users/types";
+import type { UserSummary } from "../users/types";
 import type {
 	baseItemSearchSchema,
 	createItemFormSchema,
@@ -43,7 +42,7 @@ export type ItemType = {
 	condition: ItemConditionType;
 	state: ItemStateType;
 	category: Category;
-	owner: User | null;
+	owner: UserSummary | null;
 	images: Image[];
 	thumbnail: Image | null;
 };
@@ -61,7 +60,7 @@ export type ItemListProps = {
 export type ItemCardProps = {
 	item: ItemType;
 };
-export type ItemWithOwnerType = ItemType & { owner: User };
+export type ItemWithOwnerType = ItemType & { owner: UserSummary };
 
 export type ItemProps = {
 	item: ItemWithOwnerType;
