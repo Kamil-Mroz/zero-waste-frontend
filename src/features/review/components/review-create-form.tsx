@@ -34,13 +34,17 @@ export function ReviewCreateForm({ offerId }: ReviewCreateFormProps) {
 								{(field) => <field.TextareaField label="Comment" />}
 							</form.AppField>
 
-							<div className="grid grid-cols-2 gap-1">
-								<form.AppForm>
-									<form.ResetButton />
-								</form.AppForm>
-								<form.AppForm>
-									<form.SubmitButton label="Submit" />
-								</form.AppForm>
+							<div className="grid md:grid-cols-2 gap-1 ">
+								<div className="order-last md:order-first grid">
+									<form.AppForm>
+										<form.ResetButton />
+									</form.AppForm>
+								</div>
+								<div className="order-first md:order-last">
+									<form.AppForm>
+										<form.SubmitButton label="Submit" />
+									</form.AppForm>
+								</div>
 							</div>
 						</FieldGroup>
 					</form>

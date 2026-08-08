@@ -13,6 +13,7 @@ export const categoriesQueryOptions = () => {
 	return queryOptions({
 		queryKey: CATEGORY_QUERY_KEYS.all,
 		queryFn: async () => fetchCategories(),
+		staleTime: 30 * 60 * 1000,
 	});
 };
 
@@ -20,5 +21,6 @@ export const categoryTreeQueryOptions = () => {
 	return queryOptions({
 		queryKey: CATEGORY_QUERY_KEYS.tree,
 		queryFn: async () => fetchCategoryTree(),
+		staleTime: 30 * 60 * 1000,
 	});
 };

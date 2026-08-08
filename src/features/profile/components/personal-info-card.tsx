@@ -1,15 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/features/shared/components/ui/card";
 
 type Props = {
-	email: string;
-	phoneNumber: string;
 	firstName: string;
 	lastName: string;
 };
 
 export function PersonalInfoCard({
-	email,
-	phoneNumber,
 	firstName,
 	lastName,
 }: Props) {
@@ -30,15 +26,7 @@ export function PersonalInfoCard({
 					<p>{lastName}</p>
 				</div>
 
-				<div>
-					<p className="text-muted-foreground text-sm">Email</p>
-					<p>{email}</p>
-				</div>
 
-				<div>
-					<p className="text-muted-foreground text-sm">Phone Number</p>
-					<p>{phoneNumber}</p>
-				</div>
 			</CardContent>
 		</Card>
 	);

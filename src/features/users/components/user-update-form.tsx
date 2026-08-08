@@ -1,17 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { Spinner } from "@/features/shared/components/ui/spinner";
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS, USER_ROLES } from "../constants";
 import { userFormOptions } from "../hooks/form-options";
 import { userUpdateMutationOptions } from "../hooks/mutation-options";
 import { userQueryOptions } from "../hooks/query-options";
 import { type UpdateUserType, updateUserSchema } from "../schemas/user.schema";
-import { appToast } from "@/features/shared/components/toast";
 
 type UserUpdateForm = { onDone: () => void; userId: string };
 
@@ -20,6 +20,7 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 	const client = useQueryClient();
 	const mutation = useMutation(userUpdateMutationOptions(userId));
 	const { data, isLoading } = useQuery(userQueryOptions(userId));
+	const isMobile = useIsMobile();
 
 	const form = useAppForm({
 		...userFormOptions(),
@@ -77,18 +78,17 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 				<form.AppField name="password">
 					{(field) => <field.TextField label="Password" type="password" />}
 				</form.AppField>
-				<form.AppField name="phoneNumber">
-					{(field) => <field.TextField label="Phone number" />}
-				</form.AppField>
 				<form.AppField mode="array" name="roles">
 					{(field) => (
 						<field.CheckboxArrayField items={USER_ROLES} label="Roles" />
 					)}
 				</form.AppField>
-				<div className="grid grid-cols-2 gap-1">
-					<form.AppForm>
-						<form.ResetButton />
-					</form.AppForm>
+				<div className="grid md:grid-cols-2 gap-1">
+					{isMobile ? null : (
+						<form.AppForm>
+							<form.ResetButton />
+						</form.AppForm>
+					)}
 					<form.AppForm>
 						<form.SubmitButton label="Submit" />
 					</form.AppForm>

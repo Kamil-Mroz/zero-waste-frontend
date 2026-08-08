@@ -13,14 +13,14 @@ export const unreadCountQueryOptions = () =>
 	queryOptions({
 		queryKey: NOTIFICATIONS_QUERY_KEYS.unreadCount(),
 		queryFn: getUnreadCount,
-		staleTime: 10_000,
+		staleTime: 10 * 1000,
 	});
 
 export const notificationPopupQueryOptions = () =>
 	queryOptions({
 		queryKey: NOTIFICATIONS_QUERY_KEYS.popup(),
 		queryFn: () => getNotificationPopup(),
-		staleTime: 30_000,
+		staleTime: 30 * 1000,
 		enabled: false,
 		refetchOnWindowFocus: false,
 	});
@@ -29,7 +29,7 @@ export const notificationQueryOptions = (notificationId: string) =>
 	queryOptions({
 		queryKey: NOTIFICATIONS_QUERY_KEYS.byId(notificationId),
 		queryFn: () => getNotification(notificationId),
-		staleTime: Infinity,
+		staleTime: 30 * 1000,
 	});
 
 export const notificationHistoryQueryOptions = (type?: NotificationType) =>

@@ -9,6 +9,7 @@ import { SelectField } from "./select-field";
 import { ThumbnailField } from "./thumbnail-field";
 import { SubmitButton } from "./submit-button";
 import { TextareaField } from "./textarea-field";
+import { ConfirmField } from "./confirm-field";
 
 export const { fieldContext, formContext, useFieldContext, useFormContext } =
 	createFormHookContexts();
@@ -25,6 +26,7 @@ export const { useAppForm, withForm } = createFormHook({
 		DateField,
 		FileField,
 		RatingField,
+    ConfirmField
 	},
 	formComponents: { SubmitButton, ResetButton },
 });

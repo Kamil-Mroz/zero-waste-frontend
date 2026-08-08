@@ -6,12 +6,12 @@ export const publicUserProfileQueryOptions = (userId: string) =>
 	queryOptions({
 		queryKey: PROFILE_QUERY_KEYS.byId(userId),
 		queryFn: async () => fetchPublicUserProfile(userId),
-		// staleTime: 30_000,
+		staleTime: 30 * 60 * 1000,
 	});
 
 export const OwnProfileQueryOptions = () =>
 	queryOptions({
 		queryKey: PROFILE_QUERY_KEYS.own(),
 		queryFn: fetchOwnProfile,
-		// staleTime: 30_000,
+		staleTime: 30 * 60 * 1000,
 	});

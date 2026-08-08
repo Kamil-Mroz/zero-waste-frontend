@@ -11,7 +11,15 @@ import { PendingComponent } from "./features/shared/components/pending";
 import WebsocketProvider from "./features/webSocket/components/websocket-provider";
 import { routeTree } from "./routeTree.gen";
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+			staleTime: 5 * 60 * 1000,
+			gcTime: 30 * 60 * 1000,
+		},
+	},
+});
 
 export const router = createRouter({
 	routeTree,

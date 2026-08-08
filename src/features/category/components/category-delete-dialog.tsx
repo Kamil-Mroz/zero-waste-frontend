@@ -4,7 +4,6 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { Button } from "@/features/shared/components/ui/button";
 import { Spinner } from "@/features/shared/components/ui/spinner";
 import { CATEGORY_QUERY_KEYS } from "../constants";
@@ -43,7 +42,7 @@ export function CategoryDeleteDialog({
 	return (
 		<div className="space-y-4">
 			<p>Category to delete: {category.name}</p>
-			<div className="grid grid-cols-2 gap-2">
+			<div className="grid md:grid-cols-2 gap-2">
         {isMobile ? null:
 				<Button
         variant="outline"

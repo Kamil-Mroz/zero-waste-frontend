@@ -17,7 +17,6 @@ export function OwnProfile({ user }: Props) {
 			<UserHeader
 				firstName={user.firstName}
 				lastName={user.lastName}
-				subtitle={user.email}
 			/>
 			<div className="grid sm:grid-cols-2 gap-4">
 				<AccountStatusCard
@@ -31,8 +30,6 @@ export function OwnProfile({ user }: Props) {
 			<PersonalInfoCard
 				firstName={user.firstName}
 				lastName={user.lastName}
-				email={user.email}
-				phoneNumber={user.phoneNumber}
 			/>
 			<Suspense fallback={<OwnProfileStatsSkeleton />}>
 				<OwnProfileStats />

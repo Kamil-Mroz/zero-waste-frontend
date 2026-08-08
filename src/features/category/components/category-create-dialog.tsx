@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { CATEGORY_QUERY_KEYS } from "../constants";
 import { createCategoryMutationOptions } from "../hooks/mutation-options";
 import type { CategoryCreateDialogProps } from "../types";

@@ -12,10 +12,5 @@ export const registerSchema = z.object({
 		)
 		.min(10, "Password must be at least 10 characters")
 		.max(128, "Password can be maximum 128 characters"),
-	phoneNumber: z
-		.string()
-		.regex(
-			/^\+?(\d{1,3})?[-.\s]?(\(?\d{3}\)?[-.\s]?)?(\d[-.\s]?){6,9}\d$/,
-			"Provide a valid format phone number",
-		),
+
 });

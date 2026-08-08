@@ -96,10 +96,7 @@ export const NAV_LINKS = {
 					title: "Manage Blog",
 					url: "/admin/blog",
 				},
-				{
-					title: "Manage Quizzes",
-					url: "/admin/quizzes",
-				},
+
 				{
 					title: "Reports",
 					url: "/admin/reports",
@@ -128,7 +125,7 @@ export const NAV_LINKS = {
 				},
 				{
 					title: "Settings",
-					url: "/profile/settings",
+					url: "/settings",
 				},
 			],
 		},

@@ -7,10 +7,12 @@ export const usersQueryOptions = (options: UsersQueryOptionsProps) =>
 	queryOptions({
 		queryKey: [...USER_QUERY_KEYS.all, options],
 		queryFn: async () => fetchUsers(options),
+		staleTime: 30 * 60 * 1000,
 	});
 
 export const userQueryOptions = (id: string) =>
 	queryOptions({
 		queryKey: USER_QUERY_KEYS.byId(id),
 		queryFn: async () => fetchUser(id),
+		staleTime: 30 * 60 * 1000,
 	});

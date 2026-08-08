@@ -1,16 +1,12 @@
 import type { z } from "zod/v4";
+import type { User, UserRoles } from "../users/types";
 import type { loginSchema } from "./schemas/login.schema";
 import type { registerSchema } from "./schemas/register.schema";
-import type { User, UserRoles } from "../users/types";
-
-
 
 export type AuthResponse = {
 	user: User;
 	accessToken: string;
 };
-
-
 
 export type AuthState = {
 	user: User | null;
@@ -21,6 +17,7 @@ export type AuthState = {
 	register: (data: RegisterRequest) => Promise<void>;
 	login: (data: LoginRequest) => Promise<void>;
 	logout: () => Promise<void>;
+	resetState: () => void;
 };
 
 export type LoginRequest = z.infer<typeof loginSchema>;

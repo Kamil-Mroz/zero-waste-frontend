@@ -1,15 +1,15 @@
-import { mutationOptions } from "@tanstack/react-query";
+import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { appToast } from "@/features/shared/components/toast";
+import { handleApiError } from "@/lib/utils";
 import {
 	banUsers,
 	createUser,
+	deleteUser,
 	deleteUsers,
 	unbanUsers,
 	updateUser,
 } from "../api";
 import type { UpdateUserType } from "../schemas/user.schema";
-import { handleApiError } from "@/lib/utils";
-import { toast } from "sonner";
-import { appToast } from "@/features/shared/components/toast";
 
 export function userCreateMutationOptions() {
 	return mutationOptions({
@@ -41,5 +41,11 @@ export function userBanMutationOptions() {
 export function userUnbanMutationOptions() {
 	return mutationOptions({
 		mutationFn: unbanUsers,
+	});
+}
+
+export function useUserAccountDeleteMutation() {
+	return useMutation({
+		mutationFn: deleteUser,
 	});
 }

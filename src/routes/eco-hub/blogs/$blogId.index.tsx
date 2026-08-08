@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Blog } from "@/features/blog/components/blog";
+import { BlogDetailsSkeleton } from "@/features/blog/components/blog-details-skeleton";
 import { blogQueryOptions } from "@/features/blog/hooks/query-options";
 import GoBackButton from "@/features/shared/components/go-back-button";
 import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/eco-hub/blogs/$blogId/")({
 	beforeLoad: async ({ context, params }) => {
 		await context.queryClient.ensureQueryData(blogQueryOptions(params.blogId));
 	},
+	pendingComponent: BlogDetailsSkeleton,
 });
 
 function RouteComponent() {

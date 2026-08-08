@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
+import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS } from "../constants";
 import { userUnbanFormOptions } from "../hooks/form-options";
 import { userUnbanMutationOptions } from "../hooks/mutation-options";
 import { unbanUserSchema } from "../schemas/user.schema";
-import { appToast } from "@/features/shared/components/toast";
 
 export function UserUnbanForm({
 	onDone,
@@ -22,6 +22,7 @@ export function UserUnbanForm({
 	const mutation = useMutation({
 		...userUnbanMutationOptions(),
 	});
+	const isMobile = useIsMobile();
 
 	const form = useAppForm({
 		...userUnbanFormOptions(ids),
@@ -68,10 +69,12 @@ export function UserUnbanForm({
 					{(field) => <field.TextareaField label="Reason" />}
 				</form.AppField>
 
-				<div className="grid grid-cols-2 gap-1">
-					<form.AppForm>
-						<form.ResetButton />
-					</form.AppForm>
+				<div className="grid md:grid-cols-2 gap-1">
+					{isMobile ? null : (
+						<form.AppForm>
+							<form.ResetButton />
+						</form.AppForm>
+					)}
 					<form.AppForm>
 						<form.SubmitButton label="Submit" />
 					</form.AppForm>

@@ -3,7 +3,6 @@ import {
 	useQueryClient,
 	useSuspenseQueries,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { appToast } from "@/features/shared/components/toast";
 import { CATEGORY_QUERY_KEYS } from "../constants";
 import { updateCategoryMutationOptions } from "../hooks/mutation-options";

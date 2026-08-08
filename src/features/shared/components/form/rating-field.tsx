@@ -8,17 +8,15 @@ import { useFieldContext } from "./form";
 function RatingField({ label }: { label: string }) {
 	const field = useFieldContext<number>();
 
-	const [errors, isInvalid] = useStore(field.store, (state) => [
+	const [value, errors, isInvalid] = useStore(field.store, (state) => [
+		state.value,
 		state.meta.errors,
 		state.meta.isTouched && !state.meta.isValid,
 	]);
 
-	const [hoveredStars, setHoveredStars] = useState(field.state.value);
+	const [hoveredStars, setHoveredStars] = useState(value);
 	return (
-		<Field
-			data-invalid={isInvalid}
-			onMouseLeave={() => setHoveredStars(field.state.value)}
-		>
+		<Field data-invalid={isInvalid} onMouseLeave={() => setHoveredStars(value)}>
 			<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
 			<div className="flex gap-1 items-center">
 				{Array.from({ length: 5 }).map((_, i) => {
@@ -34,8 +32,8 @@ function RatingField({ label }: { label: string }) {
 							<Star
 								className={cn(
 									"size-5 cursor-pointer",
-									field.state.value === hoveredStars
-										? starValue <= field.state.value
+									value === hoveredStars
+										? starValue <= value
 											? "fill-yellow-400 text-yellow-400"
 											: "text-muted-foreground"
 										: starValue <= hoveredStars

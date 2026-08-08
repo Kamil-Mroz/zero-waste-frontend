@@ -7,12 +7,12 @@ export const ownOffersQueryOptions = (options: Partial<Pageable>) =>
 	queryOptions({
 		queryKey: [...OFFER_QUERY_KEYS.own(), options],
 		queryFn: async () => getOwnOffers(options),
-		staleTime: 30_000,
+		staleTime: 30 * 1000,
 	});
 
 export const receivedOffersQueryOptions = (options: Partial<Pageable>) =>
 	queryOptions({
 		queryKey: [...OFFER_QUERY_KEYS.received(), options],
 		queryFn: async () => getReceivedOffers(options),
-		staleTime: 30_000,
+		staleTime: 30 * 1000,
 	});

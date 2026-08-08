@@ -105,13 +105,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	const logout = async () => {
 		try {
 			await api.post("/v1/auth/logout");
-			setUser(null);
-			setToken(null);
+			resetState();
 		} catch {
 			appToast.error({
 				description: "Something went wrong, please try again.",
 			});
 		}
+	};
+	const resetState = () => {
+		setUser(null);
+		setToken(null);
 	};
 	const hasRole = (role: Roles) => {
 		if (!user) return false;
@@ -134,6 +137,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				isLoading,
 				hasAnyRole,
 				token,
+				resetState,
 			}}
 		>
 			{children}

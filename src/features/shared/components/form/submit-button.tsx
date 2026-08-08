@@ -1,8 +1,14 @@
 import { useStore } from "@tanstack/react-form";
-import { Button } from "../ui/button";
+import type { VariantProps } from "class-variance-authority";
+import { Button, buttonVariants } from "../ui/button";
 import { useFormContext } from "./form";
 
-export function SubmitButton({ label }: { label: string }) {
+export function SubmitButton({
+	label,
+	variant,
+}: {
+	label: string;
+} & VariantProps<typeof buttonVariants>) {
 	const form = useFormContext();
 
 	const [isSubmitting, canSubmit] = useStore(form.store, (state) => [
@@ -14,6 +20,8 @@ export function SubmitButton({ label }: { label: string }) {
 		<Button
 			type="submit"
 			disabled={!canSubmit || isSubmitting}
+			variant={variant || "default"}
+			className="w-full"
 		>
 			{isSubmitting ? "..." : label}
 		</Button>

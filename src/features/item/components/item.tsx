@@ -90,7 +90,6 @@ export function Item({ item }: ItemProps) {
 								{item.owner.firstName} {item.owner.lastName}
 							</Link>
 						</Button>
-						<p className="text-sm">{item.owner.email}</p>
 					</div>
 
 					<ItemActions

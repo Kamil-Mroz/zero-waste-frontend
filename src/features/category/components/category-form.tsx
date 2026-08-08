@@ -1,11 +1,10 @@
-import { toast } from "sonner";
-
+import { appToast } from "@/features/shared/components/toast";
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import { handleApiError } from "@/lib/utils";
 import { useAppForm } from "../../shared/components/form/form";
 import { FieldGroup } from "../../shared/components/ui/field";
 import { categoryFormOptions } from "../hooks/form-options";
 import type { CategoryFormProps } from "../types";
-import { appToast } from "@/features/shared/components/toast";
 
 export function CategoryForm({
 	defaultValues,
@@ -13,6 +12,7 @@ export function CategoryForm({
 	showCategorySelect = false,
 	categories,
 }: CategoryFormProps) {
+	const isMobile = useIsMobile();
 	const form = useAppForm({
 		...categoryFormOptions(defaultValues),
 		listeners: {
@@ -74,10 +74,12 @@ export function CategoryForm({
 						)}
 					</form.AppField>
 				)}
-				<div className="grid grid-cols-2 gap-1">
-					<form.AppForm>
-						<form.ResetButton />
-					</form.AppForm>
+				<div className="grid md:grid-cols-2 gap-1">
+					{isMobile ? null : (
+						<form.AppForm>
+							<form.ResetButton />
+						</form.AppForm>
+					)}
 					<form.AppForm>
 						<form.SubmitButton label="Submit" />
 					</form.AppForm>

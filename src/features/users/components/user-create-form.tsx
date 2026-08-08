@@ -3,6 +3,7 @@ import { useRouter } from "@tanstack/react-router";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
+import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS, USER_ROLES } from "../constants";
 import { userFormOptions } from "../hooks/form-options";
@@ -13,6 +14,7 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 	const router = useRouter();
 	const client = useQueryClient();
 	const mutation = useMutation(userCreateMutationOptions());
+	const isMobile = useIsMobile();
 
 	const form = useAppForm({
 		...userFormOptions(),
@@ -57,18 +59,18 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 				<form.AppField name="password">
 					{(field) => <field.TextField label="Password" type="text" />}
 				</form.AppField>
-				<form.AppField name="phoneNumber">
-					{(field) => <field.TextField label="Phone number" />}
-				</form.AppField>
+
 				<form.AppField mode="array" name="roles">
 					{(field) => (
 						<field.CheckboxArrayField items={USER_ROLES} label="Roles" />
 					)}
 				</form.AppField>
-				<div className="grid grid-cols-2 gap-1">
-					<form.AppForm>
-						<form.ResetButton />
-					</form.AppForm>
+				<div className="grid md:grid-cols-2 gap-1">
+					{isMobile ? null : (
+						<form.AppForm>
+							<form.ResetButton />
+						</form.AppForm>
+					)}
 					<form.AppForm>
 						<form.SubmitButton label="Submit" />
 					</form.AppForm>

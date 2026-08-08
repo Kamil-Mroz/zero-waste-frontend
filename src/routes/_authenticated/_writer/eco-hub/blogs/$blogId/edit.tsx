@@ -21,7 +21,7 @@ function RouteComponent() {
 	const { blogId } = Route.useParams();
 	const { data: blog } = useSuspenseQuery(blogQueryOptions(blogId));
 	return (
-		<div className="grid place-items-center h-full">
+		<div className="grid items-center h-full">
 			<div className="space-y-2">
 				<GoBackButton />
 				<BlogForm blog={blog} />

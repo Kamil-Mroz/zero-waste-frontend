@@ -20,6 +20,7 @@ import { Route as EcoHubIndexRouteImport } from './routes/eco-hub/index'
 import { Route as MarketplaceItemIdRouteImport } from './routes/marketplace/$itemId'
 import { Route as UnauthenticatedRegisterRouteImport } from './routes/_unauthenticated/register'
 import { Route as UnauthenticatedLoginRouteImport } from './routes/_unauthenticated/login'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedOffersRouteImport } from './routes/_authenticated/offers'
 import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
@@ -119,6 +120,11 @@ const UnauthenticatedLoginRoute = UnauthenticatedLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => UnauthenticatedRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
@@ -392,6 +398,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/offers': typeof AuthenticatedOffersRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
@@ -438,6 +445,7 @@ export interface FileRoutesByTo {
   '/about': typeof AuthenticatedAboutRoute
   '/marketplace': typeof MarketplaceIndexRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
@@ -491,6 +499,7 @@ export interface FileRoutesById {
   '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
   '/_authenticated/offers': typeof AuthenticatedOffersRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_unauthenticated/login': typeof UnauthenticatedLoginRoute
   '/_unauthenticated/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
@@ -548,6 +557,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/offers'
     | '/profile'
+    | '/settings'
     | '/login'
     | '/register'
     | '/marketplace/$itemId'
@@ -594,6 +604,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/marketplace'
     | '/profile'
+    | '/settings'
     | '/login'
     | '/register'
     | '/marketplace/$itemId'
@@ -646,6 +657,7 @@ export interface FileRouteTypes {
     | '/_authenticated/marketplace'
     | '/_authenticated/offers'
     | '/_authenticated/profile'
+    | '/_authenticated/settings'
     | '/_unauthenticated/login'
     | '/_unauthenticated/register'
     | '/marketplace/$itemId'
@@ -777,6 +789,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof UnauthenticatedLoginRouteImport
       parentRoute: typeof UnauthenticatedRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
@@ -1349,6 +1368,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedMarketplaceRoute: typeof AuthenticatedMarketplaceRouteWithChildren
   AuthenticatedOffersRoute: typeof AuthenticatedOffersRouteWithChildren
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedNotificationsNotificationIdRoute: typeof AuthenticatedNotificationsNotificationIdRoute
   AuthenticatedNotificationsIndexRoute: typeof AuthenticatedNotificationsIndexRoute
 }
@@ -1361,6 +1381,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedMarketplaceRoute: AuthenticatedMarketplaceRouteWithChildren,
   AuthenticatedOffersRoute: AuthenticatedOffersRouteWithChildren,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedNotificationsNotificationIdRoute:
     AuthenticatedNotificationsNotificationIdRoute,
   AuthenticatedNotificationsIndexRoute: AuthenticatedNotificationsIndexRoute,

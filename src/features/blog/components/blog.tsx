@@ -11,7 +11,7 @@ export function Blog({ blog }: BlogProps) {
 	const { user } = useAuth();
 	const mutation = useBlogDeleteMutation();
 	return (
-		<article className="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md">
+		<article className="group">
 			<div className="flex items-start justify-between gap-4">
 				<div className="space-y-2">
 					<h2 className="text-xl font-semibold tracking-tight">{blog.title}</h2>

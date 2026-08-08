@@ -1,9 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { useMemo } from "react";
-
-import { cn } from "@/lib/utils";
 import { Label } from "@/features/shared/components/ui/label";
 import { Separator } from "@/features/shared/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
 	return (
@@ -74,7 +73,7 @@ function Field({
 }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
 	return (
 		// biome-ignore lint/a11y/useSemanticElements: <explanation>
-<div
+		<div
 			role="group"
 			data-slot="field"
 			data-orientation={orientation}
@@ -194,7 +193,7 @@ function FieldError({
 		];
 
 		if (uniqueErrors?.length === 1) {
-			return uniqueErrors[0]?.message;
+			return <p>{uniqueErrors[0]?.message}</p>;
 		}
 
 		return (
@@ -209,6 +208,7 @@ function FieldError({
 	}, [children, errors]);
 
 	if (!content) {
+		console.log(true);
 		return null;
 	}
 

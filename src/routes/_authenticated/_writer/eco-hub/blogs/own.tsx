@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogList } from "@/features/blog/components/blog-list";
+import { BlogListSkeleton } from "@/features/blog/components/blog-list-skeleton";
 import { ownBlogsQueryOptions } from "@/features/blog/hooks/query-options";
 
 export const Route = createFileRoute(
@@ -10,6 +11,7 @@ export const Route = createFileRoute(
 	beforeLoad: async ({ context }) => {
 		await context.queryClient.ensureQueryData(ownBlogsQueryOptions());
 	},
+	pendingComponent: BlogListSkeleton,
 });
 
 function RouteComponent() {

@@ -40,3 +40,7 @@ export const unbanUsers = async (values: UnbanUserSchema) => {
 	const res = await api.post(`/v1/users/unban`, values);
 	return res.data;
 };
+
+export const deleteUser = async () => {
+	return api.delete(`/v1/users/account`);
+};

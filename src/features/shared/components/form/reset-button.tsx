@@ -5,11 +5,7 @@ export function ResetButton({ label }: { label?: string }) {
 	const form = useFormContext();
 
 	return (
-		<Button
-			type="button"
-			variant="outline"
-			onClick={() => form.reset()}
-		>
+		<Button type="button" variant="outline" onClick={() => form.reset()}>
 			{label ?? "Reset"}
 		</Button>
 	);

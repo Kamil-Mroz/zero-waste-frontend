@@ -5,7 +5,6 @@ import { appToast } from "@/features/shared/components/toast";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
@@ -16,7 +15,7 @@ import { registerFormOpts } from "../hooks/form-options";
 import { useAuth } from "../hooks/useAuth";
 
 export function RegisterForm() {
-	const {register} = useAuth();
+	const { register } = useAuth();
 	const navigate = useNavigate();
 	const route = useRouter();
 	const form = useAppForm({
@@ -38,10 +37,9 @@ export function RegisterForm() {
 
 	return (
 		<div className="px-5 w-full">
-			<Card className="w-full sm:max-w-2xl mx-auto">
+			<Card className="w-full sm:max-w-md mx-auto">
 				<CardHeader>
 					<CardTitle className="text-center text-3xl">Register</CardTitle>
-					<CardDescription></CardDescription>
 				</CardHeader>
 				<CardContent>
 					<form
@@ -50,7 +48,7 @@ export function RegisterForm() {
 							form.handleSubmit();
 						}}
 					>
-						<FieldGroup className="sm:grid">
+						<FieldGroup className="">
 							<form.AppField name="firstName">
 								{(field) => <field.TextField label="First name" />}
 							</form.AppField>
@@ -66,9 +64,6 @@ export function RegisterForm() {
 								)}
 							</form.AppField>
 
-							<form.AppField name="phoneNumber">
-								{(field) => <field.TextField label="Phone number" type="tel" />}
-							</form.AppField>
 							<div className="grid col-span-2">
 								<form.AppForm>
 									<form.SubmitButton label="Submit" />

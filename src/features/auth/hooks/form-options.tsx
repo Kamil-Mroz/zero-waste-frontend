@@ -9,7 +9,6 @@ export const registerFormOpts = () =>
 			lastName: "",
 			email: "",
 			password: "",
-			phoneNumber: "",
 		},
 		validators: {
 			onSubmit: registerSchema,

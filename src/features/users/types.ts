@@ -14,7 +14,6 @@ export type User = {
 	firstName: string;
 	lastName: string;
 	email: string;
-	phoneNumber: string;
 	hasActiveBan: boolean;
 	bannedUntil: string | null;
 	joinedAt: string;

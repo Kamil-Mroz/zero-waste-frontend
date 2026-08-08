@@ -43,8 +43,6 @@ export const banUserSchema = z.object({
 });
 export type BanUserSchema = z.infer<typeof banUserSchema>;
 
-
-
 export const unbanUserSchema = z.object({
 	ids: z.array(z.uuid()).min(1),
 	revokedReason: z.string().trim().nonempty("Reason required"),
@@ -58,4 +56,8 @@ export const userParamsSchema = z.object({
 	userId: z.uuid().optional().catch(""),
 	text: z.string().optional().catch(""),
 	roles: z.array(roleSchema).optional().catch([]),
+});
+
+export const deleteUserFormSchema = z.object({
+	confirmation: z.string(),
 });
