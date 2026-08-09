@@ -1,9 +1,5 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { z } from "zod/v4";
-import { Item } from "@/features/item/components/item";
-import { ItemDetailSkeleton } from "@/features/item/components/item-detail-skeleton";
-import { ItemDialog } from "@/features/item/components/item-dialog";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
 import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
@@ -15,7 +11,6 @@ const itemSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/marketplace/$itemId")({
-	component: RouteComponent,
 	staticData: {
 		getTitle: () => "Item",
 	},
@@ -24,7 +19,6 @@ export const Route = createFileRoute("/marketplace/$itemId")({
 		const { modal } = search;
 		return { modal };
 	},
-	pendingComponent: ItemDetailSkeleton,
 	params: {
 		parse: (params) => {
 			const result = idParamSchema.safeParse({ id: params.itemId });
@@ -46,17 +40,3 @@ export const Route = createFileRoute("/marketplace/$itemId")({
 		}
 	},
 });
-
-function RouteComponent() {
-	const { itemId } = Route.useParams();
-
-	const { data: item } = useSuspenseQuery(itemQueryOptions(itemId));
-
-	// console.log(item);
-	return (
-		<>
-			<Item item={item} />
-			<ItemDialog />
-		</>
-	);
-}

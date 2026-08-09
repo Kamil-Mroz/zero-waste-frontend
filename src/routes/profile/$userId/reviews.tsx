@@ -1,18 +1,12 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { NotificationListSkeleton } from "@/features/notification/components/notification-list-skeleton";
-import { ReviewList } from "@/features/review/components/review-list";
 import { userReviewsQueryOptions } from "@/features/review/hooks/query-options";
-import GoBackButton from "@/features/shared/components/go-back-button";
 import { paginationSchema } from "@/features/shared/schemas/pagination.schema";
-import { getValidPage, withDefaultPageable } from "@/lib/utils";
+import { getValidPage } from "@/lib/utils";
 
 export const Route = createFileRoute("/profile/$userId/reviews")({
 	staticData: {
 		getTitle: () => "Reviews",
 	},
-	pendingComponent: NotificationListSkeleton,
-	component: RouteComponent,
 	validateSearch: paginationSchema,
 	beforeLoad: async ({ context, params, search }) => {
 		const { page, size } = search;
@@ -34,19 +28,3 @@ export const Route = createFileRoute("/profile/$userId/reviews")({
 		}
 	},
 });
-
-function RouteComponent() {
-	const { userId } = Route.useParams();
-	const { page, size } = Route.useSearch();
-	const pageable = withDefaultPageable({ page, size });
-	const { data: reviews } = useSuspenseQuery(
-		userReviewsQueryOptions(userId, pageable),
-	);
-
-	return (
-		<div className="space-y-2">
-			<GoBackButton />
-			<ReviewList reviews={reviews} pageable={pageable} />
-		</div>
-	);
-}

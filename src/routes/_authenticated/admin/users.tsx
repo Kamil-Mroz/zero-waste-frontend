@@ -1,7 +1,6 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
-	component: () => <Outlet />,
 	staticData: {
 		getTitle: () => "Manage users",
 	},

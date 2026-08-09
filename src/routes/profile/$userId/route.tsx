@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, Outlet } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/profile/$userId")({
@@ -16,5 +16,4 @@ export const Route = createFileRoute("/profile/$userId")({
 			};
 		},
 	},
-	component: Outlet,
 });

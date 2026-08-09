@@ -1,8 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { CategoryDialog } from "@/features/category/components/category-dialog";
-import { CategoryList } from "@/features/category/components/category-list";
-import { CategoryTreeSkeleton } from "@/features/category/components/category-tree-skeleton";
 import {
 	categoriesQueryOptions,
 	categoryQueryOptions,
@@ -11,7 +7,6 @@ import {
 import { categorySearchSchema } from "@/features/category/schemas/category.schema";
 
 export const Route = createFileRoute("/_authenticated/admin/categories/")({
-	component: RouteComponent,
 	staticData: {
 		getTitle: () => "List",
 	},
@@ -37,16 +32,4 @@ export const Route = createFileRoute("/_authenticated/admin/categories/")({
 			await context.queryClient.ensureQueryData(categoryTreeQueryOptions());
 		}
 	},
-	pendingComponent: CategoryTreeSkeleton,
 });
-
-function RouteComponent() {
-	const { data: tree } = useSuspenseQuery(categoryTreeQueryOptions());
-
-	return (
-		<div>
-			<CategoryList categories={tree} />
-			<CategoryDialog />
-		</div>
-	);
-}

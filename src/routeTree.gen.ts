@@ -8,82 +8,80 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
-import { Route as MarketplaceRouteImport } from './routes/marketplace'
-import { Route as UnauthenticatedRouteImport } from './routes/_unauthenticated'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as EcoHubRouteRouteImport } from './routes/eco-hub/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as MarketplaceIndexRouteImport } from './routes/marketplace/index'
-import { Route as EcoHubIndexRouteImport } from './routes/eco-hub/index'
-import { Route as MarketplaceItemIdRouteImport } from './routes/marketplace/$itemId'
-import { Route as UnauthenticatedRegisterRouteImport } from './routes/_unauthenticated/register'
-import { Route as UnauthenticatedLoginRouteImport } from './routes/_unauthenticated/login'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedOffersRouteImport } from './routes/_authenticated/offers'
-import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedAboutRouteImport } from './routes/_authenticated/about'
-import { Route as ProfileUserIdRouteRouteImport } from './routes/profile/$userId/route'
-import { Route as EcoHubQuizzesRouteRouteImport } from './routes/eco-hub/quizzes/route'
-import { Route as EcoHubBlogsRouteRouteImport } from './routes/eco-hub/blogs/route'
-import { Route as AuthenticatedReviewsRouteRouteImport } from './routes/_authenticated/reviews/route'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as UnauthenticatedRouteImport } from './routes/_unauthenticated'
+import { Route as EcoHubRouteRouteImport } from './routes/eco-hub/route'
+import { Route as MarketplaceRouteImport } from './routes/marketplace'
+import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as AuthenticatedWriterRouteRouteImport } from './routes/_authenticated/_writer/route'
-import { Route as ProfileUserIdIndexRouteImport } from './routes/profile/$userId/index'
-import { Route as EcoHubQuizzesIndexRouteImport } from './routes/eco-hub/quizzes/index'
-import { Route as EcoHubBlogsIndexRouteImport } from './routes/eco-hub/blogs/index'
-import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
-import { Route as AuthenticatedOffersIndexRouteImport } from './routes/_authenticated/offers/index'
-import { Route as AuthenticatedNotificationsIndexRouteImport } from './routes/_authenticated/notifications/index'
-import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
-import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
-import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId/items'
-import { Route as AuthenticatedOffersReceivedRouteImport } from './routes/_authenticated/offers/received'
-import { Route as AuthenticatedOffersOwnRouteImport } from './routes/_authenticated/offers/own'
-import { Route as AuthenticatedNotificationsNotificationIdRouteImport } from './routes/_authenticated/notifications/$notificationId'
-import { Route as AuthenticatedMarketplaceWishlistRouteImport } from './routes/_authenticated/marketplace/wishlist'
-import { Route as AuthenticatedMarketplaceMyItemsRouteImport } from './routes/_authenticated/marketplace/my-items'
-import { Route as AuthenticatedMarketplaceHistoryRouteImport } from './routes/_authenticated/marketplace/history'
-import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_authenticated/marketplace/create'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
-import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
-import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
-import { Route as AuthenticatedReviewsLayoutRouteRouteImport } from './routes/_authenticated/reviews/_layout/route'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
+import { Route as AuthenticatedOffersRouteImport } from './routes/_authenticated/offers'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedReviewsRouteRouteImport } from './routes/_authenticated/reviews/route'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as UnauthenticatedLoginRouteImport } from './routes/_unauthenticated/login'
+import { Route as UnauthenticatedRegisterRouteImport } from './routes/_unauthenticated/register'
+import { Route as EcoHubIndexRouteImport } from './routes/eco-hub/index'
+import { Route as EcoHubBlogsRouteRouteImport } from './routes/eco-hub/blogs/route'
+import { Route as EcoHubQuizzesRouteRouteImport } from './routes/eco-hub/quizzes/route'
+import { Route as MarketplaceIndexRouteImport } from './routes/marketplace/index'
+import { Route as MarketplaceItemIdRouteImport } from './routes/marketplace/$itemId'
+import { Route as ProfileUserIdRouteRouteImport } from './routes/profile/$userId/route'
 import { Route as AuthenticatedWriterEcoHubRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/route'
-import { Route as EcoHubBlogsBlogIdIndexRouteImport } from './routes/eco-hub/blogs/$blogId.index'
-import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_authenticated/marketplace/create'
+import { Route as AuthenticatedMarketplaceHistoryRouteImport } from './routes/_authenticated/marketplace/history'
+import { Route as AuthenticatedMarketplaceMyItemsRouteImport } from './routes/_authenticated/marketplace/my-items'
+import { Route as AuthenticatedNotificationsIndexRouteImport } from './routes/_authenticated/notifications/index'
+import { Route as AuthenticatedNotificationsNotificationIdRouteImport } from './routes/_authenticated/notifications/$notificationId'
+import { Route as AuthenticatedOffersIndexRouteImport } from './routes/_authenticated/offers/index'
+import { Route as AuthenticatedOffersOwnRouteImport } from './routes/_authenticated/offers/own'
+import { Route as AuthenticatedOffersReceivedRouteImport } from './routes/_authenticated/offers/received'
+import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
+import { Route as AuthenticatedReviewsLayoutRouteRouteImport } from './routes/_authenticated/reviews/_layout/route'
+import { Route as EcoHubBlogsIndexRouteImport } from './routes/eco-hub/blogs/index'
+import { Route as EcoHubQuizzesIndexRouteImport } from './routes/eco-hub/quizzes/index'
+import { Route as ProfileUserIdIndexRouteImport } from './routes/profile/$userId/index'
+import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId/items'
+import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
 import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/admin/categories/index'
-import { Route as AuthenticatedReviewsCreateOfferIdRouteImport } from './routes/_authenticated/reviews/create/$offerId'
-import { Route as AuthenticatedReviewsLayoutReceivedRouteImport } from './routes/_authenticated/reviews/_layout/received'
-import { Route as AuthenticatedReviewsLayoutGivenRouteImport } from './routes/_authenticated/reviews/_layout/given'
-import { Route as AuthenticatedMarketplaceItemIdEditRouteImport } from './routes/_authenticated/marketplace/$itemId.edit'
+import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users/$userId'
+import { Route as AuthenticatedMarketplaceItemIdEditRouteImport } from './routes/_authenticated/marketplace/$itemId.edit'
+import { Route as AuthenticatedReviewsLayoutGivenRouteImport } from './routes/_authenticated/reviews/_layout/given'
+import { Route as AuthenticatedReviewsLayoutReceivedRouteImport } from './routes/_authenticated/reviews/_layout/received'
+import { Route as AuthenticatedReviewsCreateOfferIdRouteImport } from './routes/_authenticated/reviews/create/$offerId'
+import { Route as EcoHubBlogsBlogIdIndexRouteImport } from './routes/eco-hub/blogs/$blogId.index'
+import { Route as AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/route'
+import { Route as AuthenticatedWriterEcoHubBlogsOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/own'
+import { Route as AuthenticatedWriterEcoHubQuizzesOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/quizzes/own'
 import { Route as AuthenticatedAdminUsersUserIdIndexRouteImport } from './routes/_authenticated/admin/users/$userId/index'
 import { Route as AuthenticatedAdminUsersUserIdItemsRouteImport } from './routes/_authenticated/admin/users/$userId/items'
-import { Route as AuthenticatedWriterEcoHubQuizzesOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/quizzes/own'
-import { Route as AuthenticatedWriterEcoHubBlogsOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/own'
-import { Route as AuthenticatedWriterEcoHubBlogsCreateRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/create'
-import { Route as AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/route'
 import { Route as AuthenticatedWriterEcoHubBlogsBlogIdEditRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
 
-const UnauthorizedRoute = UnauthorizedRouteImport.update({
-  id: '/unauthorized',
-  path: '/unauthorized',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MarketplaceRoute = MarketplaceRouteImport.update({
-  id: '/marketplace',
-  path: '/marketplace',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UnauthenticatedRoute = UnauthenticatedRouteImport.update({
-  id: '/_unauthenticated',
+const AuthenticatedWriterEcoHubBlogsCreateLazyRouteImport = createFileRoute(
+  '/_authenticated/_writer/eco-hub/blogs/create',
+)()
+
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UnauthenticatedRoute = UnauthenticatedRouteImport.update({
+  id: '/_unauthenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EcoHubRouteRoute = EcoHubRouteRouteImport.update({
@@ -91,162 +89,167 @@ const EcoHubRouteRoute = EcoHubRouteRouteImport.update({
   path: '/eco-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MarketplaceIndexRoute = MarketplaceIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => MarketplaceRoute,
+const UnauthorizedRoute = UnauthorizedRouteImport.update({
+  id: '/unauthorized',
+  path: '/unauthorized',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const EcoHubIndexRoute = EcoHubIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EcoHubRouteRoute,
-} as any)
-const MarketplaceItemIdRoute = MarketplaceItemIdRouteImport.update({
-  id: '/$itemId',
-  path: '/$itemId',
-  getParentRoute: () => MarketplaceRoute,
+const AuthenticatedWriterRouteRoute =
+  AuthenticatedWriterRouteRouteImport.update({
+    id: '/_writer',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/_writer/route.lazy').then((d) => d.Route),
+  )
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/admin.lazy').then((d) => d.Route),
+)
+const AuthenticatedMarketplaceRoute =
+  AuthenticatedMarketplaceRouteImport.update({
+    id: '/marketplace',
+    path: '/marketplace',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/marketplace.lazy').then((d) => d.Route),
+  )
+const AuthenticatedOffersRoute = AuthenticatedOffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/offers.lazy').then((d) => d.Route),
+)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/profile.lazy').then((d) => d.Route),
+)
+const AuthenticatedReviewsRouteRoute =
+  AuthenticatedReviewsRouteRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/reviews/route.lazy').then((d) => d.Route),
+  )
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/settings.lazy').then((d) => d.Route),
+)
+const UnauthenticatedLoginRoute = UnauthenticatedLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => UnauthenticatedRoute,
 } as any)
 const UnauthenticatedRegisterRoute = UnauthenticatedRegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => UnauthenticatedRoute,
 } as any)
-const UnauthenticatedLoginRoute = UnauthenticatedLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => UnauthenticatedRoute,
-} as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedOffersRoute = AuthenticatedOffersRouteImport.update({
-  id: '/offers',
-  path: '/offers',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedMarketplaceRoute =
-  AuthenticatedMarketplaceRouteImport.update({
-    id: '/marketplace',
-    path: '/marketplace',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const AuthenticatedAboutRoute = AuthenticatedAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-const ProfileUserIdRouteRoute = ProfileUserIdRouteRouteImport.update({
-  id: '/profile/$userId',
-  path: '/profile/$userId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EcoHubQuizzesRouteRoute = EcoHubQuizzesRouteRouteImport.update({
-  id: '/quizzes',
-  path: '/quizzes',
+const EcoHubIndexRoute = EcoHubIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => EcoHubRouteRoute,
 } as any)
 const EcoHubBlogsRouteRoute = EcoHubBlogsRouteRouteImport.update({
   id: '/blogs',
   path: '/blogs',
   getParentRoute: () => EcoHubRouteRoute,
+} as any).lazy(() =>
+  import('./routes/eco-hub/blogs/route.lazy').then((d) => d.Route),
+)
+const EcoHubQuizzesRouteRoute = EcoHubQuizzesRouteRouteImport.update({
+  id: '/quizzes',
+  path: '/quizzes',
+  getParentRoute: () => EcoHubRouteRoute,
 } as any)
-const AuthenticatedReviewsRouteRoute =
-  AuthenticatedReviewsRouteRouteImport.update({
-    id: '/reviews',
-    path: '/reviews',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedWriterRouteRoute =
-  AuthenticatedWriterRouteRouteImport.update({
-    id: '/_writer',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const ProfileUserIdIndexRoute = ProfileUserIdIndexRouteImport.update({
+const MarketplaceIndexRoute = MarketplaceIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ProfileUserIdRouteRoute,
+  getParentRoute: () => MarketplaceRoute,
 } as any)
-const EcoHubQuizzesIndexRoute = EcoHubQuizzesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EcoHubQuizzesRouteRoute,
-} as any)
-const EcoHubBlogsIndexRoute = EcoHubBlogsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EcoHubBlogsRouteRoute,
-} as any)
-const AuthenticatedReviewsIndexRoute =
-  AuthenticatedReviewsIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedReviewsRouteRoute,
-  } as any)
-const AuthenticatedOffersIndexRoute =
-  AuthenticatedOffersIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedOffersRoute,
-  } as any)
-const AuthenticatedNotificationsIndexRoute =
-  AuthenticatedNotificationsIndexRouteImport.update({
-    id: '/notifications/',
-    path: '/notifications/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
+const MarketplaceItemIdRoute = MarketplaceItemIdRouteImport.update({
+  id: '/$itemId',
+  path: '/$itemId',
+  getParentRoute: () => MarketplaceRoute,
+} as any).lazy(() =>
+  import('./routes/marketplace/$itemId.lazy').then((d) => d.Route),
+)
+const ProfileUserIdRouteRoute = ProfileUserIdRouteRouteImport.update({
+  id: '/profile/$userId',
+  path: '/profile/$userId',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/profile/$userId/route.lazy').then((d) => d.Route),
+)
+const AuthenticatedWriterEcoHubRouteRoute =
+  AuthenticatedWriterEcoHubRouteRouteImport.update({
+    id: '/eco-hub',
+    path: '/eco-hub',
+    getParentRoute: () => AuthenticatedWriterRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/_writer/eco-hub/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const ProfileUserIdReviewsRoute = ProfileUserIdReviewsRouteImport.update({
-  id: '/reviews',
-  path: '/reviews',
-  getParentRoute: () => ProfileUserIdRouteRoute,
-} as any)
-const ProfileUserIdItemsRoute = ProfileUserIdItemsRouteImport.update({
-  id: '/items',
-  path: '/items',
-  getParentRoute: () => ProfileUserIdRouteRoute,
-} as any)
-const AuthenticatedOffersReceivedRoute =
-  AuthenticatedOffersReceivedRouteImport.update({
-    id: '/received',
-    path: '/received',
-    getParentRoute: () => AuthenticatedOffersRoute,
-  } as any)
-const AuthenticatedOffersOwnRoute = AuthenticatedOffersOwnRouteImport.update({
-  id: '/own',
-  path: '/own',
-  getParentRoute: () => AuthenticatedOffersRoute,
-} as any)
-const AuthenticatedNotificationsNotificationIdRoute =
-  AuthenticatedNotificationsNotificationIdRouteImport.update({
-    id: '/notifications/$notificationId',
-    path: '/notifications/$notificationId',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedMarketplaceWishlistRoute =
-  AuthenticatedMarketplaceWishlistRouteImport.update({
-    id: '/wishlist',
-    path: '/wishlist',
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/categories.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/dashboard.lazy').then((d) => d.Route),
+  )
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/admin/users.lazy').then((d) => d.Route),
+)
+const AuthenticatedMarketplaceCreateRoute =
+  AuthenticatedMarketplaceCreateRouteImport.update({
+    id: '/create',
+    path: '/create',
+    getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/marketplace/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedMarketplaceHistoryRoute =
+  AuthenticatedMarketplaceHistoryRouteImport.update({
+    id: '/history',
+    path: '/history',
     getParentRoute: () => AuthenticatedMarketplaceRoute,
   } as any)
 const AuthenticatedMarketplaceMyItemsRoute =
@@ -254,147 +257,249 @@ const AuthenticatedMarketplaceMyItemsRoute =
     id: '/my-items',
     path: '/my-items',
     getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/marketplace/my-items.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedNotificationsIndexRoute =
+  AuthenticatedNotificationsIndexRouteImport.update({
+    id: '/notifications/',
+    path: '/notifications/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/notifications/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedNotificationsNotificationIdRoute =
+  AuthenticatedNotificationsNotificationIdRouteImport.update({
+    id: '/notifications/$notificationId',
+    path: '/notifications/$notificationId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/notifications/$notificationId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedOffersIndexRoute =
+  AuthenticatedOffersIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedOffersRoute,
   } as any)
-const AuthenticatedMarketplaceHistoryRoute =
-  AuthenticatedMarketplaceHistoryRouteImport.update({
-    id: '/history',
-    path: '/history',
-    getParentRoute: () => AuthenticatedMarketplaceRoute,
-  } as any)
-const AuthenticatedMarketplaceCreateRoute =
-  AuthenticatedMarketplaceCreateRouteImport.update({
-    id: '/create',
-    path: '/create',
-    getParentRoute: () => AuthenticatedMarketplaceRoute,
-  } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminDashboardRoute =
-  AuthenticatedAdminDashboardRouteImport.update({
-    id: '/dashboard',
-    path: '/dashboard',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminCategoriesRoute =
-  AuthenticatedAdminCategoriesRouteImport.update({
-    id: '/categories',
-    path: '/categories',
-    getParentRoute: () => AuthenticatedAdminRoute,
+const AuthenticatedOffersOwnRoute = AuthenticatedOffersOwnRouteImport.update({
+  id: '/own',
+  path: '/own',
+  getParentRoute: () => AuthenticatedOffersRoute,
+} as any).lazy(() =>
+  import('./routes/_authenticated/offers/own.lazy').then((d) => d.Route),
+)
+const AuthenticatedOffersReceivedRoute =
+  AuthenticatedOffersReceivedRouteImport.update({
+    id: '/received',
+    path: '/received',
+    getParentRoute: () => AuthenticatedOffersRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/offers/received.lazy').then((d) => d.Route),
+  )
+const AuthenticatedReviewsIndexRoute =
+  AuthenticatedReviewsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedReviewsRouteRoute,
   } as any)
 const AuthenticatedReviewsLayoutRouteRoute =
   AuthenticatedReviewsLayoutRouteRouteImport.update({
     id: '/_layout',
     getParentRoute: () => AuthenticatedReviewsRouteRoute,
-  } as any)
-const AuthenticatedWriterEcoHubRouteRoute =
-  AuthenticatedWriterEcoHubRouteRouteImport.update({
-    id: '/eco-hub',
-    path: '/eco-hub',
-    getParentRoute: () => AuthenticatedWriterRouteRoute,
-  } as any)
-const EcoHubBlogsBlogIdIndexRoute = EcoHubBlogsBlogIdIndexRouteImport.update({
-  id: '/$blogId/',
-  path: '/$blogId/',
+  } as any).lazy(() =>
+    import('./routes/_authenticated/reviews/_layout/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const EcoHubBlogsIndexRoute = EcoHubBlogsIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => EcoHubBlogsRouteRoute,
+} as any).lazy(() =>
+  import('./routes/eco-hub/blogs/index.lazy').then((d) => d.Route),
+)
+const EcoHubQuizzesIndexRoute = EcoHubQuizzesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EcoHubQuizzesRouteRoute,
 } as any)
-const AuthenticatedAdminUsersIndexRoute =
-  AuthenticatedAdminUsersIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedAdminUsersRoute,
-  } as any)
+const ProfileUserIdIndexRoute = ProfileUserIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfileUserIdRouteRoute,
+} as any).lazy(() =>
+  import('./routes/profile/$userId/index.lazy').then((d) => d.Route),
+)
+const ProfileUserIdItemsRoute = ProfileUserIdItemsRouteImport.update({
+  id: '/items',
+  path: '/items',
+  getParentRoute: () => ProfileUserIdRouteRoute,
+} as any).lazy(() =>
+  import('./routes/profile/$userId/items.lazy').then((d) => d.Route),
+)
+const ProfileUserIdReviewsRoute = ProfileUserIdReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => ProfileUserIdRouteRoute,
+} as any).lazy(() =>
+  import('./routes/profile/$userId/reviews.lazy').then((d) => d.Route),
+)
 const AuthenticatedAdminCategoriesIndexRoute =
   AuthenticatedAdminCategoriesIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedAdminCategoriesRoute,
-  } as any)
-const AuthenticatedReviewsCreateOfferIdRoute =
-  AuthenticatedReviewsCreateOfferIdRouteImport.update({
-    id: '/create/$offerId',
-    path: '/create/$offerId',
-    getParentRoute: () => AuthenticatedReviewsRouteRoute,
-  } as any)
-const AuthenticatedReviewsLayoutReceivedRoute =
-  AuthenticatedReviewsLayoutReceivedRouteImport.update({
-    id: '/received',
-    path: '/received',
-    getParentRoute: () => AuthenticatedReviewsLayoutRouteRoute,
-  } as any)
-const AuthenticatedReviewsLayoutGivenRoute =
-  AuthenticatedReviewsLayoutGivenRouteImport.update({
-    id: '/given',
-    path: '/given',
-    getParentRoute: () => AuthenticatedReviewsLayoutRouteRoute,
-  } as any)
-const AuthenticatedMarketplaceItemIdEditRoute =
-  AuthenticatedMarketplaceItemIdEditRouteImport.update({
-    id: '/$itemId/edit',
-    path: '/$itemId/edit',
-    getParentRoute: () => AuthenticatedMarketplaceRoute,
-  } as any)
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/categories/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedAdminUsersIndexRoute =
+  AuthenticatedAdminUsersIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminUsersRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/users/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const AuthenticatedAdminUsersUserIdRoute =
   AuthenticatedAdminUsersUserIdRouteImport.update({
     id: '/$userId',
     path: '/$userId',
     getParentRoute: () => AuthenticatedAdminUsersRoute,
-  } as any)
-const AuthenticatedAdminUsersUserIdIndexRoute =
-  AuthenticatedAdminUsersUserIdIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedAdminUsersUserIdRoute,
-  } as any)
-const AuthenticatedAdminUsersUserIdItemsRoute =
-  AuthenticatedAdminUsersUserIdItemsRouteImport.update({
-    id: '/items',
-    path: '/items',
-    getParentRoute: () => AuthenticatedAdminUsersUserIdRoute,
-  } as any)
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/users/$userId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedMarketplaceItemIdEditRoute =
+  AuthenticatedMarketplaceItemIdEditRouteImport.update({
+    id: '/$itemId/edit',
+    path: '/$itemId/edit',
+    getParentRoute: () => AuthenticatedMarketplaceRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/marketplace/$itemId.edit.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedReviewsLayoutGivenRoute =
+  AuthenticatedReviewsLayoutGivenRouteImport.update({
+    id: '/given',
+    path: '/given',
+    getParentRoute: () => AuthenticatedReviewsLayoutRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/reviews/_layout/given.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedReviewsLayoutReceivedRoute =
+  AuthenticatedReviewsLayoutReceivedRouteImport.update({
+    id: '/received',
+    path: '/received',
+    getParentRoute: () => AuthenticatedReviewsLayoutRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/reviews/_layout/received.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedReviewsCreateOfferIdRoute =
+  AuthenticatedReviewsCreateOfferIdRouteImport.update({
+    id: '/create/$offerId',
+    path: '/create/$offerId',
+    getParentRoute: () => AuthenticatedReviewsRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/reviews/create/$offerId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const EcoHubBlogsBlogIdIndexRoute = EcoHubBlogsBlogIdIndexRouteImport.update({
+  id: '/$blogId/',
+  path: '/$blogId/',
+  getParentRoute: () => EcoHubBlogsRouteRoute,
+} as any).lazy(() =>
+  import('./routes/eco-hub/blogs/$blogId.index.lazy').then((d) => d.Route),
+)
+const AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute =
+  AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport.update({
+    id: '/blogs/$blogId',
+    path: '/blogs/$blogId',
+    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/_writer/eco-hub/blogs/$blogId/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedWriterEcoHubBlogsCreateLazyRoute =
+  AuthenticatedWriterEcoHubBlogsCreateLazyRouteImport.update({
+    id: '/blogs/create',
+    path: '/blogs/create',
+    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/_writer/eco-hub/blogs/create.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedWriterEcoHubBlogsOwnRoute =
+  AuthenticatedWriterEcoHubBlogsOwnRouteImport.update({
+    id: '/blogs/own',
+    path: '/blogs/own',
+    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/_writer/eco-hub/blogs/own.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const AuthenticatedWriterEcoHubQuizzesOwnRoute =
   AuthenticatedWriterEcoHubQuizzesOwnRouteImport.update({
     id: '/quizzes/own',
     path: '/quizzes/own',
     getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
   } as any)
-const AuthenticatedWriterEcoHubBlogsOwnRoute =
-  AuthenticatedWriterEcoHubBlogsOwnRouteImport.update({
-    id: '/blogs/own',
-    path: '/blogs/own',
-    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
-  } as any)
-const AuthenticatedWriterEcoHubBlogsCreateRoute =
-  AuthenticatedWriterEcoHubBlogsCreateRouteImport.update({
-    id: '/blogs/create',
-    path: '/blogs/create',
-    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
-  } as any)
-const AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute =
-  AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport.update({
-    id: '/blogs/$blogId',
-    path: '/blogs/$blogId',
-    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
+const AuthenticatedAdminUsersUserIdIndexRoute =
+  AuthenticatedAdminUsersUserIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminUsersUserIdRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/users/$userId/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedAdminUsersUserIdItemsRoute =
+  AuthenticatedAdminUsersUserIdItemsRouteImport.update({
+    id: '/items',
+    path: '/items',
+    getParentRoute: () => AuthenticatedAdminUsersUserIdRoute,
   } as any)
 const AuthenticatedWriterEcoHubBlogsBlogIdEditRoute =
   AuthenticatedWriterEcoHubBlogsBlogIdEditRouteImport.update({
     id: '/edit',
     path: '/edit',
     getParentRoute: () => AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute,
-  } as any)
+  } as any).lazy(() =>
+    import('./routes/_authenticated/_writer/eco-hub/blogs/$blogId/edit.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/eco-hub': typeof AuthenticatedWriterEcoHubRouteRouteWithChildren
   '/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
   '/unauthorized': typeof UnauthorizedRoute
-  '/reviews': typeof AuthenticatedReviewsLayoutRouteRouteWithChildren
+  '/reviews': typeof AuthenticatedReviewsRouteRouteWithChildren
   '/eco-hub/blogs': typeof EcoHubBlogsRouteRouteWithChildren
   '/eco-hub/quizzes': typeof EcoHubQuizzesRouteRouteWithChildren
   '/profile/$userId': typeof ProfileUserIdRouteRouteWithChildren
-  '/about': typeof AuthenticatedAboutRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/offers': typeof AuthenticatedOffersRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
@@ -410,7 +515,6 @@ export interface FileRoutesByFullPath {
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
-  '/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
   '/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/offers/own': typeof AuthenticatedOffersOwnRoute
   '/offers/received': typeof AuthenticatedOffersReceivedRoute
@@ -432,30 +536,28 @@ export interface FileRoutesByFullPath {
   '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
   '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
   '/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
-  '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
+  '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
   '/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
   '/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/unauthorized': typeof UnauthorizedRoute
-  '/about': typeof AuthenticatedAboutRoute
   '/marketplace': typeof MarketplaceIndexRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/login': typeof UnauthenticatedLoginRoute
   '/register': typeof UnauthenticatedRegisterRoute
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
-  '/eco-hub': typeof AuthenticatedWriterEcoHubRouteRouteWithChildren
+  '/eco-hub': typeof EcoHubIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
-  '/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
   '/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/offers/own': typeof AuthenticatedOffersOwnRoute
   '/offers/received': typeof AuthenticatedOffersReceivedRoute
@@ -473,11 +575,11 @@ export interface FileRoutesByTo {
   '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesIndexRoute
   '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
-  '/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
-  '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateRoute
+  '/eco-hub/blogs/$blogId': typeof EcoHubBlogsBlogIdIndexRoute
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
+  '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdIndexRoute
   '/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
@@ -494,7 +596,6 @@ export interface FileRoutesById {
   '/eco-hub/blogs': typeof EcoHubBlogsRouteRouteWithChildren
   '/eco-hub/quizzes': typeof EcoHubQuizzesRouteRouteWithChildren
   '/profile/$userId': typeof ProfileUserIdRouteRouteWithChildren
-  '/_authenticated/about': typeof AuthenticatedAboutRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
   '/_authenticated/offers': typeof AuthenticatedOffersRouteWithChildren
@@ -513,7 +614,6 @@ export interface FileRoutesById {
   '/_authenticated/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/_authenticated/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/_authenticated/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
-  '/_authenticated/marketplace/wishlist': typeof AuthenticatedMarketplaceWishlistRoute
   '/_authenticated/notifications/$notificationId': typeof AuthenticatedNotificationsNotificationIdRoute
   '/_authenticated/offers/own': typeof AuthenticatedOffersOwnRoute
   '/_authenticated/offers/received': typeof AuthenticatedOffersReceivedRoute
@@ -535,10 +635,10 @@ export interface FileRoutesById {
   '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
   '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
   '/_authenticated/_writer/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
-  '/_authenticated/_writer/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   '/_authenticated/_writer/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   '/_authenticated/_writer/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/_authenticated/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
+  '/_authenticated/_writer/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
   '/_authenticated/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
   '/_authenticated/_writer/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
@@ -553,7 +653,6 @@ export interface FileRouteTypes {
     | '/eco-hub/blogs'
     | '/eco-hub/quizzes'
     | '/profile/$userId'
-    | '/about'
     | '/admin'
     | '/offers'
     | '/profile'
@@ -569,7 +668,6 @@ export interface FileRouteTypes {
     | '/marketplace/create'
     | '/marketplace/history'
     | '/marketplace/my-items'
-    | '/marketplace/wishlist'
     | '/notifications/$notificationId'
     | '/offers/own'
     | '/offers/received'
@@ -591,17 +689,16 @@ export interface FileRouteTypes {
     | '/admin/users/'
     | '/eco-hub/blogs/$blogId/'
     | '/eco-hub/blogs/$blogId'
-    | '/eco-hub/blogs/create'
     | '/eco-hub/blogs/own'
     | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
+    | '/eco-hub/blogs/create'
     | '/admin/users/$userId/'
     | '/eco-hub/blogs/$blogId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/unauthorized'
-    | '/about'
     | '/marketplace'
     | '/profile'
     | '/settings'
@@ -614,7 +711,6 @@ export interface FileRouteTypes {
     | '/marketplace/create'
     | '/marketplace/history'
     | '/marketplace/my-items'
-    | '/marketplace/wishlist'
     | '/notifications/$notificationId'
     | '/offers/own'
     | '/offers/received'
@@ -633,10 +729,10 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/users'
     | '/eco-hub/blogs/$blogId'
-    | '/eco-hub/blogs/create'
     | '/eco-hub/blogs/own'
     | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
+    | '/eco-hub/blogs/create'
     | '/admin/users/$userId'
     | '/eco-hub/blogs/$blogId/edit'
   id:
@@ -652,7 +748,6 @@ export interface FileRouteTypes {
     | '/eco-hub/blogs'
     | '/eco-hub/quizzes'
     | '/profile/$userId'
-    | '/_authenticated/about'
     | '/_authenticated/admin'
     | '/_authenticated/marketplace'
     | '/_authenticated/offers'
@@ -671,7 +766,6 @@ export interface FileRouteTypes {
     | '/_authenticated/marketplace/create'
     | '/_authenticated/marketplace/history'
     | '/_authenticated/marketplace/my-items'
-    | '/_authenticated/marketplace/wishlist'
     | '/_authenticated/notifications/$notificationId'
     | '/_authenticated/offers/own'
     | '/_authenticated/offers/received'
@@ -693,10 +787,10 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/users/'
     | '/eco-hub/blogs/$blogId/'
     | '/_authenticated/_writer/eco-hub/blogs/$blogId'
-    | '/_authenticated/_writer/eco-hub/blogs/create'
     | '/_authenticated/_writer/eco-hub/blogs/own'
     | '/_authenticated/_writer/eco-hub/quizzes/own'
     | '/_authenticated/admin/users/$userId/items'
+    | '/_authenticated/_writer/eco-hub/blogs/create'
     | '/_authenticated/admin/users/$userId/'
     | '/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
   fileRoutesById: FileRoutesById
@@ -713,25 +807,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/unauthorized': {
-      id: '/unauthorized'
-      path: '/unauthorized'
-      fullPath: '/unauthorized'
-      preLoaderRoute: typeof UnauthorizedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/marketplace': {
-      id: '/marketplace'
-      path: '/marketplace'
-      fullPath: '/marketplace'
-      preLoaderRoute: typeof MarketplaceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_unauthenticated': {
-      id: '/_unauthenticated'
-      path: ''
+    '/': {
+      id: '/'
+      path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof UnauthenticatedRouteImport
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -741,6 +821,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_unauthenticated': {
+      id: '/_unauthenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof UnauthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/eco-hub': {
       id: '/eco-hub'
       path: '/eco-hub'
@@ -748,74 +835,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EcoHubRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/marketplace/': {
-      id: '/marketplace/'
-      path: '/'
-      fullPath: '/marketplace/'
-      preLoaderRoute: typeof MarketplaceIndexRouteImport
-      parentRoute: typeof MarketplaceRoute
-    }
-    '/eco-hub/': {
-      id: '/eco-hub/'
-      path: '/'
-      fullPath: '/eco-hub/'
-      preLoaderRoute: typeof EcoHubIndexRouteImport
-      parentRoute: typeof EcoHubRouteRoute
-    }
-    '/marketplace/$itemId': {
-      id: '/marketplace/$itemId'
-      path: '/$itemId'
-      fullPath: '/marketplace/$itemId'
-      preLoaderRoute: typeof MarketplaceItemIdRouteImport
-      parentRoute: typeof MarketplaceRoute
-    }
-    '/_unauthenticated/register': {
-      id: '/_unauthenticated/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof UnauthenticatedRegisterRouteImport
-      parentRoute: typeof UnauthenticatedRoute
-    }
-    '/_unauthenticated/login': {
-      id: '/_unauthenticated/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof UnauthenticatedLoginRouteImport
-      parentRoute: typeof UnauthenticatedRoute
-    }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/offers': {
-      id: '/_authenticated/offers'
-      path: '/offers'
-      fullPath: '/offers'
-      preLoaderRoute: typeof AuthenticatedOffersRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/marketplace': {
-      id: '/_authenticated/marketplace'
+    '/marketplace': {
+      id: '/marketplace'
       path: '/marketplace'
       fullPath: '/marketplace'
-      preLoaderRoute: typeof AuthenticatedMarketplaceRouteImport
+      preLoaderRoute: typeof MarketplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unauthorized': {
+      id: '/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof UnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/_writer': {
+      id: '/_authenticated/_writer'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedWriterRouteRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/admin': {
@@ -825,25 +863,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/about': {
-      id: '/_authenticated/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AuthenticatedAboutRouteImport
+    '/_authenticated/marketplace': {
+      id: '/_authenticated/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof AuthenticatedMarketplaceRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/profile/$userId': {
-      id: '/profile/$userId'
-      path: '/profile/$userId'
-      fullPath: '/profile/$userId'
-      preLoaderRoute: typeof ProfileUserIdRouteRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/offers': {
+      id: '/_authenticated/offers'
+      path: '/offers'
+      fullPath: '/offers'
+      preLoaderRoute: typeof AuthenticatedOffersRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/eco-hub/quizzes': {
-      id: '/eco-hub/quizzes'
-      path: '/quizzes'
-      fullPath: '/eco-hub/quizzes'
-      preLoaderRoute: typeof EcoHubQuizzesRouteRouteImport
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/reviews': {
+      id: '/_authenticated/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof AuthenticatedReviewsRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_unauthenticated/login': {
+      id: '/_unauthenticated/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof UnauthenticatedLoginRouteImport
+      parentRoute: typeof UnauthenticatedRoute
+    }
+    '/_unauthenticated/register': {
+      id: '/_unauthenticated/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof UnauthenticatedRegisterRouteImport
+      parentRoute: typeof UnauthenticatedRoute
+    }
+    '/eco-hub/': {
+      id: '/eco-hub/'
+      path: '/'
+      fullPath: '/eco-hub/'
+      preLoaderRoute: typeof EcoHubIndexRouteImport
       parentRoute: typeof EcoHubRouteRoute
     }
     '/eco-hub/blogs': {
@@ -853,144 +926,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EcoHubBlogsRouteRouteImport
       parentRoute: typeof EcoHubRouteRoute
     }
-    '/_authenticated/reviews': {
-      id: '/_authenticated/reviews'
-      path: '/reviews'
-      fullPath: '/reviews'
-      preLoaderRoute: typeof AuthenticatedReviewsRouteRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/eco-hub/quizzes': {
+      id: '/eco-hub/quizzes'
+      path: '/quizzes'
+      fullPath: '/eco-hub/quizzes'
+      preLoaderRoute: typeof EcoHubQuizzesRouteRouteImport
+      parentRoute: typeof EcoHubRouteRoute
     }
-    '/_authenticated/_writer': {
-      id: '/_authenticated/_writer'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedWriterRouteRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/profile/$userId/': {
-      id: '/profile/$userId/'
+    '/marketplace/': {
+      id: '/marketplace/'
       path: '/'
-      fullPath: '/profile/$userId/'
-      preLoaderRoute: typeof ProfileUserIdIndexRouteImport
-      parentRoute: typeof ProfileUserIdRouteRoute
+      fullPath: '/marketplace/'
+      preLoaderRoute: typeof MarketplaceIndexRouteImport
+      parentRoute: typeof MarketplaceRoute
     }
-    '/eco-hub/quizzes/': {
-      id: '/eco-hub/quizzes/'
-      path: '/'
-      fullPath: '/eco-hub/quizzes/'
-      preLoaderRoute: typeof EcoHubQuizzesIndexRouteImport
-      parentRoute: typeof EcoHubQuizzesRouteRoute
+    '/marketplace/$itemId': {
+      id: '/marketplace/$itemId'
+      path: '/$itemId'
+      fullPath: '/marketplace/$itemId'
+      preLoaderRoute: typeof MarketplaceItemIdRouteImport
+      parentRoute: typeof MarketplaceRoute
     }
-    '/eco-hub/blogs/': {
-      id: '/eco-hub/blogs/'
-      path: '/'
-      fullPath: '/eco-hub/blogs/'
-      preLoaderRoute: typeof EcoHubBlogsIndexRouteImport
-      parentRoute: typeof EcoHubBlogsRouteRoute
+    '/profile/$userId': {
+      id: '/profile/$userId'
+      path: '/profile/$userId'
+      fullPath: '/profile/$userId'
+      preLoaderRoute: typeof ProfileUserIdRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/reviews/': {
-      id: '/_authenticated/reviews/'
-      path: '/'
-      fullPath: '/reviews/'
-      preLoaderRoute: typeof AuthenticatedReviewsIndexRouteImport
-      parentRoute: typeof AuthenticatedReviewsRouteRoute
-    }
-    '/_authenticated/offers/': {
-      id: '/_authenticated/offers/'
-      path: '/'
-      fullPath: '/offers/'
-      preLoaderRoute: typeof AuthenticatedOffersIndexRouteImport
-      parentRoute: typeof AuthenticatedOffersRoute
-    }
-    '/_authenticated/notifications/': {
-      id: '/_authenticated/notifications/'
-      path: '/notifications'
-      fullPath: '/notifications/'
-      preLoaderRoute: typeof AuthenticatedNotificationsIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+    '/_authenticated/_writer/eco-hub': {
+      id: '/_authenticated/_writer/eco-hub'
+      path: '/eco-hub'
+      fullPath: '/eco-hub'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubRouteRouteImport
+      parentRoute: typeof AuthenticatedWriterRouteRoute
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/profile/$userId/reviews': {
-      id: '/profile/$userId/reviews'
-      path: '/reviews'
-      fullPath: '/profile/$userId/reviews'
-      preLoaderRoute: typeof ProfileUserIdReviewsRouteImport
-      parentRoute: typeof ProfileUserIdRouteRoute
-    }
-    '/profile/$userId/items': {
-      id: '/profile/$userId/items'
-      path: '/items'
-      fullPath: '/profile/$userId/items'
-      preLoaderRoute: typeof ProfileUserIdItemsRouteImport
-      parentRoute: typeof ProfileUserIdRouteRoute
-    }
-    '/_authenticated/offers/received': {
-      id: '/_authenticated/offers/received'
-      path: '/received'
-      fullPath: '/offers/received'
-      preLoaderRoute: typeof AuthenticatedOffersReceivedRouteImport
-      parentRoute: typeof AuthenticatedOffersRoute
-    }
-    '/_authenticated/offers/own': {
-      id: '/_authenticated/offers/own'
-      path: '/own'
-      fullPath: '/offers/own'
-      preLoaderRoute: typeof AuthenticatedOffersOwnRouteImport
-      parentRoute: typeof AuthenticatedOffersRoute
-    }
-    '/_authenticated/notifications/$notificationId': {
-      id: '/_authenticated/notifications/$notificationId'
-      path: '/notifications/$notificationId'
-      fullPath: '/notifications/$notificationId'
-      preLoaderRoute: typeof AuthenticatedNotificationsNotificationIdRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
-    '/_authenticated/marketplace/wishlist': {
-      id: '/_authenticated/marketplace/wishlist'
-      path: '/wishlist'
-      fullPath: '/marketplace/wishlist'
-      preLoaderRoute: typeof AuthenticatedMarketplaceWishlistRouteImport
-      parentRoute: typeof AuthenticatedMarketplaceRoute
-    }
-    '/_authenticated/marketplace/my-items': {
-      id: '/_authenticated/marketplace/my-items'
-      path: '/my-items'
-      fullPath: '/marketplace/my-items'
-      preLoaderRoute: typeof AuthenticatedMarketplaceMyItemsRouteImport
-      parentRoute: typeof AuthenticatedMarketplaceRoute
-    }
-    '/_authenticated/marketplace/history': {
-      id: '/_authenticated/marketplace/history'
-      path: '/history'
-      fullPath: '/marketplace/history'
-      preLoaderRoute: typeof AuthenticatedMarketplaceHistoryRouteImport
-      parentRoute: typeof AuthenticatedMarketplaceRoute
-    }
-    '/_authenticated/marketplace/create': {
-      id: '/_authenticated/marketplace/create'
-      path: '/create'
-      fullPath: '/marketplace/create'
-      preLoaderRoute: typeof AuthenticatedMarketplaceCreateRouteImport
-      parentRoute: typeof AuthenticatedMarketplaceRoute
-    }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/dashboard': {
-      id: '/_authenticated/admin/dashboard'
-      path: '/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/categories': {
@@ -1000,6 +975,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/marketplace/create': {
+      id: '/_authenticated/marketplace/create'
+      path: '/create'
+      fullPath: '/marketplace/create'
+      preLoaderRoute: typeof AuthenticatedMarketplaceCreateRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
+    '/_authenticated/marketplace/history': {
+      id: '/_authenticated/marketplace/history'
+      path: '/history'
+      fullPath: '/marketplace/history'
+      preLoaderRoute: typeof AuthenticatedMarketplaceHistoryRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
+    '/_authenticated/marketplace/my-items': {
+      id: '/_authenticated/marketplace/my-items'
+      path: '/my-items'
+      fullPath: '/marketplace/my-items'
+      preLoaderRoute: typeof AuthenticatedMarketplaceMyItemsRouteImport
+      parentRoute: typeof AuthenticatedMarketplaceRoute
+    }
+    '/_authenticated/notifications/': {
+      id: '/_authenticated/notifications/'
+      path: '/notifications'
+      fullPath: '/notifications/'
+      preLoaderRoute: typeof AuthenticatedNotificationsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/notifications/$notificationId': {
+      id: '/_authenticated/notifications/$notificationId'
+      path: '/notifications/$notificationId'
+      fullPath: '/notifications/$notificationId'
+      preLoaderRoute: typeof AuthenticatedNotificationsNotificationIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/offers/': {
+      id: '/_authenticated/offers/'
+      path: '/'
+      fullPath: '/offers/'
+      preLoaderRoute: typeof AuthenticatedOffersIndexRouteImport
+      parentRoute: typeof AuthenticatedOffersRoute
+    }
+    '/_authenticated/offers/own': {
+      id: '/_authenticated/offers/own'
+      path: '/own'
+      fullPath: '/offers/own'
+      preLoaderRoute: typeof AuthenticatedOffersOwnRouteImport
+      parentRoute: typeof AuthenticatedOffersRoute
+    }
+    '/_authenticated/offers/received': {
+      id: '/_authenticated/offers/received'
+      path: '/received'
+      fullPath: '/offers/received'
+      preLoaderRoute: typeof AuthenticatedOffersReceivedRouteImport
+      parentRoute: typeof AuthenticatedOffersRoute
+    }
+    '/_authenticated/reviews/': {
+      id: '/_authenticated/reviews/'
+      path: '/'
+      fullPath: '/reviews/'
+      preLoaderRoute: typeof AuthenticatedReviewsIndexRouteImport
+      parentRoute: typeof AuthenticatedReviewsRouteRoute
+    }
     '/_authenticated/reviews/_layout': {
       id: '/_authenticated/reviews/_layout'
       path: ''
@@ -1007,26 +1059,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReviewsLayoutRouteRouteImport
       parentRoute: typeof AuthenticatedReviewsRouteRoute
     }
-    '/_authenticated/_writer/eco-hub': {
-      id: '/_authenticated/_writer/eco-hub'
-      path: '/eco-hub'
-      fullPath: '/eco-hub'
-      preLoaderRoute: typeof AuthenticatedWriterEcoHubRouteRouteImport
-      parentRoute: typeof AuthenticatedWriterRouteRoute
-    }
-    '/eco-hub/blogs/$blogId/': {
-      id: '/eco-hub/blogs/$blogId/'
-      path: '/$blogId'
-      fullPath: '/eco-hub/blogs/$blogId/'
-      preLoaderRoute: typeof EcoHubBlogsBlogIdIndexRouteImport
+    '/eco-hub/blogs/': {
+      id: '/eco-hub/blogs/'
+      path: '/'
+      fullPath: '/eco-hub/blogs/'
+      preLoaderRoute: typeof EcoHubBlogsIndexRouteImport
       parentRoute: typeof EcoHubBlogsRouteRoute
     }
-    '/_authenticated/admin/users/': {
-      id: '/_authenticated/admin/users/'
+    '/eco-hub/quizzes/': {
+      id: '/eco-hub/quizzes/'
       path: '/'
-      fullPath: '/admin/users/'
-      preLoaderRoute: typeof AuthenticatedAdminUsersIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminUsersRoute
+      fullPath: '/eco-hub/quizzes/'
+      preLoaderRoute: typeof EcoHubQuizzesIndexRouteImport
+      parentRoute: typeof EcoHubQuizzesRouteRoute
+    }
+    '/profile/$userId/': {
+      id: '/profile/$userId/'
+      path: '/'
+      fullPath: '/profile/$userId/'
+      preLoaderRoute: typeof ProfileUserIdIndexRouteImport
+      parentRoute: typeof ProfileUserIdRouteRoute
+    }
+    '/profile/$userId/items': {
+      id: '/profile/$userId/items'
+      path: '/items'
+      fullPath: '/profile/$userId/items'
+      preLoaderRoute: typeof ProfileUserIdItemsRouteImport
+      parentRoute: typeof ProfileUserIdRouteRoute
+    }
+    '/profile/$userId/reviews': {
+      id: '/profile/$userId/reviews'
+      path: '/reviews'
+      fullPath: '/profile/$userId/reviews'
+      preLoaderRoute: typeof ProfileUserIdReviewsRouteImport
+      parentRoute: typeof ProfileUserIdRouteRoute
     }
     '/_authenticated/admin/categories/': {
       id: '/_authenticated/admin/categories/'
@@ -1035,26 +1101,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesIndexRouteImport
       parentRoute: typeof AuthenticatedAdminCategoriesRoute
     }
-    '/_authenticated/reviews/create/$offerId': {
-      id: '/_authenticated/reviews/create/$offerId'
-      path: '/create/$offerId'
-      fullPath: '/reviews/create/$offerId'
-      preLoaderRoute: typeof AuthenticatedReviewsCreateOfferIdRouteImport
-      parentRoute: typeof AuthenticatedReviewsRouteRoute
+    '/_authenticated/admin/users/': {
+      id: '/_authenticated/admin/users/'
+      path: '/'
+      fullPath: '/admin/users/'
+      preLoaderRoute: typeof AuthenticatedAdminUsersIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersRoute
     }
-    '/_authenticated/reviews/_layout/received': {
-      id: '/_authenticated/reviews/_layout/received'
-      path: '/received'
-      fullPath: '/reviews/received'
-      preLoaderRoute: typeof AuthenticatedReviewsLayoutReceivedRouteImport
-      parentRoute: typeof AuthenticatedReviewsLayoutRouteRoute
-    }
-    '/_authenticated/reviews/_layout/given': {
-      id: '/_authenticated/reviews/_layout/given'
-      path: '/given'
-      fullPath: '/reviews/given'
-      preLoaderRoute: typeof AuthenticatedReviewsLayoutGivenRouteImport
-      parentRoute: typeof AuthenticatedReviewsLayoutRouteRoute
+    '/_authenticated/admin/users/$userId': {
+      id: '/_authenticated/admin/users/$userId'
+      path: '/$userId'
+      fullPath: '/admin/users/$userId'
+      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdRouteImport
+      parentRoute: typeof AuthenticatedAdminUsersRoute
     }
     '/_authenticated/marketplace/$itemId/edit': {
       id: '/_authenticated/marketplace/$itemId/edit'
@@ -1063,12 +1122,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMarketplaceItemIdEditRouteImport
       parentRoute: typeof AuthenticatedMarketplaceRoute
     }
-    '/_authenticated/admin/users/$userId': {
-      id: '/_authenticated/admin/users/$userId'
-      path: '/$userId'
-      fullPath: '/admin/users/$userId'
-      preLoaderRoute: typeof AuthenticatedAdminUsersUserIdRouteImport
-      parentRoute: typeof AuthenticatedAdminUsersRoute
+    '/_authenticated/reviews/_layout/given': {
+      id: '/_authenticated/reviews/_layout/given'
+      path: '/given'
+      fullPath: '/reviews/given'
+      preLoaderRoute: typeof AuthenticatedReviewsLayoutGivenRouteImport
+      parentRoute: typeof AuthenticatedReviewsLayoutRouteRoute
+    }
+    '/_authenticated/reviews/_layout/received': {
+      id: '/_authenticated/reviews/_layout/received'
+      path: '/received'
+      fullPath: '/reviews/received'
+      preLoaderRoute: typeof AuthenticatedReviewsLayoutReceivedRouteImport
+      parentRoute: typeof AuthenticatedReviewsLayoutRouteRoute
+    }
+    '/_authenticated/reviews/create/$offerId': {
+      id: '/_authenticated/reviews/create/$offerId'
+      path: '/create/$offerId'
+      fullPath: '/reviews/create/$offerId'
+      preLoaderRoute: typeof AuthenticatedReviewsCreateOfferIdRouteImport
+      parentRoute: typeof AuthenticatedReviewsRouteRoute
+    }
+    '/eco-hub/blogs/$blogId/': {
+      id: '/eco-hub/blogs/$blogId/'
+      path: '/$blogId'
+      fullPath: '/eco-hub/blogs/$blogId/'
+      preLoaderRoute: typeof EcoHubBlogsBlogIdIndexRouteImport
+      parentRoute: typeof EcoHubBlogsRouteRoute
+    }
+    '/_authenticated/_writer/eco-hub/blogs/$blogId': {
+      id: '/_authenticated/_writer/eco-hub/blogs/$blogId'
+      path: '/blogs/$blogId'
+      fullPath: '/eco-hub/blogs/$blogId'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport
+      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
+    }
+    '/_authenticated/_writer/eco-hub/blogs/create': {
+      id: '/_authenticated/_writer/eco-hub/blogs/create'
+      path: '/blogs/create'
+      fullPath: '/eco-hub/blogs/create'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsCreateLazyRouteImport
+      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
+    }
+    '/_authenticated/_writer/eco-hub/blogs/own': {
+      id: '/_authenticated/_writer/eco-hub/blogs/own'
+      path: '/blogs/own'
+      fullPath: '/eco-hub/blogs/own'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsOwnRouteImport
+      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
+    }
+    '/_authenticated/_writer/eco-hub/quizzes/own': {
+      id: '/_authenticated/_writer/eco-hub/quizzes/own'
+      path: '/quizzes/own'
+      fullPath: '/eco-hub/quizzes/own'
+      preLoaderRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRouteImport
+      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
     }
     '/_authenticated/admin/users/$userId/': {
       id: '/_authenticated/admin/users/$userId/'
@@ -1083,34 +1191,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/users/$userId/items'
       preLoaderRoute: typeof AuthenticatedAdminUsersUserIdItemsRouteImport
       parentRoute: typeof AuthenticatedAdminUsersUserIdRoute
-    }
-    '/_authenticated/_writer/eco-hub/quizzes/own': {
-      id: '/_authenticated/_writer/eco-hub/quizzes/own'
-      path: '/quizzes/own'
-      fullPath: '/eco-hub/quizzes/own'
-      preLoaderRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRouteImport
-      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
-    }
-    '/_authenticated/_writer/eco-hub/blogs/own': {
-      id: '/_authenticated/_writer/eco-hub/blogs/own'
-      path: '/blogs/own'
-      fullPath: '/eco-hub/blogs/own'
-      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsOwnRouteImport
-      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
-    }
-    '/_authenticated/_writer/eco-hub/blogs/create': {
-      id: '/_authenticated/_writer/eco-hub/blogs/create'
-      path: '/blogs/create'
-      fullPath: '/eco-hub/blogs/create'
-      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsCreateRouteImport
-      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
-    }
-    '/_authenticated/_writer/eco-hub/blogs/$blogId': {
-      id: '/_authenticated/_writer/eco-hub/blogs/$blogId'
-      path: '/blogs/$blogId'
-      fullPath: '/eco-hub/blogs/$blogId'
-      preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport
-      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
     }
     '/_authenticated/_writer/eco-hub/blogs/$blogId/edit': {
       id: '/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
@@ -1179,21 +1259,21 @@ const AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren =
 
 interface AuthenticatedWriterEcoHubRouteRouteChildren {
   AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
-  AuthenticatedWriterEcoHubBlogsCreateRoute: typeof AuthenticatedWriterEcoHubBlogsCreateRoute
   AuthenticatedWriterEcoHubBlogsOwnRoute: typeof AuthenticatedWriterEcoHubBlogsOwnRoute
   AuthenticatedWriterEcoHubQuizzesOwnRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
+  AuthenticatedWriterEcoHubBlogsCreateLazyRoute: typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
 }
 
 const AuthenticatedWriterEcoHubRouteRouteChildren: AuthenticatedWriterEcoHubRouteRouteChildren =
   {
     AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute:
       AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren,
-    AuthenticatedWriterEcoHubBlogsCreateRoute:
-      AuthenticatedWriterEcoHubBlogsCreateRoute,
     AuthenticatedWriterEcoHubBlogsOwnRoute:
       AuthenticatedWriterEcoHubBlogsOwnRoute,
     AuthenticatedWriterEcoHubQuizzesOwnRoute:
       AuthenticatedWriterEcoHubQuizzesOwnRoute,
+    AuthenticatedWriterEcoHubBlogsCreateLazyRoute:
+      AuthenticatedWriterEcoHubBlogsCreateLazyRoute,
   }
 
 const AuthenticatedWriterEcoHubRouteRouteWithChildren =
@@ -1325,7 +1405,6 @@ interface AuthenticatedMarketplaceRouteChildren {
   AuthenticatedMarketplaceCreateRoute: typeof AuthenticatedMarketplaceCreateRoute
   AuthenticatedMarketplaceHistoryRoute: typeof AuthenticatedMarketplaceHistoryRoute
   AuthenticatedMarketplaceMyItemsRoute: typeof AuthenticatedMarketplaceMyItemsRoute
-  AuthenticatedMarketplaceWishlistRoute: typeof AuthenticatedMarketplaceWishlistRoute
   AuthenticatedMarketplaceItemIdEditRoute: typeof AuthenticatedMarketplaceItemIdEditRoute
 }
 
@@ -1334,8 +1413,6 @@ const AuthenticatedMarketplaceRouteChildren: AuthenticatedMarketplaceRouteChildr
     AuthenticatedMarketplaceCreateRoute: AuthenticatedMarketplaceCreateRoute,
     AuthenticatedMarketplaceHistoryRoute: AuthenticatedMarketplaceHistoryRoute,
     AuthenticatedMarketplaceMyItemsRoute: AuthenticatedMarketplaceMyItemsRoute,
-    AuthenticatedMarketplaceWishlistRoute:
-      AuthenticatedMarketplaceWishlistRoute,
     AuthenticatedMarketplaceItemIdEditRoute:
       AuthenticatedMarketplaceItemIdEditRoute,
   }
@@ -1363,7 +1440,6 @@ const AuthenticatedOffersRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedWriterRouteRoute: typeof AuthenticatedWriterRouteRouteWithChildren
   AuthenticatedReviewsRouteRoute: typeof AuthenticatedReviewsRouteRouteWithChildren
-  AuthenticatedAboutRoute: typeof AuthenticatedAboutRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedMarketplaceRoute: typeof AuthenticatedMarketplaceRouteWithChildren
   AuthenticatedOffersRoute: typeof AuthenticatedOffersRouteWithChildren
@@ -1376,7 +1452,6 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedWriterRouteRoute: AuthenticatedWriterRouteRouteWithChildren,
   AuthenticatedReviewsRouteRoute: AuthenticatedReviewsRouteRouteWithChildren,
-  AuthenticatedAboutRoute: AuthenticatedAboutRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedMarketplaceRoute: AuthenticatedMarketplaceRouteWithChildren,
   AuthenticatedOffersRoute: AuthenticatedOffersRouteWithChildren,

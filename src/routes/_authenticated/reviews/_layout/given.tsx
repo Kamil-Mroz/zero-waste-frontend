@@ -1,13 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { ReviewList } from "@/features/review/components/review-list";
-import { ReviewsSkeleton } from "@/features/review/components/reviews-skeleton";
 import { GivenReviewsQueryOptions } from "@/features/review/hooks/query-options";
-import { getValidPage, withDefaultPageable } from "@/lib/utils";
+import { getValidPage } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/reviews/_layout/given")({
-	pendingComponent: ReviewsSkeleton,
-	component: RouteComponent,
 	staticData: {
 		getTitle: () => "Given",
 	},
@@ -31,14 +26,3 @@ export const Route = createFileRoute("/_authenticated/reviews/_layout/given")({
 		}
 	},
 });
-
-function RouteComponent() {
-	const { page, size } = Route.useSearch();
-	const pageable = withDefaultPageable({ page, size });
-
-	const { data: reviews } = useSuspenseQuery(
-		GivenReviewsQueryOptions(pageable),
-	);
-
-	return <ReviewList reviews={reviews} pageable={pageable} />;
-}

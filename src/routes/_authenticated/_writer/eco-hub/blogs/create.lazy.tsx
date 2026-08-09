@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import BlogForm from "@/features/blog/components/blog-form";
 import GoBackButton from "@/features/shared/components/go-back-button";
 
-export const Route = createFileRoute(
+export const Route = createLazyFileRoute(
 	"/_authenticated/_writer/eco-hub/blogs/create",
 )({
 	component: RouteComponent,

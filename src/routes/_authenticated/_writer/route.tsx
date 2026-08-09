@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/_writer")({
 	staticData: {
@@ -14,5 +14,4 @@ export const Route = createFileRoute("/_authenticated/_writer")({
 			});
 		}
 	},
-	component: Outlet,
 });
