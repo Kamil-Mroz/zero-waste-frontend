@@ -1,7 +1,6 @@
 import { z } from "zod/v4";
 export const registerSchema = z.object({
-	firstName: z.string().nonempty("First name required"),
-	lastName: z.string().nonempty("Last name required"),
+	nickname: z.string().nonempty("Nickname is required"),
 	email: z.email("Provide a valid email"),
 	password: z
 		.string()
@@ -12,5 +11,4 @@ export const registerSchema = z.object({
 		)
 		.min(10, "Password must be at least 10 characters")
 		.max(128, "Password can be maximum 128 characters"),
-
 });

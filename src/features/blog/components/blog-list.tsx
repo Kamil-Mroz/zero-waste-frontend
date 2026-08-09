@@ -59,7 +59,7 @@ export function BlogList({ blogs, showCreate = false }: BlogListProps) {
 								</CardHeader>
 
 								<CardContent className="text-sm text-muted-foreground">
-									By {blog.author.firstName} {blog.author.lastName}
+									By {blog.author.nickname}
 								</CardContent>
 							</Card>
 						</Link>

@@ -26,7 +26,7 @@ export const Route = createFileRoute("/_authenticated/settings")({
 });
 
 function RouteComponent() {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const form = useDeleteForm({ onSuccess: () => setIsOpen(false) });
 	return (
 		<div>

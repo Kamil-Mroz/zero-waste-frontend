@@ -9,7 +9,7 @@ export function ItemImage({ src, alt }: ItemImageProps) {
 				<img
 					src={src}
 					alt={alt}
-					className="h-full w-full object-cover transition duration-300 hover:scale-105"
+					className="h-full w-full object-contain transition duration-300 hover:scale-105"
 				/>
 			) : (
 				<div className="flex h-full items-center justify-center text-sm text-muted-foreground">

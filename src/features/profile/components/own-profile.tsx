@@ -14,10 +14,7 @@ type Props = {
 export function OwnProfile({ user }: Props) {
 	return (
 		<div className="mx-auto w-full space-y-4">
-			<UserHeader
-				firstName={user.firstName}
-				lastName={user.lastName}
-			/>
+			<UserHeader nickname={user.nickname} />
 			<div className="grid sm:grid-cols-2 gap-4">
 				<AccountStatusCard
 					hasActiveBan={user.hasActiveBan}
@@ -27,10 +24,7 @@ export function OwnProfile({ user }: Props) {
 				<RolesCard roles={user.roles} />
 			</div>
 
-			<PersonalInfoCard
-				firstName={user.firstName}
-				lastName={user.lastName}
-			/>
+			<PersonalInfoCard nickname={user.nickname} />
 			<Suspense fallback={<OwnProfileStatsSkeleton />}>
 				<OwnProfileStats />
 			</Suspense>

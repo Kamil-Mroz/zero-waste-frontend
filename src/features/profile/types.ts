@@ -3,8 +3,7 @@ import type { Review, ReviewResponse } from "../review/types";
 
 export type PublicUserProfile = {
 	id: string;
-	firstName: string;
-	lastName: string;
+	nickname: string;
 	joinedAt: string;
 	items: ProfileItemSummary;
 	reviews: ProfileReviewSummary;

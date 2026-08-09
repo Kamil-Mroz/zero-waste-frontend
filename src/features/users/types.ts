@@ -11,8 +11,7 @@ export type UserRoles = Roles[];
 
 export type User = {
 	id: string;
-	firstName: string;
-	lastName: string;
+	nickname: string;
 	email: string;
 	hasActiveBan: boolean;
 	bannedUntil: string | null;
@@ -20,7 +19,7 @@ export type User = {
 	roles: UserRoles;
 };
 
-export type UserSummary = Pick<User, "email" | "id" | "firstName" | "lastName">;
+export type UserSummary = Pick<User, "email" | "id" | "nickname">;
 
 export type UserFormProps = {
 	defaultValues?: CreateUserType;

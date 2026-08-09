@@ -28,9 +28,9 @@ export const columns: ColumnDef<User>[] = [
 		),
 	},
 	{
-		id: "name",
+		id: "nickname",
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Name" />
+			<DataTableColumnHeader column={column} title="Nickname" />
 		),
 		cell: ({ row }) => {
 			const user = row.original;
@@ -42,7 +42,7 @@ export const columns: ColumnDef<User>[] = [
 					className="pl-0 text-foreground"
 				>
 					<Link to="/admin/users/$userId" params={{ userId: user.id }}>
-						{user.firstName} {user.lastName}
+						{user.nickname}
 					</Link>
 				</Button>
 			);

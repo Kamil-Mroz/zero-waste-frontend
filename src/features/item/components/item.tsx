@@ -4,6 +4,10 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import GoBackButton from "@/features/shared/components/go-back-button";
 import { Button } from "@/features/shared/components/ui/button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
+import {
+	ScrollArea,
+	ScrollBar,
+} from "@/features/shared/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import type { ItemProps } from "../types";
 import { ItemActions } from "./item-actions";
@@ -17,7 +21,7 @@ export function Item({ item }: ItemProps) {
 	const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
 	return (
-		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto p-4">
+		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto">
 			<GoBackButton />
 			<Card
 				className={cn(
@@ -25,7 +29,7 @@ export function Item({ item }: ItemProps) {
 					item.state === "GIVEN" ? "border-destructive" : "",
 				)}
 			>
-				<CardContent className="p-6 space-y-4 ">
+				<CardContent className="md:p-6 space-y-4 ">
 					{item.state === "GIVEN" && (
 						<span className="absolute top-1/2 -translate-y-1/2 text-7xl bg-destructive/40 rotate-45 font-bold -inset-x-full  text-center py-10 z-10">
 							GIVEN
@@ -33,12 +37,12 @@ export function Item({ item }: ItemProps) {
 					)}
 					<h1 className="text-2xl font-bold">{item.title}</h1>
 					<div className="space-y-3">
-						<div className="aspect-square w-full max-w-sm overflow-hidden rounded-2xl border mx-auto">
+						<div className="aspect-square w-full max-w-sm overflow-hidden  border mx-auto bg-muted">
 							{activeImage ? (
 								<img
 									src={activeImage}
 									alt={item.title}
-									className="h-full w-full object-cover transition duration-300"
+									className="h-full w-full object-contain transition duration-300"
 								/>
 							) : (
 								<div className="flex h-full items-center justify-center text-sm text-muted-foreground">
@@ -47,30 +51,33 @@ export function Item({ item }: ItemProps) {
 							)}
 						</div>
 						{item.images?.length > 1 && (
-							<div className="flex gap-2 overflow-x-auto p-1">
-								{item.images.map((img, idx) => (
-									<button
-										key={img.id}
-										type="button"
-										ref={(el) => {
-											buttonRefs.current[img.id] = el;
-										}}
-										onMouseEnter={() => {
-											setActiveImage(img.url);
-											buttonRefs.current[img.id]?.focus();
-										}}
-										onFocus={() => setActiveImage(img.url)}
-										onClick={() => setActiveImage(img.url)}
-										className="h-20 w-20 shrink-0 overflow-hidden rounded-lg border p-0 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
-									>
-										<img
-											src={img.url}
-											alt={`${item.title} number ${idx + 1}`}
-											className={`h-full w-full object-cover transition ${activeImage === img.url ? "ring-2 ring-primary" : "opacity-80 hover:opacity-100"}`}
-										/>
-									</button>
-								))}
-							</div>
+							<ScrollArea className="">
+								<div className="flex w-max p-2 space-x-2 mx-auto">
+									{item.images.map((img, idx) => (
+										<button
+											key={img.id}
+											type="button"
+											ref={(el) => {
+												buttonRefs.current[img.id] = el;
+											}}
+											onMouseEnter={() => {
+												setActiveImage(img.url);
+												buttonRefs.current[img.id]?.focus();
+											}}
+											onFocus={() => setActiveImage(img.url)}
+											onClick={() => setActiveImage(img.url)}
+											className="h-20 w-20 shrink-0 overflow-hidden rounded-lg border p-0 bg-muted focus:outline-none focus:ring-2 focus:ring-primary rounded-none"
+										>
+											<img
+												src={img.url}
+												alt={`${item.title} number ${idx + 1}`}
+												className={`h-full w-full object-contain transition ${activeImage === img.url ? "ring-2 ring-primary" : "opacity-80 hover:opacity-100"}`}
+											/>
+										</button>
+									))}
+								</div>
+								<ScrollBar orientation="horizontal" />
+							</ScrollArea>
 						)}
 					</div>
 
@@ -87,7 +94,7 @@ export function Item({ item }: ItemProps) {
 						<p className="font-medium">Owner</p>
 						<Button variant="link" asChild className="px-0 text-foreground">
 							<Link to="/profile/$userId" params={{ userId: item.owner.id }}>
-								{item.owner.firstName} {item.owner.lastName}
+								{item.owner.nickname}
 							</Link>
 						</Button>
 					</div>

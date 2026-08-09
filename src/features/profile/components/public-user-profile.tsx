@@ -12,8 +12,7 @@ export function PublicUserProfile({ profile, userId }: PublicUserProfileProps) {
 	return (
 		<div className="mx-auto  w-full space-y-4">
 			<UserHeader
-				firstName={profile.firstName}
-				lastName={profile.lastName}
+				nickname={profile.nickname}
 				subtitle={`Member since ${new Date(
 					profile.joinedAt,
 				).toLocaleDateString()}`}

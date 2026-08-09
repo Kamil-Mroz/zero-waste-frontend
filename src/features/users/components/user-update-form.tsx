@@ -66,11 +66,8 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 			}}
 		>
 			<FieldGroup>
-				<form.AppField name="firstName">
-					{(field) => <field.TextField label="First name" />}
-				</form.AppField>
-				<form.AppField name="lastName">
-					{(field) => <field.TextField label="Last name" />}
+				<form.AppField name="nickname">
+					{(field) => <field.TextField label="Nickname" />}
 				</form.AppField>
 				<form.AppField name="email">
 					{(field) => <field.TextField label="Email" type="email" />}

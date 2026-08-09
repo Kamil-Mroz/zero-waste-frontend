@@ -85,8 +85,8 @@ export const NAV_LINKS = {
 					url: "/admin/users",
 				},
 				{
-					title: "Manage Listings",
-					url: "/admin/listings",
+					title: "Manage Items",
+					url: "/admin/items",
 				},
 				{
 					title: "Manage categories",

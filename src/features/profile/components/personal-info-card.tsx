@@ -1,14 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/features/shared/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/features/shared/components/ui/card";
 
 type Props = {
-	firstName: string;
-	lastName: string;
+	nickname: string;
 };
 
-export function PersonalInfoCard({
-	firstName,
-	lastName,
-}: Props) {
+export function PersonalInfoCard({ nickname }: Props) {
 	return (
 		<Card>
 			<CardHeader>
@@ -17,16 +18,9 @@ export function PersonalInfoCard({
 
 			<CardContent className="grid gap-6 md:grid-cols-2">
 				<div>
-					<p className="text-muted-foreground text-sm">First Name</p>
-					<p>{firstName}</p>
+					<p className="text-muted-foreground text-sm">Nickname</p>
+					<p>{nickname}</p>
 				</div>
-
-				<div>
-					<p className="text-muted-foreground text-sm">Last Name</p>
-					<p>{lastName}</p>
-				</div>
-
-
 			</CardContent>
 		</Card>
 	);

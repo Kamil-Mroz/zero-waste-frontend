@@ -14,8 +14,7 @@ import { useUserAccountDeleteMutation } from "./mutation-options";
 export const userFormOptions = () => {
 	return formOptions({
 		defaultValues: {
-			firstName: "",
-			lastName: "",
+			nickname: "",
 			email: "",
 			password: "",
 			roles: ["USER"],

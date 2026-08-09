@@ -5,8 +5,7 @@ import { registerSchema } from "../schemas/register.schema";
 export const registerFormOpts = () =>
 	formOptions({
 		defaultValues: {
-			firstName: "",
-			lastName: "",
+			nickname: "",
 			email: "",
 			password: "",
 		},

@@ -17,7 +17,7 @@ export function Blog({ blog }: BlogProps) {
 					<h2 className="text-xl font-semibold tracking-tight">{blog.title}</h2>
 
 					<p className="text-sm text-muted-foreground">
-						By {blog.author.firstName} {blog.author.lastName}
+						By {blog.author.nickname}
 					</p>
 				</div>
 

@@ -4,7 +4,7 @@ import { Skeleton } from "@/features/shared/components/ui/skeleton";
 
 export function ItemDetailSkeleton() {
 	return (
-		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto p-4">
+		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto">
 			<Skeleton className="h-9 w-24" />
 
 			<Card className="w-full rounded-2xl">

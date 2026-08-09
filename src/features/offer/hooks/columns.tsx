@@ -43,7 +43,7 @@ export const receivedColumns: ColumnDef<Offer>[] = [
 					className="pl-0 text-foreground"
 				>
 					<Link to="/profile/$userId" params={{ userId: offer.buyer.id }}>
-						{offer.buyer.firstName} {offer.buyer.lastName}
+						{offer.buyer.nickname}
 					</Link>
 				</Button>
 			);
@@ -112,7 +112,7 @@ export const ownColumns: ColumnDef<Offer>[] = [
 					className="pl-0 text-foreground"
 				>
 					<Link to="/profile/$userId" params={{ userId: offer.item.owner.id }}>
-						{offer.item.owner?.firstName} {offer.item.owner?.lastName}
+						{offer.item.owner?.nickname}
 					</Link>
 				</Button>
 			);

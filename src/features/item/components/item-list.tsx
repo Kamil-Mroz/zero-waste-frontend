@@ -21,7 +21,7 @@ export function ItemList({ items, isOwnItems }: ItemListProps) {
 					)}
 				</EmptyComponent>
 			) : (
-				<div className="w-full mx-auto sm:grid-cols-2 grid gap-4 lg:grid-cols-3 items-stretch">
+				<div className="w-full mx-auto sm:grid-cols-2 grid gap-4 lg:grid-cols-3  2xl:grid-cols-4 items-stretch ">
 					{items.map((item) => (
 						<ItemCard item={item} key={item.id} />
 					))}
