@@ -10,7 +10,7 @@ export function UserHeader({ nickname, subtitle }: UserHeaderProps) {
 		<Card>
 			<CardContent className="flex items-center flex-col sm:flex-row gap-4 p-6">
 				<div className="bg-primary text-primary-foreground flex size-16 items-center justify-center rounded-full text-2xl font-semibold">
-					{nickname.charAt(0)}
+					{nickname.charAt(0).toUpperCase()}
 				</div>
 
 				<div>

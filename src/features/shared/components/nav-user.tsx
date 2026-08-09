@@ -37,7 +37,7 @@ export function NavUser({ user }: { user: User }) {
 	const navigate = useNavigate();
 
 	const nickname = user.nickname;
-	const shortName = user.nickname.charAt(0);
+	const shortName = user.nickname.charAt(0).toUpperCase();
 
 	const onLogout = async () => {
 		await logout();

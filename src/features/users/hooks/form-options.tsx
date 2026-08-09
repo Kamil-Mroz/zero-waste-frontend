@@ -9,15 +9,16 @@ import {
 	type BanUserSchema,
 	deleteUserFormSchema,
 } from "../schemas/user.schema";
+import type { User } from "../types";
 import { useUserAccountDeleteMutation } from "./mutation-options";
 
-export const userFormOptions = () => {
+export const userFormOptions = (user?: User) => {
 	return formOptions({
 		defaultValues: {
-			nickname: "",
-			email: "",
+			nickname: user?.nickname || "",
+			email: user?.email || "",
 			password: "",
-			roles: ["USER"],
+			roles: user?.roles && user.roles.length > 0 ? user.roles : ["USER"],
 		},
 	});
 };

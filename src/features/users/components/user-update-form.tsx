@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+	useMutation,
+	useQuery,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAppForm } from "@/features/shared/components/form/form";
@@ -23,7 +28,7 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 	const isMobile = useIsMobile();
 
 	const form = useAppForm({
-		...userFormOptions(),
+		...userFormOptions(data),
 		validators: {
 			onSubmit: updateUserSchema,
 		},

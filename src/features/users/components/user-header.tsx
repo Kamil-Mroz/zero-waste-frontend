@@ -10,7 +10,7 @@ function UserHeader({ user }: UserHeader) {
 		<Card>
 			<CardContent className="flex items-center gap-4 p-6">
 				<div className="bg-primary text-primary-foreground flex size-16 items-center justify-center rounded-full text-2xl font-semibold">
-					{user.nickname.charAt(0)}
+					{user.nickname.charAt(0).toUpperCase()}
 				</div>
 
 				<div>
