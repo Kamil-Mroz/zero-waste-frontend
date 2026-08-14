@@ -3,6 +3,13 @@ import { GivenReviewsQueryOptions } from "@/features/review/hooks/query-options"
 import { getValidPage } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/reviews/_layout/given")({
+	head: () => ({
+		meta: [
+			{
+				title: "Given reviews",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Given",
 	},

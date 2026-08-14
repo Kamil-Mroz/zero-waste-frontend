@@ -3,6 +3,13 @@ import { blogQueryOptions } from "@/features/blog/hooks/query-options";
 import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/eco-hub/blogs/$blogId/")({
+	head: () => ({
+		meta: [
+			{
+				title: "Blog",
+			},
+		],
+	}),
 	params: {
 		parse: (params) => {
 			const result = idParamSchema.safeParse({ id: params.blogId });

@@ -8,6 +8,13 @@ const notificationSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/_authenticated/notifications/")({
+	head: () => ({
+		meta: [
+			{
+				title: "Notifications",
+			},
+		],
+	}),
 	validateSearch: notificationSearchSchema,
 	loaderDeps: ({ search }) => {
 		const { notificationType } = search;

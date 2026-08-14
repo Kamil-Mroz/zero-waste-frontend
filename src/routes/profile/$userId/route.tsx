@@ -2,6 +2,13 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/profile/$userId")({
+	head: () => ({
+		meta: [
+			{
+				title: "Profile",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Profile",
 	},

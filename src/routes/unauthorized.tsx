@@ -3,6 +3,13 @@ import { Button } from "@/features/shared/components/ui/button";
 import { redirectSchema } from "@/features/shared/schemas/redirect.schema";
 
 export const Route = createFileRoute("/unauthorized")({
+	head: () => ({
+		meta: [
+			{
+				title: "Unauthorized",
+			},
+		],
+	}),
 	validateSearch: redirectSchema,
 	component: RouteComponent,
 });

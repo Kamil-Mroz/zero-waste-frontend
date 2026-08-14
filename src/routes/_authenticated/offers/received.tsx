@@ -10,6 +10,13 @@ const receivedOffersSearchSchema = z.object({
 	offerId: z.uuid().optional().catch(""),
 });
 export const Route = createFileRoute("/_authenticated/offers/received")({
+	head: () => ({
+		meta: [
+			{
+				title: "Received offers",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Received",
 	},

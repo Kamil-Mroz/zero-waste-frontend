@@ -1,7 +1,14 @@
 import { formOptions } from "@tanstack/react-form";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
+import { AUTH_QUERY_KEYS } from "@/features/auth/constants";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import {
+	type CreatePasswordInput,
+	createPasswordSchema,
+	type UpdatePasswordInput,
+	updatePasswordSchema,
+} from "@/features/auth/schemas/password.schema";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { appToast } from "@/features/shared/components/toast";
 import { handleApiError } from "@/lib/utils";
@@ -10,7 +17,11 @@ import {
 	deleteUserFormSchema,
 } from "../schemas/user.schema";
 import type { User } from "../types";
-import { useUserAccountDeleteMutation } from "./mutation-options";
+import {
+	createPasswordMutationOptions,
+	updatePasswordMutationOptions,
+	useUserAccountDeleteMutation,
+} from "./mutation-options";
 
 export const userFormOptions = (user?: User) => {
 	return formOptions({
@@ -87,6 +98,56 @@ export const useDeleteForm = ({ onSuccess }: { onSuccess: () => void }) => {
 						description: message,
 					});
 			}
+		},
+	});
+};
+
+export const usePasswordManagerForm = (
+	hasPassword: boolean,
+	setShowForm: (state: boolean) => void,
+) => {
+	const queryClient = useQueryClient();
+	const router = useRouter();
+	const createPasswordMutation = useMutation(createPasswordMutationOptions());
+
+	const updatePasswordMutation = useMutation(updatePasswordMutationOptions());
+
+	const schema = hasPassword ? updatePasswordSchema : createPasswordSchema;
+
+	return useAppForm({
+		defaultValues: hasPassword
+			? {
+					currentPassword: "",
+					newPassword: "",
+					confirmPassword: "",
+				}
+			: {
+					newPassword: "",
+					confirmPassword: "",
+				},
+		validators: {
+			onSubmit: schema,
+		},
+		onSubmit: async ({ value, formApi }) => {
+			if (hasPassword) {
+				await updatePasswordMutation.mutateAsync({
+					currentPassword: value.currentPassword,
+					newPassword: value.newPassword,
+					confirmPassword: value.confirmPassword,
+				} as UpdatePasswordInput);
+			} else {
+				await createPasswordMutation.mutateAsync({
+					newPassword: value.newPassword,
+					confirmPassword: value.confirmPassword,
+				} as CreatePasswordInput);
+			}
+			formApi.reset();
+			await queryClient.invalidateQueries({
+				queryKey: AUTH_QUERY_KEYS.connections(),
+			});
+			setShowForm(false);
+			await router.invalidate();
+			appToast.success({ description: "Password save successfully" });
 		},
 	});
 };

@@ -11,6 +11,13 @@ const ownOffersSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/_authenticated/offers/own")({
+	head: () => ({
+		meta: [
+			{
+				title: "Own offers",
+			},
+		],
+	}),
 	validateSearch: ownOffersSearchSchema,
 	staticData: {
 		getTitle: () => "Own",

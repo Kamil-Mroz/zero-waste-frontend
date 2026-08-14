@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { AlertTriangle } from "lucide-react";
 import { useEffect } from "react";
+import { getErrorDetails } from "@/lib/utils";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 
@@ -13,21 +14,24 @@ export function ErrorComponent({ error }: ErrorComponentProps) {
 	const router = useRouter();
 	const queryClientErrorBoundary = useQueryErrorResetBoundary();
 
-	const isDev = import.meta.env.DEV;
-
 	useEffect(() => {
 		queryClientErrorBoundary.reset();
 	}, [queryClientErrorBoundary]);
+
+	const errorInfo = getErrorDetails(error);
+	const isDev = import.meta.env.DEV;
 
 	return (
 		<div className="grid h-full place-items-center">
 			<div className="w-full max-w-md grid gap-4">
 				<Alert variant="destructive">
 					<AlertTriangle className="size-4" />
-					<AlertTitle>Oops! Something went wrong</AlertTitle>
-					<AlertDescription>
-						We&apos;re sorry, but we encountered an unexpected and error.
-					</AlertDescription>
+					<AlertTitle>
+						{errorInfo.status
+							? `${errorInfo.status} ${errorInfo.title}`
+							: errorInfo.title}
+					</AlertTitle>
+					<AlertDescription>{errorInfo.message}</AlertDescription>
 				</Alert>
 				<div className="space-y-4">
 					<Button

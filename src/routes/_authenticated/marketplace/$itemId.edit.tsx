@@ -7,6 +7,13 @@ import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 export const Route = createFileRoute(
 	"/_authenticated/marketplace/$itemId/edit",
 )({
+	head: () => ({
+		meta: [
+			{
+				title: "Edit item",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Edit item",
 	},

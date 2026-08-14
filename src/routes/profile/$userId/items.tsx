@@ -2,6 +2,13 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { userItemsQueryOptions } from "@/features/item/hooks/query-options";
 
 export const Route = createFileRoute("/profile/$userId/items")({
+	head: () => ({
+		meta: [
+			{
+				title: "Items",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Items",
 	},

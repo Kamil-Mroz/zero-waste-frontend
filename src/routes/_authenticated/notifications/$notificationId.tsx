@@ -5,6 +5,13 @@ import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 export const Route = createFileRoute(
 	"/_authenticated/notifications/$notificationId",
 )({
+	head: () => ({
+		meta: [
+			{
+				title: "Notification",
+			},
+		],
+	}),
 	params: {
 		parse: (params) => {
 			const result = idParamSchema.safeParse({ id: params.notificationId });

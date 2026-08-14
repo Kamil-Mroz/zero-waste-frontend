@@ -56,7 +56,19 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			(response) => response,
 			async (error) => {
 				const originalRequest = error.config;
-				const isAuthEndpoint = originalRequest.url?.includes("/auth/");
+
+				if (error.response?.status === 429) {
+					const retryAfter = error.response.headers["retry-after"];
+
+					const seconds = Number(retryAfter);
+
+					appToast.error({
+						description: Number.isFinite(seconds)
+							? `Too many requests. Please try again in ${seconds} seconds.`
+							: "Too many requests. Please try again later.",
+					});
+				}
+				const isAuthEndpoint = originalRequest.url?.includes("auth");
 
 				if (
 					error.response?.status === 401 &&

@@ -2,6 +2,13 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/_authenticated/admin/users/$userId")({
+	head: () => ({
+		meta: [
+			{
+				title: "User",
+			},
+		],
+	}),
 	params: {
 		parse: (params) => {
 			const result = idParamSchema.safeParse({ id: params.userId });

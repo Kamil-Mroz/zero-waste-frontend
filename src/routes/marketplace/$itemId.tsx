@@ -11,6 +11,13 @@ const itemSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/marketplace/$itemId")({
+	head: () => ({
+		meta: [
+			{
+				title: "Item",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Item",
 	},

@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Star } from "lucide-react";
 import type { ProfileReviewSummary } from "@/features/profile/types";
 import { Rating } from "@/features/review/components/rating";
-import { Avatar, AvatarFallback } from "@/features/shared/components/ui/avatar";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -37,7 +36,7 @@ export function ProfileReviewsCard({
 				</Button>
 			</CardHeader>
 
-			<CardContent className="space-y-2">
+			<CardContent className="space-y-2 max-w-2xl mx-auto w-full">
 				<div className="flex items-center gap-3">
 					<Star className="h-6 w-6 fill-yellow-400 text-yellow-400" />
 					<div>

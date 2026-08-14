@@ -22,7 +22,7 @@ export function deleteCategoryMutationOptions() {
 		onError: (error) => {
 			const message = handleApiError(error);
 			if (message) {
-				appToast.error({ title: "Delete failed", description: message });
+				appToast.error({ title: "Deletion failed", description: message });
 			}
 		},
 	});

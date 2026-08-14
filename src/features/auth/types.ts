@@ -23,3 +23,10 @@ export type AuthState = {
 export type LoginRequest = z.infer<typeof loginSchema>;
 
 export type RegisterRequest = z.infer<typeof registerSchema>;
+
+export type Providers = "GOOGLE" | "GITHUB";
+
+export type Connections = {
+	providers: Providers[];
+	hasPassword: boolean;
+};

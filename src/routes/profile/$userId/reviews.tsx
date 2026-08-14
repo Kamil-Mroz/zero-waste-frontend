@@ -4,6 +4,13 @@ import { paginationSchema } from "@/features/shared/schemas/pagination.schema";
 import { getValidPage } from "@/lib/utils";
 
 export const Route = createFileRoute("/profile/$userId/reviews")({
+	head: () => ({
+		meta: [
+			{
+				title: "Reviews",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Reviews",
 	},

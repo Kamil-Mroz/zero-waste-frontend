@@ -1,12 +1,6 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
-import {
-	BadgeCheck,
-	Bell,
-	ChevronsUpDown,
-	CreditCard,
-	LogOut,
-	Sparkles,
-} from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
 	Avatar,
@@ -35,12 +29,14 @@ export function NavUser({ user }: { user: User }) {
 	const router = useRouter();
 	const { logout } = useAuth();
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	const nickname = user.nickname;
 	const shortName = user.nickname.charAt(0).toUpperCase();
 
 	const onLogout = async () => {
 		await logout();
+		await queryClient.clear();
 		await router.invalidate();
 		await navigate({ to: "/login" });
 		if (isMobile) toggleSidebar();

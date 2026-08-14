@@ -1,4 +1,5 @@
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { createPassword, updatePassword } from "@/features/auth/api";
 import { appToast } from "@/features/shared/components/toast";
 import { handleApiError } from "@/lib/utils";
 import {
@@ -28,7 +29,7 @@ export function userDeleteMutationOptions() {
 		onError: (error) => {
 			const message = handleApiError(error);
 			if (message) {
-				appToast.error({ title: "Delete failed", description: message });
+				appToast.error({ title: "Deletion failed", description: message });
 			}
 		},
 	});
@@ -47,5 +48,35 @@ export function userUnbanMutationOptions() {
 export function useUserAccountDeleteMutation() {
 	return useMutation({
 		mutationFn: deleteUser,
+	});
+}
+
+export function createPasswordMutationOptions() {
+	return mutationOptions({
+		mutationFn: createPassword,
+		onError: (error) => {
+			const message = handleApiError(error);
+			if (message) {
+				appToast.error({
+					title: "Password creation failed",
+					description: message,
+				});
+			}
+		},
+	});
+}
+
+export function updatePasswordMutationOptions() {
+	return mutationOptions({
+		mutationFn: updatePassword,
+		onError: (error) => {
+			const message = handleApiError(error);
+			if (message) {
+				appToast.error({
+					title: "Update password failed",
+					description: message,
+				});
+			}
+		},
 	});
 }

@@ -5,6 +5,13 @@ import { getValidPage } from "@/lib/utils";
 export const Route = createFileRoute(
 	"/_authenticated/reviews/_layout/received",
 )({
+	head: () => ({
+		meta: [
+			{
+				title: "Received reviews",
+			},
+		],
+	}),
 	staticData: {
 		getTitle: () => "Received",
 	},

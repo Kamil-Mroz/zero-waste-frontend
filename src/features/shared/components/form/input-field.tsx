@@ -14,9 +14,11 @@ import { useFieldContext } from "./form";
 export function InputField({
 	label,
 	type = "text",
+	orientation = "vertical",
 }: {
 	label: string;
 	type?: HTMLInputTypeAttribute;
+	orientation?: "horizontal" | "vertical" | "responsive";
 }) {
 	const field = useFieldContext<string>();
 	const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +28,7 @@ export function InputField({
 		state.meta.isTouched && !state.meta.isValid,
 	]);
 	return (
-		<Field data-invalid={isInvalid}>
+		<Field data-invalid={isInvalid} orientation={orientation}>
 			<FieldLabel htmlFor={field.name}>{label}</FieldLabel>
 			<ButtonGroup>
 				<Input

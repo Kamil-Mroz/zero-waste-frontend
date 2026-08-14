@@ -208,7 +208,6 @@ function FieldError({
 	}, [children, errors]);
 
 	if (!content) {
-		console.log(true);
 		return null;
 	}
 

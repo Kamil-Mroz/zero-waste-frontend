@@ -3,6 +3,13 @@ import { idParamSchema } from "@/features/shared/schemas/uuid.schema";
 
 export const Route = createFileRoute("/_authenticated/reviews/create/$offerId")(
 	{
+		head: () => ({
+			meta: [
+				{
+					title: "Write review",
+				},
+			],
+		}),
 		params: {
 			parse: (params) => {
 				const result = idParamSchema.safeParse({ id: params.offerId });

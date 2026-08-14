@@ -2,7 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 
-export const Route = createFileRoute("/")({ component: App });
+export const Route = createFileRoute("/")({
+	head: () => ({
+		meta: [
+			{
+				title: "Home",
+			},
+		],
+	}),
+	component: App,
+});
 
 function App() {
 	return (

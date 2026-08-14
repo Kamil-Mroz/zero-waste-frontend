@@ -1,5 +1,5 @@
 import type { AnyFormApi } from "@tanstack/react-form";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { CategoryTreeType } from "@/features/category/types";
@@ -8,6 +8,19 @@ import type { Pageable } from "@/features/shared/types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
+}
+export interface ProblemDetail {
+	type?: string;
+	title?: string;
+	status?: number;
+	detail?: string;
+	instance?: string;
+	errors?: Record<
+		string,
+		{
+			message: string;
+		}
+	>;
 }
 
 export type ApiError = {
@@ -19,22 +32,35 @@ export type ApiError = {
 };
 
 export const handleApiError = (
-	error: unknown,
-
-	form?: AnyFormApi,
+  error: unknown,
+  form?: AnyFormApi,
 ) => {
-	if (error instanceof AxiosError && error.response) {
-		const data = error.response.data as ApiError;
+  if (error instanceof AxiosError && error.response) {
+    const { status, data } = error.response;
 
-		if (data.errors && form) {
-			form.setErrorMap({
-				onSubmit: { fields: data.errors },
-			});
-			return;
-		}
-		return data.detail;
-	}
-	return "Something went wrong, please try again";
+    if (status === 429) {
+      return "Too many login attempts. Please try again later.";
+    }
+
+    if (typeof data === "object" && data !== null) {
+      const apiError = data as ApiError;
+
+      if (apiError.errors && form) {
+        form.setErrorMap({
+          onSubmit: { fields: apiError.errors },
+        });
+        return;
+      }
+
+      if (apiError.detail) {
+        return apiError.detail;
+      }
+    }
+
+    return "Something went wrong, please try again.";
+  }
+
+  return "Something went wrong, please try again.";
 };
 
 export const withDefaultPageable = (value?: Partial<Pageable>): Pageable => ({
@@ -78,3 +104,32 @@ export const flattenCategories = (
 		...flattenCategories(category.children),
 	]);
 };
+
+export function getErrorDetails(error: unknown) {
+	if (axios.isAxiosError<ProblemDetail>(error)) {
+		const problem = error.response?.data;
+
+		return {
+			status: problem?.status ?? error.response?.status,
+			title: problem?.title ?? "Request Failed",
+			message: problem?.detail ?? error.message,
+			fieldErrors: problem?.errors,
+		};
+	}
+
+	if (error instanceof Error) {
+		return {
+			status: undefined,
+			title: "Unexpected Error",
+			message: error.message,
+			fieldErrors: undefined,
+		};
+	}
+
+	return {
+		status: undefined,
+		title: "Unexpected Error",
+		message: "Something went wrong.",
+		fieldErrors: undefined,
+	};
+}
