@@ -45,7 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								</div>
 								<div className="grid flex-1 text-left text-sm leading-tight">
 									<span className="truncate font-medium">Zero waste</span>
-									<span className="truncate text-xs">Demo 2</span>
+									<span className="truncate text-xs">Demo</span>
 								</div>
 							</Link>
 						</SidebarMenuButton>

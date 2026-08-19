@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 import { AppSidebar } from "./app-sidebar";
+import Footer from "./Footer";
 import Header from "./Header";
 import { SidebarInset, SidebarProvider } from "./ui/sidebar";
 
@@ -12,6 +13,7 @@ export function MainLayout({ children }: PropsWithChildren) {
 					<AppSidebar />
 					<SidebarInset className="mx-auto container p-2">
 						{children}
+						<Footer />
 					</SidebarInset>
 				</div>
 			</SidebarProvider>

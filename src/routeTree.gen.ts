@@ -16,6 +16,8 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as UnauthenticatedRouteImport } from './routes/_unauthenticated'
 import { Route as EcoHubRouteRouteImport } from './routes/eco-hub/route'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as AuthenticatedWriterRouteRouteImport } from './routes/_authenticated/_writer/route'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -92,6 +94,16 @@ const EcoHubRouteRoute = EcoHubRouteRouteImport.update({
 const MarketplaceRoute = MarketplaceRouteImport.update({
   id: '/marketplace',
   path: '/marketplace',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UnauthorizedRoute = UnauthorizedRouteImport.update({
@@ -495,6 +507,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/eco-hub': typeof AuthenticatedWriterEcoHubRouteRouteWithChildren
   '/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/reviews': typeof AuthenticatedReviewsRouteRouteWithChildren
   '/eco-hub/blogs': typeof EcoHubBlogsRouteRouteWithChildren
@@ -545,6 +559,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/marketplace': typeof MarketplaceIndexRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -590,6 +606,8 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_unauthenticated': typeof UnauthenticatedRouteWithChildren
   '/marketplace': typeof MarketplaceRouteWithChildren
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/_authenticated/_writer': typeof AuthenticatedWriterRouteRouteWithChildren
   '/_authenticated/reviews': typeof AuthenticatedReviewsRouteRouteWithChildren
@@ -648,6 +666,8 @@ export interface FileRouteTypes {
     | '/'
     | '/eco-hub'
     | '/marketplace'
+    | '/privacy'
+    | '/terms'
     | '/unauthorized'
     | '/reviews'
     | '/eco-hub/blogs'
@@ -698,6 +718,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/privacy'
+    | '/terms'
     | '/unauthorized'
     | '/marketplace'
     | '/profile'
@@ -742,6 +764,8 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_unauthenticated'
     | '/marketplace'
+    | '/privacy'
+    | '/terms'
     | '/unauthorized'
     | '/_authenticated/_writer'
     | '/_authenticated/reviews'
@@ -801,6 +825,8 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   UnauthenticatedRoute: typeof UnauthenticatedRouteWithChildren
   MarketplaceRoute: typeof MarketplaceRouteWithChildren
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
   ProfileUserIdRouteRoute: typeof ProfileUserIdRouteRouteWithChildren
 }
@@ -840,6 +866,20 @@ declare module '@tanstack/react-router' {
       path: '/marketplace'
       fullPath: '/marketplace'
       preLoaderRoute: typeof MarketplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/unauthorized': {
@@ -1515,6 +1555,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   UnauthenticatedRoute: UnauthenticatedRouteWithChildren,
   MarketplaceRoute: MarketplaceRouteWithChildren,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
   UnauthorizedRoute: UnauthorizedRoute,
   ProfileUserIdRouteRoute: ProfileUserIdRouteRouteWithChildren,
 }

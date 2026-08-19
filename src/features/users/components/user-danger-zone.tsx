@@ -62,7 +62,10 @@ export function UserDangerZone() {
 					}}
 				>
 					<FieldGroup>
-						<p>This action cannot be undone. Type DELETE to confirm</p>
+						<p>
+							This action cannot be undone. Type{" "}
+							<span className="text-destructive">DELETE</span> to confirm
+						</p>
 						<form.AppField
 							name="confirmation"
 							validators={{
