@@ -50,6 +50,17 @@ export const receivedColumns: ColumnDef<Offer>[] = [
 		},
 	},
 	{
+		accessorKey: "Contact",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Contact" />
+		),
+
+		cell: ({ row }) => {
+			const offer = row.original;
+			return <span>{offer.buyer.email}</span>;
+		},
+	},
+	{
 		accessorKey: "status",
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Status" />

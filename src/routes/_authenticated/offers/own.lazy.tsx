@@ -23,6 +23,7 @@ function RouteComponent() {
 	const pageable = withDefaultPageable(search);
 
 	const { data: page } = useSuspenseQuery(ownOffersQueryOptions(search));
+
 	return (
 		<div>
 			<OfferTable

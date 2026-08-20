@@ -5,7 +5,7 @@ export const Route = createFileRoute("/_unauthenticated")({
 	validateSearch: redirectSchema,
 	beforeLoad: ({ context, search }) => {
 		if (context.auth.user) {
-			throw redirect({ to: search.redirect });
+			throw redirect({ to: search.redirect || "/marketplace" });
 		}
 	},
 	component: RouteComponent,

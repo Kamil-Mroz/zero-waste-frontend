@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { ReportButton } from "@/features/report/components/report-button";
 import { Button } from "@/features/shared/components/ui/button";
 import { useBlogDeleteMutation } from "../hooks/mutation-options";
 import type { BlogType } from "../types";
@@ -12,7 +13,7 @@ export function Blog({ blog }: BlogProps) {
 	const mutation = useBlogDeleteMutation();
 	return (
 		<article className="group">
-			<div className="flex items-start justify-between gap-4">
+			<div className="flex items-center justify-between gap-4">
 				<div className="space-y-2">
 					<h2 className="text-xl font-semibold tracking-tight">{blog.title}</h2>
 
@@ -41,12 +42,17 @@ export function Blog({ blog }: BlogProps) {
 						</Button>
 					</div>
 				)}
+				{user?.id !== blog.author.id ? (
+					<ReportButton subjectId={blog.id} subjectType="BLOG" />
+				) : null}
 			</div>
 
 			<div className="mt-4">
 				{/* <p className="text-muted-foreground">{blog.description}</p> */}
 
-				<p className="line-clamp-3 text-sm leading-relaxed">{blog.content}</p>
+				<p className="line-clamp-3 text-sm leading-relaxed max-w-prose mx-auto">
+					{blog.content}
+				</p>
 			</div>
 		</article>
 	);

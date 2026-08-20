@@ -5,7 +5,7 @@ export default function Footer() {
 
 	return (
 		<footer className="mt-auto border-t border-muted">
-			<div className="flex flex-col gap-3 py-6 text-sm sm:flex-row sm:items-center sm:justify-between">
+			<div className="flex flex-col items-center gap-3 py-6 text-sm lg:flex-row lg:justify-between">
 				<p className="m-0">&copy; {year} Kamil Mróz. All rights reserved.</p>
 
 				<nav aria-label="Legal">
@@ -26,6 +26,14 @@ export default function Footer() {
 							>
 								Privacy Policy
 							</Link>
+						</li>
+						<li>
+							<a
+								href="mailto:kamilmp17@gmail.com"
+								className="text-muted-foreground transition-colors hover:text-foreground"
+							>
+								Contact
+							</a>
 						</li>
 					</ul>
 				</nav>

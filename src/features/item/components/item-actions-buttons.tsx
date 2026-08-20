@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import { ReportButton } from "@/features/report/components/report-button";
 import { Button } from "@/features/shared/components/ui/button";
 import type { ItemActionsProps } from "../types";
 
-export function ItemActions({
+export function ItemActionsButtons({
 	isOwner,
 	item,
 	isAuthenticated,
@@ -64,7 +65,7 @@ export function ItemActions({
 							I'm interested
 						</Link>
 					</Button>
-					<Button variant="secondary">Report</Button>
+					<ReportButton subjectId={item.id} subjectType="ITEM" />
 				</>
 			)}
 

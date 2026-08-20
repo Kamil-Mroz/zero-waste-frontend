@@ -49,12 +49,14 @@ export const useWebSocketService = (webSocketUrl: string) => {
 			forceBinaryWSFrames: true,
 			appendMissingNULLonIncoming: true,
 			onConnect: () => {
-				// console.log("Websocket connected");
+				if (isDev) console.log("Websocket connected");
 				setIsConnected(true);
 			},
 			onStompError: (frame) => {
-				if (import.meta.env.DEV)
+				if (isDev) {
 					console.error("Websocket error:", frame.headers.message);
+					console.error("Body:", frame.body);
+				}
 			},
 		});
 

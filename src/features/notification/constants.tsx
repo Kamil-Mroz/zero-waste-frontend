@@ -6,7 +6,7 @@ import {
 	Package,
 	XCircle,
 } from "lucide-react";
-import type { JSX, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { z } from "zod/v4";
 import { Button } from "../shared/components/ui/button";
 import type { Notification, NotificationType } from "./types";

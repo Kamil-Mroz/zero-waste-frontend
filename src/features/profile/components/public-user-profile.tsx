@@ -13,6 +13,7 @@ export function PublicUserProfile({ profile, userId }: PublicUserProfileProps) {
 		<div className="mx-auto  w-full space-y-4">
 			<UserHeader
 				nickname={profile.nickname}
+        userId={userId}
 				subtitle={`Member since ${new Date(
 					profile.joinedAt,
 				).toLocaleDateString()}`}

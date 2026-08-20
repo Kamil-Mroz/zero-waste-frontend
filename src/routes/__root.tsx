@@ -11,6 +11,7 @@ import "../styles.css";
 import type { QueryClient } from "@tanstack/react-query";
 import type { AuthState } from "@/features/auth/types";
 import { MainLayout } from "@/features/shared/components/main-layout";
+import { Toaster } from "@/features/shared/components/ui/sonner";
 import { queryClient } from "@/main";
 
 interface MyRouterContext {
@@ -30,6 +31,7 @@ function RootComponent() {
 				<Outlet />
 			</MainLayout>
 
+			<Toaster />
 			<TanStackDevtools
 				config={{
 					position: "bottom-right",

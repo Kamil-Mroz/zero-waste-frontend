@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
+import { useRouter, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import { AUTH_QUERY_KEYS } from "@/features/auth/constants";
 import {
@@ -13,6 +13,8 @@ type UserLinkedAccountsProps = {
 	providers: Providers[];
 };
 export function UserLinkedAccounts({ providers }: UserLinkedAccountsProps) {
+	const { error } = useSearch({ from: "/_authenticated/settings" });
+
 	const [pendingProvider, setPendingProvider] = useState<Providers | null>(
 		null,
 	);
@@ -64,6 +66,8 @@ export function UserLinkedAccounts({ providers }: UserLinkedAccountsProps) {
 						disabled={pendingProvider !== null}
 					/>
 				))}
+
+				{error ? <p className="text-destructive">{error}</p> : null}
 			</div>
 		</section>
 	);

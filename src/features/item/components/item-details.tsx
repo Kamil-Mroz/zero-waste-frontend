@@ -10,9 +10,9 @@ import {
 } from "@/features/shared/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import type { ItemProps } from "../types";
-import { ItemActions } from "./item-actions";
+import { ItemActionsButtons } from "./item-actions-buttons";
 
-export function Item({ item }: ItemProps) {
+export function ItemDetails({ item }: ItemProps) {
 	const { user } = useAuth();
 
 	const isAuthenticated = !!user;
@@ -21,7 +21,7 @@ export function Item({ item }: ItemProps) {
 	const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
 	return (
-		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto">
+		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto mb-4">
 			<GoBackButton />
 			<Card
 				className={cn(
@@ -99,7 +99,7 @@ export function Item({ item }: ItemProps) {
 						</Button>
 					</div>
 
-					<ItemActions
+					<ItemActionsButtons
 						isOwner={isOwner}
 						item={item}
 						isAuthenticated={isAuthenticated}

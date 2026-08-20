@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Item } from "@/features/item/components/item";
+import { ItemDetails } from "@/features/item/components/item-details";
 import { ItemDetailSkeleton } from "@/features/item/components/item-detail-skeleton";
 import { ItemDialog } from "@/features/item/components/item-dialog";
 import { itemQueryOptions } from "@/features/item/hooks/query-options";
@@ -17,7 +17,7 @@ function RouteComponent() {
 
 	return (
 		<>
-			<Item item={item} />
+			<ItemDetails item={item} />
 			<ItemDialog />
 		</>
 	);
