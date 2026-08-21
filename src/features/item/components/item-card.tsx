@@ -3,31 +3,37 @@ import { Badge } from "@/features/shared/components/ui/badge";
 import { Button } from "@/features/shared/components/ui/button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
 import { cn } from "@/lib/utils";
+import { HiddenItemOverlay } from "../../shared/components/hidden-item-overlay";
 import type { ItemCardProps } from "../types";
 import { ItemImage } from "./item-image";
 
 export function ItemCard({ item }: ItemCardProps) {
 	const navigate = useNavigate();
+	const isHidden = item.moderationStatus === "HIDDEN";
 	return (
 		<Card
 			key={item.id}
 			className={cn(
-				"rounded-2xl shadow hover:shadow-md transition cursor-pointer max-w-sm mx-auto w-full hover:scale-[102%] border border-transparent relative overflow-hidden",
-				item.state === "GIVEN" ? "border-destructive" : "",
+				"rounded-2xl shadow transition max-w-sm mx-auto w-full border relative overflow-hidden",
+				isHidden
+					? "border-destructive/50"
+					: "hover:shadow-md hover:scale-[102%] cursor-pointer border-transparent",
+				item.state === "GIVEN" && !isHidden ? "border-destructive" : "",
 			)}
 			onClick={() =>
 				navigate({ to: "/marketplace/$itemId", params: { itemId: item.id } })
 			}
 		>
+			{isHidden && <HiddenItemOverlay />}
 			<CardContent className="px-4 space-y-2">
-				{item.state === "GIVEN" ? (
-					<span className="py-2 bg-destructive/40 absolute px-20 top-2.5 text-bold -right-19 rotate-45  text-center text-xl z-10">
+				{item.moderationStatus === "HIDDEN" ? (
+					<Badge variant="destructive">HIDDEN</Badge>
+				) : item.state === "GIVEN" ? (
+					<span className="py-2 bg-destructive/40 absolute px-20 top-2.5 text-bold -right-19 rotate-45 text-center text-xl z-10">
 						GIVEN
 					</span>
 				) : (
-					<Badge
-						variant={`${item.state === "AVAILABLE" ? "default" : "outline"}`}
-					>
+					<Badge variant={item.state === "AVAILABLE" ? "default" : "outline"}>
 						{item.state}
 					</Badge>
 				)}

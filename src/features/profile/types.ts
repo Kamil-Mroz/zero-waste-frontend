@@ -1,10 +1,11 @@
 import type { ItemType } from "../item/types";
-import type { Review, ReviewResponse } from "../review/types";
+import type { Review } from "../review/types";
 
 export type PublicUserProfile = {
 	id: string;
 	nickname: string;
 	joinedAt: string;
+	banned: boolean;
 	items: ProfileItemSummary;
 	reviews: ProfileReviewSummary;
 };

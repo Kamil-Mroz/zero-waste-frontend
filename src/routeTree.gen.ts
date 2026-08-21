@@ -37,7 +37,7 @@ import { Route as ProfileUserIdRouteRouteImport } from './routes/profile/$userId
 import { Route as AuthenticatedWriterEcoHubRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/route'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
-import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
+import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin/reports'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_authenticated/marketplace/create'
 import { Route as AuthenticatedMarketplaceHistoryRouteImport } from './routes/_authenticated/marketplace/history'
@@ -55,6 +55,7 @@ import { Route as ProfileUserIdIndexRouteImport } from './routes/profile/$userId
 import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId/items'
 import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
 import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/admin/categories/index'
+import { Route as AuthenticatedAdminReportsIndexRouteImport } from './routes/_authenticated/admin/reports/index'
 import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users/$userId'
 import { Route as AuthenticatedMarketplaceItemIdEditRouteImport } from './routes/_authenticated/marketplace/$itemId.edit'
@@ -233,13 +234,13 @@ const AuthenticatedAdminCategoriesRoute =
       (d) => d.Route,
     ),
   )
-const AuthenticatedAdminDashboardRoute =
-  AuthenticatedAdminDashboardRouteImport.update({
-    id: '/dashboard',
-    path: '/dashboard',
+const AuthenticatedAdminReportsRoute =
+  AuthenticatedAdminReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any).lazy(() =>
-    import('./routes/_authenticated/admin/dashboard.lazy').then((d) => d.Route),
+    import('./routes/_authenticated/admin/reports.lazy').then((d) => d.Route),
   )
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/users',
@@ -370,6 +371,16 @@ const AuthenticatedAdminCategoriesIndexRoute =
     getParentRoute: () => AuthenticatedAdminCategoriesRoute,
   } as any).lazy(() =>
     import('./routes/_authenticated/admin/categories/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const AuthenticatedAdminReportsIndexRoute =
+  AuthenticatedAdminReportsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminReportsRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/reports/index.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -524,7 +535,7 @@ export interface FileRoutesByFullPath {
   '/eco-hub/': typeof EcoHubIndexRoute
   '/marketplace/': typeof MarketplaceIndexRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
-  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
@@ -547,6 +558,7 @@ export interface FileRoutesByFullPath {
   '/reviews/received': typeof AuthenticatedReviewsLayoutReceivedRoute
   '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
+  '/admin/reports/': typeof AuthenticatedAdminReportsIndexRoute
   '/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
   '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
   '/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
@@ -570,7 +582,6 @@ export interface FileRoutesByTo {
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/eco-hub': typeof EcoHubIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
-  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
@@ -590,6 +601,7 @@ export interface FileRoutesByTo {
   '/reviews/received': typeof AuthenticatedReviewsLayoutReceivedRoute
   '/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesIndexRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsIndexRoute
   '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
   '/eco-hub/blogs/$blogId': typeof EcoHubBlogsBlogIdIndexRoute
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
@@ -627,7 +639,7 @@ export interface FileRoutesById {
   '/_authenticated/_writer/eco-hub': typeof AuthenticatedWriterEcoHubRouteRouteWithChildren
   '/_authenticated/reviews/_layout': typeof AuthenticatedReviewsLayoutRouteRouteWithChildren
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
-  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/_authenticated/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/_authenticated/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
@@ -650,6 +662,7 @@ export interface FileRoutesById {
   '/_authenticated/reviews/_layout/received': typeof AuthenticatedReviewsLayoutReceivedRoute
   '/_authenticated/reviews/create/$offerId': typeof AuthenticatedReviewsCreateOfferIdRoute
   '/_authenticated/admin/categories/': typeof AuthenticatedAdminCategoriesIndexRoute
+  '/_authenticated/admin/reports/': typeof AuthenticatedAdminReportsIndexRoute
   '/_authenticated/admin/users/': typeof AuthenticatedAdminUsersIndexRoute
   '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
   '/_authenticated/_writer/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
@@ -683,7 +696,7 @@ export interface FileRouteTypes {
     | '/eco-hub/'
     | '/marketplace/'
     | '/admin/categories'
-    | '/admin/dashboard'
+    | '/admin/reports'
     | '/admin/users'
     | '/marketplace/create'
     | '/marketplace/history'
@@ -706,6 +719,7 @@ export interface FileRouteTypes {
     | '/reviews/received'
     | '/reviews/create/$offerId'
     | '/admin/categories/'
+    | '/admin/reports/'
     | '/admin/users/'
     | '/eco-hub/blogs/$blogId/'
     | '/eco-hub/blogs/$blogId'
@@ -729,7 +743,6 @@ export interface FileRouteTypes {
     | '/marketplace/$itemId'
     | '/eco-hub'
     | '/reviews'
-    | '/admin/dashboard'
     | '/marketplace/create'
     | '/marketplace/history'
     | '/marketplace/my-items'
@@ -749,6 +762,7 @@ export interface FileRouteTypes {
     | '/reviews/received'
     | '/reviews/create/$offerId'
     | '/admin/categories'
+    | '/admin/reports'
     | '/admin/users'
     | '/eco-hub/blogs/$blogId'
     | '/eco-hub/blogs/own'
@@ -785,7 +799,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_writer/eco-hub'
     | '/_authenticated/reviews/_layout'
     | '/_authenticated/admin/categories'
-    | '/_authenticated/admin/dashboard'
+    | '/_authenticated/admin/reports'
     | '/_authenticated/admin/users'
     | '/_authenticated/marketplace/create'
     | '/_authenticated/marketplace/history'
@@ -808,6 +822,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reviews/_layout/received'
     | '/_authenticated/reviews/create/$offerId'
     | '/_authenticated/admin/categories/'
+    | '/_authenticated/admin/reports/'
     | '/_authenticated/admin/users/'
     | '/eco-hub/blogs/$blogId/'
     | '/_authenticated/_writer/eco-hub/blogs/$blogId'
@@ -1015,11 +1030,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/_authenticated/admin/dashboard': {
-      id: '/_authenticated/admin/dashboard'
-      path: '/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+    '/_authenticated/admin/reports': {
+      id: '/_authenticated/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/users': {
@@ -1140,6 +1155,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/categories/'
       preLoaderRoute: typeof AuthenticatedAdminCategoriesIndexRouteImport
       parentRoute: typeof AuthenticatedAdminCategoriesRoute
+    }
+    '/_authenticated/admin/reports/': {
+      id: '/_authenticated/admin/reports/'
+      path: '/'
+      fullPath: '/admin/reports/'
+      preLoaderRoute: typeof AuthenticatedAdminReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminReportsRoute
     }
     '/_authenticated/admin/users/': {
       id: '/_authenticated/admin/users/'
@@ -1388,6 +1410,20 @@ const AuthenticatedAdminCategoriesRouteWithChildren =
     AuthenticatedAdminCategoriesRouteChildren,
   )
 
+interface AuthenticatedAdminReportsRouteChildren {
+  AuthenticatedAdminReportsIndexRoute: typeof AuthenticatedAdminReportsIndexRoute
+}
+
+const AuthenticatedAdminReportsRouteChildren: AuthenticatedAdminReportsRouteChildren =
+  {
+    AuthenticatedAdminReportsIndexRoute: AuthenticatedAdminReportsIndexRoute,
+  }
+
+const AuthenticatedAdminReportsRouteWithChildren =
+  AuthenticatedAdminReportsRoute._addFileChildren(
+    AuthenticatedAdminReportsRouteChildren,
+  )
+
 interface AuthenticatedAdminUsersUserIdRouteChildren {
   AuthenticatedAdminUsersUserIdItemsRoute: typeof AuthenticatedAdminUsersUserIdItemsRoute
   AuthenticatedAdminUsersUserIdIndexRoute: typeof AuthenticatedAdminUsersUserIdIndexRoute
@@ -1425,7 +1461,7 @@ const AuthenticatedAdminUsersRouteWithChildren =
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRouteWithChildren
-  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRouteWithChildren
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -1433,7 +1469,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCategoriesRoute:
     AuthenticatedAdminCategoriesRouteWithChildren,
-  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+  AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRouteWithChildren,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }

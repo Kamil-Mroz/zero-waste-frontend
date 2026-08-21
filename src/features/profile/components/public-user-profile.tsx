@@ -12,8 +12,9 @@ export function PublicUserProfile({ profile, userId }: PublicUserProfileProps) {
 	return (
 		<div className="mx-auto  w-full space-y-4">
 			<UserHeader
+				banned={profile.banned}
 				nickname={profile.nickname}
-        userId={userId}
+				userId={userId}
 				subtitle={`Member since ${new Date(
 					profile.joinedAt,
 				).toLocaleDateString()}`}

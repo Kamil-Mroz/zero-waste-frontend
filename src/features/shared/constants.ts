@@ -70,33 +70,19 @@ export const NAV_LINKS = {
 		},
 		{
 			title: "Admin",
-			url: "/admin/dashboard",
 			icon: Shield,
 			private: true,
 			role: "ADMIN",
 			isActive: true,
 			items: [
 				{
-					title: "Dashboard",
-					url: "/admin/dashboard",
-				},
-				{
 					title: "Manage Users",
 					url: "/admin/users",
-				},
-				{
-					title: "Manage Items",
-					url: "/admin/items",
 				},
 				{
 					title: "Manage categories",
 					url: "/admin/categories",
 				},
-				{
-					title: "Manage Blog",
-					url: "/admin/blog",
-				},
-
 				{
 					title: "Reports",
 					url: "/admin/reports",

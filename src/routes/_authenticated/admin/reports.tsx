@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_authenticated/admin/dashboard")({
+export const Route = createFileRoute("/_authenticated/admin/reports")({
 	head: () => ({
 		meta: [
 			{
-				title: "Dashboard",
+				title: "Users",
 			},
 		],
 	}),
 	staticData: {
-		getTitle: () => "Dashboard",
+		getTitle: () => "Manage users",
 	},
 });

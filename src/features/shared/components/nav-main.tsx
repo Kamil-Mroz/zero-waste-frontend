@@ -48,16 +48,23 @@ export function NavMain({ items }: { items: NavItem[] }) {
 					return canAccess(item) ? (
 						<Collapsible key={item.title} asChild defaultOpen={item?.isActive}>
 							<SidebarMenuItem>
-								<SidebarMenuButton asChild tooltip={item.title}>
-									<Link
-										to={item.url}
-										onClick={() => {
-											if (isMobile) toggleSidebar();
-										}}
-									>
-										<item.icon />
-										<span>{item.title}</span>
-									</Link>
+								<SidebarMenuButton asChild={!!item.url} tooltip={item.title}>
+									{!!item.url ? (
+										<Link
+											to={item.url}
+											onClick={() => {
+												if (isMobile) toggleSidebar();
+											}}
+										>
+											<item.icon />
+											<span>{item.title}</span>
+										</Link>
+									) : (
+										<>
+											<item.icon />
+											<span>{item.title}</span>
+										</>
+									)}
 								</SidebarMenuButton>
 								{item.items?.length ? (
 									<>

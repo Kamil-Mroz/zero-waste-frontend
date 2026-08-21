@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Command, LogIn } from "lucide-react";
+import { Command, LogIn, RecycleIcon } from "lucide-react";
 import type * as React from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { NavMain } from "@/features/shared/components/nav-main";
@@ -40,8 +40,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 									if (isMobile) toggleSidebar();
 								}}
 							>
-								<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-									<Command className="size-4" />
+								<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-white">
+									<RecycleIcon className="size-4" />
 								</div>
 								<div className="grid flex-1 text-left text-sm leading-tight">
 									<span className="truncate font-medium">Zero waste</span>

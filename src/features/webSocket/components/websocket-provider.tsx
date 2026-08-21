@@ -7,13 +7,14 @@ import type { Notification } from "@/features/notification/types";
 import { invalidateReportQueries } from "@/features/report/lib/invalidate-report-queries";
 import { showReportToast } from "@/features/report/lib/show-report-toast";
 import type { Report } from "@/features/report/types";
+import { appToast } from "@/features/shared/components/toast";
 import { useWebSocketService, WebSocketContext } from "../hooks/useWebSocket";
 
 function WebsocketProvider({ children }: PropsWithChildren) {
 	// return { children };
 	const queryClient = useQueryClient();
 	const websocket = useWebSocketService("/ws");
-	const { hasRole } = useAuth();
+	const { hasRole, resetState } = useAuth();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: depends on the connection state
 	useEffect(() => {
@@ -29,13 +30,22 @@ function WebsocketProvider({ children }: PropsWithChildren) {
 				invalidateNotificationQueries(queryClient, notification);
 			},
 		);
+		const banSubscriptionId = websocket.subscribe(
+			"/user/queue/ban",
+			({ message }: { message: string }) => {
+				appToast.error({ title: "Ban", description: message });
+				queryClient.clear();
+				resetState();
+			},
+		);
+
 		let reportSubscriptionId: string | null;
+
 		if (hasRole("ADMIN")) {
 			reportSubscriptionId = websocket.subscribe(
 				"/topic/reports",
 				(report: Report) => {
 					showReportToast(report);
-
 					invalidateReportQueries(queryClient, report);
 				},
 			);
@@ -44,6 +54,8 @@ function WebsocketProvider({ children }: PropsWithChildren) {
 		return () => {
 			if (notificationSubscriptionId)
 				websocket.unsubscribe(notificationSubscriptionId);
+
+			if (banSubscriptionId) websocket.unsubscribe(banSubscriptionId);
 			if (reportSubscriptionId) websocket.unsubscribe(reportSubscriptionId);
 		};
 	}, [websocket.isConnected]);

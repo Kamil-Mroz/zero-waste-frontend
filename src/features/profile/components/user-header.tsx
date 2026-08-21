@@ -5,9 +5,15 @@ type UserHeaderProps = {
 	nickname: string;
 	subtitle?: string;
 	userId?: string;
+	banned?: boolean;
 };
 
-export function UserHeader({ nickname, subtitle, userId }: UserHeaderProps) {
+export function UserHeader({
+	nickname,
+	subtitle,
+	banned,
+	userId,
+}: UserHeaderProps) {
 	return (
 		<Card>
 			<CardContent className="flex items-center flex-col sm:flex-row sm:items-start sm:justify-between gap-4 p-6">
@@ -26,9 +32,14 @@ export function UserHeader({ nickname, subtitle, userId }: UserHeaderProps) {
 								{subtitle}
 							</p>
 						)}
+						{banned && (
+							<p className="text-destructive">Account has been suspended</p>
+						)}
 					</div>
 				</div>
-				{userId && <ReportButton subjectId={userId} subjectType="USER" />}
+				{userId && !banned && (
+					<ReportButton subjectId={userId} subjectType="USER" />
+				)}
 			</CardContent>
 		</Card>
 	);

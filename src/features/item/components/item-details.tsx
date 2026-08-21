@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ShieldAlertIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import GoBackButton from "@/features/shared/components/go-back-button";
@@ -20,13 +21,16 @@ export function ItemDetails({ item }: ItemProps) {
 	const [activeImage, setActiveImage] = useState(item.thumbnail?.url ?? null);
 	const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
+	const isHidden = item.moderationStatus === "HIDDEN";
+
 	return (
-		<div className="max-w-2xl w-full grid gap-2 place-items-start mx-auto mb-4">
+		<div className="max-w-6xl w-full grid gap-2 place-items-start mx-auto mb-4">
 			<GoBackButton />
 			<Card
 				className={cn(
-					"rounded-2xl shadow w-full border border-transparent overflow-hidden relative",
-					item.state === "GIVEN" ? "border-destructive" : "",
+					"rounded-2xl shadow w-full border overflow-hidden relative",
+					isHidden ? "border-destructive/50" : "border-transparent",
+					item.state === "GIVEN" && !isHidden ? "border-destructive" : "",
 				)}
 			>
 				<CardContent className="md:p-6 space-y-4 ">
@@ -36,8 +40,26 @@ export function ItemDetails({ item }: ItemProps) {
 						</span>
 					)}
 					<h1 className="text-2xl font-bold">{item.title}</h1>
+					{isHidden && (
+						<div className="rounded-xl border border-destructive/30 bg-destructive/5 p-4">
+							<div className="flex items-start gap-3">
+								<div className="rounded-full bg-destructive/10 p-2">
+									<ShieldAlertIcon className="size-5 text-destructive" />
+								</div>
+
+								<div className="space-y-1">
+									<p className="font-semibold">This item has been hidden</p>
+
+									<p className="text-sm text-muted-foreground">
+										This item is no longer visible to other users. You can
+										delete it from your account.
+									</p>
+								</div>
+							</div>
+						</div>
+					)}
 					<div className="space-y-3">
-						<div className="aspect-square w-full max-w-sm overflow-hidden  border mx-auto bg-muted">
+						<div className="aspect-video w-full  overflow-hidden  border mx-auto bg-muted">
 							{activeImage ? (
 								<img
 									src={activeImage}

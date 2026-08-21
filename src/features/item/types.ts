@@ -1,6 +1,7 @@
 import type { z } from "zod/v4";
 import type { Category } from "../category/types";
 import type { SelectItems } from "../shared/components/form/select-field";
+import type { ModerationStatus } from "../shared/types";
 import type { UserSummary } from "../users/types";
 import type {
 	baseItemSearchSchema,
@@ -39,6 +40,7 @@ export type ItemType = {
 	title: string;
 	description: string;
 	city: string;
+	moderationStatus: ModerationStatus;
 	condition: ItemConditionType;
 	state: ItemStateType;
 	category: Category;

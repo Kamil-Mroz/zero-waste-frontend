@@ -13,7 +13,9 @@ export function MainLayout({ children }: PropsWithChildren) {
 					<AppSidebar />
 					<SidebarInset className="mx-auto container p-2">
 						{children}
-						<Footer />
+						<div className="mt-auto">
+							<Footer />
+						</div>
 					</SidebarInset>
 				</div>
 			</SidebarProvider>

@@ -51,3 +51,5 @@ export type CursorResponse<T> = {
 	hasPrev: boolean;
 };
 export type CursorDirection = "FORWARD" | "BACKWARD";
+
+export type ModerationStatus = "VISIBLE" | "HIDDEN";

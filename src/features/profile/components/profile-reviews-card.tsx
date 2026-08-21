@@ -62,7 +62,7 @@ export function ProfileReviewsCard({
 					)}
 
 					{reviews.latestReviews.map((review) => (
-						<ProfileReviewCard key={review.id} review={review} />
+						<ProfileReviewCard isOwn={false} key={review.id} review={review} />
 					))}
 				</div>
 			</CardContent>

@@ -10,7 +10,7 @@ export function showReportToast(report: Report) {
 				...(report.comment ? { description: report.comment } : {}),
 				action: {
 					label: "View",
-					href: `/reports/${report.id}`,
+					href: `/admin/reports`,
 				},
 			});
 		}

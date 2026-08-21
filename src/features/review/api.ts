@@ -7,6 +7,11 @@ export async function createReview(values: CreateReviewFormValues) {
 	return res.data;
 }
 
+export async function deleteReview(id:string) {
+	const res = await api.delete(`/v1/reviews/${id}`);
+	return res.data;
+}
+
 export async function getUserReviews(userId: string, page: Partial<Pageable>) {
 	const res = await api.get<ReviewResponse>(`/v1/reviews/user/${userId}`, {
 		params: page,

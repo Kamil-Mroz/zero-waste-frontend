@@ -1,9 +1,14 @@
 import { z } from "zod/v4";
 import type { UserSummary } from "../users/types";
-import type { reportSchema } from "./schemas/report.schema";
+import type {
+	reportRejectSchema,
+	reportResolveSchema,
+	reportSchema,
+} from "./schemas/report.schema";
 
 export type ReportSubjectType = "ITEM" | "USER" | "REVIEW" | "BLOG";
 
+export type ReportAction = "HIDE" | "BAN" | "REMOVE";
 export type ReportReason =
 	| "SPAM"
 	| "HARASSMENT"
@@ -29,3 +34,5 @@ export type Report = {
 };
 
 export type ReportRequest = z.infer<typeof reportSchema>;
+export type RejectReportRequest = z.infer<typeof reportRejectSchema>;
+export type ResolveReportRequest = z.infer<typeof reportResolveSchema>;

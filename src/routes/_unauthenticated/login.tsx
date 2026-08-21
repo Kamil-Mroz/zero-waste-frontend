@@ -14,9 +14,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/features/shared/components/ui/card";
-import { Checkbox } from "@/features/shared/components/ui/checkbox";
-import { Field, FieldGroup } from "@/features/shared/components/ui/field";
-import { Label } from "@/features/shared/components/ui/label";
 import { Separator } from "@/features/shared/components/ui/separator";
 
 export const loginRouteSchema = z.object({
@@ -37,7 +34,6 @@ export const Route = createFileRoute("/_unauthenticated/login")({
 
 function RouteComponent() {
 	const { redirect, error } = Route.useSearch();
-	const [acceptedTerms, setAcceptedTerms] = useState(false);
 
 	const [pendingProvider, setPendingProvider] = useState<Providers | null>(
 		null,
@@ -73,7 +69,7 @@ function RouteComponent() {
 					variant="outline"
 					className="block w-full"
 					onClick={() => loginWithGoogle.mutate()}
-					disabled={!acceptedTerms || pendingProvider !== null}
+					disabled={pendingProvider !== null}
 				>
 					{pendingProvider === "GOOGLE" ? "..." : "Login with Google"}
 				</Button>
@@ -81,39 +77,25 @@ function RouteComponent() {
 					variant="outline"
 					className="block w-full"
 					onClick={() => loginWithGithub.mutate()}
-					disabled={!acceptedTerms || pendingProvider !== null}
+					disabled={pendingProvider !== null}
 				>
 					{pendingProvider === "GITHUB" ? "..." : "Login with Github"}
 				</Button>
 			</CardContent>
 			<CardFooter>
-				<FieldGroup className="max-w-sm">
-					<Field orientation="horizontal">
-						<Checkbox
-							id="terms-checkbox"
-							name="terms-checkbox"
-							checked={acceptedTerms}
-							onCheckedChange={(value) =>
-								setAcceptedTerms((prev) =>
-									value !== "indeterminate" ? value : !prev,
-								)
-							}
-						/>
-						<Label htmlFor="terms-checkbox">
-							<span>
-								I have read and aggree to the{" "}
-								<Link to="/terms" className="text-indigo-700 underline">
-									Terms & Conditions
-								</Link>
-								. I acknowledge the{" "}
-								<Link to="/privacy" className="text-indigo-700 underline">
-									Privacy Policy
-								</Link>
-								.
-							</span>
-						</Label>
-					</Field>
-				</FieldGroup>
+				<div className="text-base">
+					<span>
+						By logging in you have read and agreed to the{" "}
+						<Link to="/terms" className="text-indigo-600 underline">
+							Terms & Conditions
+						</Link>{" "}
+						and acknowledged the{" "}
+						<Link to="/privacy" className="text-indigo-600 underline">
+							Privacy Policy
+						</Link>
+						.
+					</span>
+				</div>
 			</CardFooter>
 		</Card>
 	);
