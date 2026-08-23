@@ -5,12 +5,12 @@ export default function Terms() {
 		<article className="max-w-prose mx-auto grid gap-8 mb-20">
 			<h1 className="text-2xl font-bold">Terms &amp; Conditions</h1>
 			<p>
-				<strong>Last updated:</strong> August 19, 2026
+				<strong>Last updated:</strong> August 23, 2026
 			</p>
 
-			<Section title="1. About ZeroWaste">
+			<Section title="1. About Zero Waste">
 				<p>
-					ZeroWaste is a personal, non-commercial demonstration project created
+					Zero Waste is a personal, non-commercial demonstration project created
 					to showcase a web application designed to encourage reuse and reduce
 					unnecessary waste.
 				</p>
@@ -21,14 +21,14 @@ export default function Terms() {
 				</p>
 				<p>
 					<strong>
-						ZeroWaste is a demonstration project and is not intended to
+						Zero Waste is a demonstration project and is not intended to
 						facilitate commercial transactions.
 					</strong>{" "}
 					Users should not use the platform to exchange money, valuable goods,
 					illegal items, or services.
 				</p>
 				<p>
-					By creating an account or using ZeroWaste, you agree to these Terms
+					By creating an account or using Zero Waste, you agree to these Terms
 					&amp; Conditions.
 				</p>
 			</Section>
@@ -38,7 +38,7 @@ export default function Terms() {
 					You must be at least <strong>18 years old</strong> to create an
 					account or use features that require authentication.
 				</p>
-				<p>By using ZeroWaste, you confirm that:</p>
+				<p>By using Zero Waste, you confirm that:</p>
 				<ul className="list-disc ml-8">
 					<li>you are at least 18 years old;</li>
 					<li>
@@ -57,7 +57,7 @@ export default function Terms() {
 					Users can create an account using supported third-party authentication
 					providers, currently Google and GitHub.
 				</p>
-				<p>During authentication, ZeroWaste may receive and store:</p>
+				<p>During authentication, Zero Waste may receive and store:</p>
 				<ul className="list-disc ml-8">
 					<li>email address;</li>
 					<li>username;</li>
@@ -70,7 +70,7 @@ export default function Terms() {
 				</p>
 				<p>
 					Users may delete their account through the account settings available
-					within ZeroWaste.
+					within Zero Waste.
 				</p>
 			</Section>
 
@@ -112,12 +112,12 @@ export default function Terms() {
 					<li>the accepted user receives a notification.</li>
 				</ul>
 				<p>
-					ZeroWaste does not participate in or guarantee the physical handover
+					Zero Waste does not participate in or guarantee the physical handover
 					of items between users. Users are responsible for arranging collection
 					or handover themselves.
 				</p>
 				<p>
-					ZeroWaste does not guarantee that an item exists, is accurately
+					Zero Waste does not guarantee that an item exists, is accurately
 					described, is in the stated condition, or will actually be handed
 					over.
 				</p>
@@ -158,14 +158,14 @@ export default function Terms() {
 
 			<Section title="8. Notifications">
 				<p>
-					ZeroWaste may send notifications when another user submits an offer,
+					Zero Waste may send notifications when another user submits an offer,
 					an offer is accepted, or an offer is rejected.
 				</p>
 			</Section>
 
 			<Section title="9. Eco Hub and Writer Accounts">
 				<p>
-					ZeroWaste may include an Eco Hub containing sustainability-related
+					Zero Waste may include an Eco Hub containing sustainability-related
 					blog posts.
 				</p>
 				<p>
@@ -181,22 +181,55 @@ export default function Terms() {
 
 			<Section title="10. Administration and Moderation">
 				<p>
-					Administrators may manage user accounts, item categories, and content
-					that violates these Terms or applicable law.
+					Zero Waste provides users with mechanisms for reporting content or
+					accounts that may violate these Terms &amp; Conditions or applicable
+					law.
+				</p>
+				<p>Users may report:</p>
+				<ul className="list-disc ml-8">
+					<li>item listings;</li>
+					<li>user profiles;</li>
+					<li>blog posts;</li>
+					<li>reviews and ratings</li>
+				</ul>
+				<p>
+					Reports may be reviewed by an administrator for moderation and safety
+					purposes.
 				</p>
 				<p>
-					Administrators may suspend or delete accounts and remove listings,
-					reviews, articles, or other content that violates these Terms or
-					applicable law.
+					Administrators may review reported content, take appropriate
+					moderation actions, and hide content or profiles that violate these
+					Terms &amp; Conditions, applicable law, or the rules of the platform.
+				</p>
+				<p>Depending on the circumstances, administrators may also:</p>
+
+				<ul className="list-disc ml-8">
+					<li>hide an item listing;</li>
+					<li>hide a blog post;</li>
+					<li>hide a review;</li>
+					<li>restrict a user account;</li>
+					<li>
+						take other reasonable actions necessary to protect the platform and
+						its users.
+					</li>
+				</ul>
+				<p>
+					Submitting a report does not guarantee that any particular action will
+					be taken. Reports are reviewed based on the available information and
+					applicable rules.
 				</p>
 				<p>
-					ZeroWaste may introduce additional reporting and moderation mechanisms
-					as the project develops.
+					Users must not submit false, abusive, or intentionally misleading
+					reports.
+				</p>
+				<p>
+					The reporting system is intended to help maintain a safe and
+					appropriate environment for users and does not guarantee that all
+					inappropriate content will be detected or removed.
 				</p>
 			</Section>
-
 			<Section title="11. Prohibited Activities">
-				<p>Users must not use ZeroWaste to:</p>
+				<p>Users must not use Zero Waste to:</p>
 				<ul className="list-disc ml-8">
 					<li>sell or purchase goods;</li>
 					<li>request or exchange money;</li>
@@ -215,10 +248,10 @@ export default function Terms() {
 			</Section>
 
 			<Section title="12. User Content">
-				<p>Users remain responsible for content they submit to ZeroWaste.</p>
+				<p>Users remain responsible for content they submit to Zero Waste.</p>
 				<p>
 					By uploading content, including photographs, descriptions, reviews,
-					and blog posts, you grant ZeroWaste a limited, non-exclusive right to
+					and blog posts, you grant Zero Waste a limited, non-exclusive right to
 					store, process, display, and technically reproduce that content only
 					as necessary to operate the application.
 				</p>
@@ -230,7 +263,7 @@ export default function Terms() {
 
 			<Section title="13. Intellectual Property">
 				<p>
-					The ZeroWaste application, including its source code, design,
+					The Zero Waste application, including its source code, design,
 					interface, branding, and original software components, is owned by the
 					project author unless otherwise stated.
 				</p>
@@ -240,13 +273,13 @@ export default function Terms() {
 				</p>
 				<p>
 					Users must not copy, redistribute, sell, or commercially exploit the
-					ZeroWaste application without appropriate permission.
+					Zero Waste application without appropriate permission.
 				</p>
 			</Section>
 
 			<Section title="14. Demonstration Project Disclaimer">
 				<p>
-					ZeroWaste is provided as a{" "}
+					Zero Waste is provided as a{" "}
 					<strong>personal demonstration project</strong>.
 				</p>
 				<p>
@@ -261,7 +294,7 @@ export default function Terms() {
 					purpose.
 				</p>
 				<p>
-					Users should not rely on ZeroWaste for commercial transactions or the
+					Users should not rely on Zero Waste for commercial transactions or the
 					exchange of valuable property.
 				</p>
 			</Section>
@@ -274,7 +307,7 @@ export default function Terms() {
 					users.
 				</p>
 				<p>
-					ZeroWaste only provides the technical platform and does not act as a
+					Zero Waste only provides the technical platform and does not act as a
 					party to any arrangement between users.
 				</p>
 				<p>
@@ -299,8 +332,8 @@ export default function Terms() {
 
 			<Section title="17. Changes to the Application">
 				<p>
-					ZeroWaste is an evolving demonstration project. Features may be added,
-					changed, suspended, or removed without prior notice.
+					Zero Waste is an evolving demonstration project. Features may be
+					added, changed, suspended, or removed without prior notice.
 				</p>
 				<p>
 					These Terms may also be updated when necessary. The latest version
@@ -331,7 +364,7 @@ export default function Terms() {
 
 			<Section title="20. Acceptance">
 				<p>
-					By creating an account or using authenticated features of ZeroWaste,
+					By creating an account or using authenticated features of Zero Waste,
 					you confirm that you have read and understood these Terms &amp;
 					Conditions and agree to comply with them.
 				</p>

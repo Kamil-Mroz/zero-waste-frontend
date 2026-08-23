@@ -24,7 +24,7 @@ export function OwnProfile({ user }: Props) {
 				<RolesCard roles={user.roles} />
 			</div>
 
-			<PersonalInfoCard nickname={user.nickname} />
+			<PersonalInfoCard user={user} />
 			<Suspense fallback={<OwnProfileStatsSkeleton />}>
 				<OwnProfileStats />
 			</Suspense>

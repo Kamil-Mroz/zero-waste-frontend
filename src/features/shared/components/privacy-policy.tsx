@@ -5,22 +5,22 @@ export default function PrivacyPolicy() {
 		<article className=" max-w-prose mx-auto grid gap-8 mb-20">
 			<h1 className="text-2xl font-bold">Privacy Policy</h1>
 			<p>
-				<strong>Last updated:</strong> August 19, 2026
+				<strong>Last updated:</strong> August 23, 2026
 			</p>
 
 			<Section title="1. Introduction">
 				<p>
-					This Privacy Policy explains how ZeroWaste processes personal data
+					This Privacy Policy explains how Zero Waste processes personal data
 					when you use the application.
 				</p>
 				<p>
-					ZeroWaste is a personal, non-commercial demonstration project created
+					Zero Waste is a personal, non-commercial demonstration project created
 					to showcase a web application focused on reuse and reducing
 					unnecessary waste.
 				</p>
 				<p>
-					This Privacy Policy applies to visitors and registered users of
-					ZeroWaste.
+					This Privacy Policy applies to visitors and registered users of Zero
+					Waste.
 				</p>
 				<p>
 					The processing of personal data is carried out in accordance with
@@ -48,13 +48,13 @@ export default function PrivacyPolicy() {
 
 			<Section title="3. Personal Data We Collect">
 				<p>
-					ZeroWaste follows the principle of data minimisation and collects only
-					information necessary for the operation of the application.
+					Zero Waste follows the principle of data minimisation and collects
+					only information necessary for the operation of the application.
 				</p>
 
 				<h3>3.1 Account Information</h3>
 				<p>
-					When you create an account using Google or GitHub, ZeroWaste may
+					When you create an account using Google or GitHub, Zero Waste may
 					receive and store:
 				</p>
 				<ul className="list-disc ml-8">
@@ -62,15 +62,15 @@ export default function PrivacyPolicy() {
 					<li>username;</li>
 					<li>user ID associated with the authentication provider.</li>
 				</ul>
-				<p>ZeroWaste does not store your Google or GitHub password.</p>
+				<p>Zero Waste does not store your Google or GitHub password.</p>
 
 				<h3>3.2 Authentication Provider Information</h3>
 				<p>
 					You may authenticate using Google or GitHub. You are redirected to the
 					provider&apos;s authentication page. After successful authentication,
-					the provider returns an authorisation code to the ZeroWaste backend,
+					the provider returns an authorisation code to the Zero Waste backend,
 					which uses the process to verify your identity and obtain the limited
-					account information required by ZeroWaste.
+					account information required by Zero Waste.
 				</p>
 
 				<h3>3.3 User Profile Information</h3>
@@ -90,7 +90,7 @@ export default function PrivacyPolicy() {
 
 				<h3>3.4 Item Listings</h3>
 				<p>
-					When you publish an item, ZeroWaste stores information you provide,
+					When you publish an item, Zero Waste stores information you provide,
 					including title, description, condition, category, pickup city,
 					visibility status, and photographs.
 				</p>
@@ -101,7 +101,7 @@ export default function PrivacyPolicy() {
 
 				<h3>3.5 Offers and Reviews</h3>
 				<p>
-					ZeroWaste stores information related to offers submitted by users.
+					Zero Waste stores information related to offers submitted by users.
 					This allows item owners to accept or reject offers and update item
 					status.
 				</p>
@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
 
 				<h3>3.6 Notifications</h3>
 				<p>
-					ZeroWaste processes information necessary to provide notifications
+					Zero Waste processes information necessary to provide notifications
 					when another user submits an offer, an offer is accepted, or an offer
 					is rejected.
 				</p>
@@ -130,7 +130,7 @@ export default function PrivacyPolicy() {
 					the infrastructure against certain types of automated traffic.
 				</p>
 				<p>
-					ZeroWaste does not use IP addresses for advertising or behavioural
+					Zero Waste does not use IP addresses for advertising or behavioural
 					profiling.
 				</p>
 
@@ -197,7 +197,7 @@ export default function PrivacyPolicy() {
 			</Section>
 
 			<Section title="5. Data Sharing">
-				<p>ZeroWaste does not sell personal data.</p>
+				<p>Zero Waste does not sell personal data.</p>
 				<p>
 					Personal data may be processed by third-party services where necessary
 					for authentication, hosting, infrastructure, security, or delivery of
@@ -225,12 +225,12 @@ export default function PrivacyPolicy() {
 
 			<Section title="6. Hosting and Storage">
 				<p>
-					ZeroWaste is hosted on privately operated hardware using Docker-based
+					Zero Waste is hosted on privately operated hardware using Docker-based
 					infrastructure.
 				</p>
 				<p>
 					Uploaded photographs and application data are stored on the storage
-					devices used by the ZeroWaste infrastructure.
+					devices used by the Zero Waste infrastructure.
 				</p>
 				<p>
 					External access to the application is provided through Cloudflare
@@ -268,7 +268,7 @@ export default function PrivacyPolicy() {
 
 			<Section title="8. Account Deletion">
 				<p>
-					You can delete your ZeroWaste account through the account settings.
+					You can delete your Zero Waste account through the account settings.
 				</p>
 				<p>
 					Account deletion is intended to remove personal data and content
@@ -333,7 +333,7 @@ export default function PrivacyPolicy() {
 
 			<Section title="11. Cookies">
 				<p>
-					ZeroWaste uses cookies that are necessary for authentication and
+					Zero Waste uses cookies that are necessary for authentication and
 					maintaining your logged-in session.
 				</p>
 				<p>
@@ -342,7 +342,7 @@ export default function PrivacyPolicy() {
 					the application.
 				</p>
 				<p>
-					ZeroWaste does not use these cookies for advertising, behavioural
+					Zero Waste does not use these cookies for advertising, behavioural
 					profiling, or cross-site tracking.
 				</p>
 				<p>
@@ -356,22 +356,22 @@ export default function PrivacyPolicy() {
 
 			<Section title="12. Third-Party Authentication">
 				<p>
-					When you choose Google or GitHub authentication, you leave the
-					ZeroWaste application and interact with the selected provider.
+					When you choose Google or GitHub authentication, you leave the Zero
+					Waste application and interact with the selected provider.
 				</p>
 				<p>
 					The authentication provider may process your information according to
 					its own privacy policy.
 				</p>
 				<p>
-					ZeroWaste only requests and stores the information required for
+					Zero Waste only requests and stores the information required for
 					authentication and account functionality.
 				</p>
 			</Section>
 
 			<Section title="13. Children's Privacy">
 				<p>
-					ZeroWaste is intended only for people who are{" "}
+					Zero Waste is intended only for people who are{" "}
 					<strong>18 years of age or older</strong>.
 				</p>
 				<p>
@@ -383,7 +383,7 @@ export default function PrivacyPolicy() {
 
 			<Section title="14. User-Generated Content">
 				<p>
-					ZeroWaste allows users to publish item descriptions, photographs,
+					Zero Waste allows users to publish item descriptions, photographs,
 					reviews, and blog posts.
 				</p>
 				<p>
@@ -399,13 +399,44 @@ export default function PrivacyPolicy() {
 
 			<Section title="15. Moderation and Safety">
 				<p>
-					The administrator may remove accounts or content that violates the
-					Terms &amp; Conditions or applicable law.
+					Zero Waste allows users to report content or profiles that they
+					believe violate the Terms &amp; Conditions or applicable law.
+				</p>
+				<p>Users may report:</p>
+
+				<ul className="list-disc ml-8">
+					<li>item listings;</li>
+					<li>user profiles;</li>
+					<li>blog posts;</li>
+					<li>reviews and ratings.</li>
+				</ul>
+				<p>
+					When a report is submitted, Zero Waste may process information
+					necessary to investigate and manage the report. This may include the
+					identity of the reporting user, the reported content or account, the
+					reason for the report, and information related to the reported
+					content.
 				</p>
 				<p>
-					Future versions of the application may provide additional reporting
-					functionality for users to report problematic users, items, reviews,
-					or blog posts.
+					Reports are used for moderation, safety, abuse prevention, and
+					enforcement of the platform's Terms &amp; Conditions.
+				</p>
+				<p>
+					Administrators may review reports and take appropriate action. This
+					may include hiding or removing reported content, restricting an
+					account, or deleting an account where appropriate.
+				</p>
+				<p>
+					The processing of report-related information is based, where
+					applicable, on the legitimate interests of the Data Controller in
+					maintaining the security, integrity, and proper operation of the
+					platform, as well as enforcing the platform's Terms & Conditions.
+				</p>
+				<p>
+					Reports are retained only for as long as reasonably necessary to
+					investigate the report, take appropriate action, resolve disputes,
+					maintain platform security, and comply with applicable legal
+					obligations.
 				</p>
 			</Section>
 
@@ -427,7 +458,7 @@ export default function PrivacyPolicy() {
 
 			<Section title="17. International Data Transfers">
 				<p>
-					Because ZeroWaste uses third-party services such as Google, GitHub,
+					Because Zero Waste uses third-party services such as Google, GitHub,
 					and Cloudflare, some personal data may be processed outside Poland or
 					the European Economic Area depending on the provider and service
 					involved.
@@ -445,7 +476,7 @@ export default function PrivacyPolicy() {
 
 			<Section title="18. Automated Decision-Making">
 				<p>
-					ZeroWaste does not use personal data to make decisions that produce
+					Zero Waste does not use personal data to make decisions that produce
 					legal or similarly significant effects on users through automated
 					decision-making or profiling.
 				</p>
@@ -462,7 +493,7 @@ export default function PrivacyPolicy() {
 					This Privacy Policy may be updated when the application, its data
 					processing activities, or applicable legal requirements change.
 				</p>
-				<p>The latest version will be published on the ZeroWaste website.</p>
+				<p>The latest version will be published on the Zero Waste website.</p>
 				<p>
 					The &quot;Last updated&quot; date at the beginning of this document
 					indicates when the Privacy Policy was most recently revised.
