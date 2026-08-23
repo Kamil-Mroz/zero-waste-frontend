@@ -31,36 +31,33 @@ export type ApiError = {
 	errors?: Record<string, { message: string }>;
 };
 
-export const handleApiError = (
-  error: unknown,
-  form?: AnyFormApi,
-) => {
-  if (error instanceof AxiosError && error.response) {
-    const { status, data } = error.response;
+export const handleApiError = (error: unknown, form?: AnyFormApi) => {
+	if (error instanceof AxiosError && error.response) {
+		const { status, data } = error.response;
 
-    if (status === 429) {
-      return "Too many login attempts. Please try again later.";
-    }
+		if (status === 429) {
+			return;
+		}
 
-    if (typeof data === "object" && data !== null) {
-      const apiError = data as ApiError;
+		if (typeof data === "object" && data !== null) {
+			const apiError = data as ApiError;
 
-      if (apiError.errors && form) {
-        form.setErrorMap({
-          onSubmit: { fields: apiError.errors },
-        });
-        return;
-      }
+			if (apiError.errors && form) {
+				form.setErrorMap({
+					onSubmit: { fields: apiError.errors },
+				});
+				return;
+			}
 
-      if (apiError.detail) {
-        return apiError.detail;
-      }
-    }
+			if (apiError.detail) {
+				return apiError.detail;
+			}
+		}
 
-    return "Something went wrong, please try again.";
-  }
+		return "Something went wrong, please try again.";
+	}
 
-  return "Something went wrong, please try again.";
+	return "Something went wrong, please try again.";
 };
 
 export const withDefaultPageable = (value?: Partial<Pageable>): Pageable => ({
