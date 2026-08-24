@@ -6,22 +6,16 @@ export const USER_QUERY_KEYS = {
 	byId: (id: string) => [...USER_QUERY_KEYS.all, "detail", id],
 } as const;
 
-export const USER_ROLES = [
-	{ label: "Admin", value: "ADMIN" },
-	{ label: "User", value: "USER" },
-	{ label: "Writer", value: "WRITER" },
-] as const;
-
 export const usersDialogConfig = {
 	create: {
 		title: "Create User",
 		description:
-			"Create a new user account and assign roles, contact details, and login credentials.",
+			"Create a new user account and assign role, contact details, and login credentials.",
 	},
 	edit: {
 		title: "Update User",
 		description:
-			"Update the selected user's profile information, roles, or password.",
+			"Update the selected user's profile information, role, or password.",
 	},
 	ban: {
 		title: "Ban User(s)",
@@ -44,8 +38,9 @@ export const usersDialogConfig = {
 	},
 } as const;
 
-export const roleOptions: MultiSelectOption<Roles>[] = [
-	{ value: "ADMIN", label: "Admin" },
-	{ value: "WRITER", label: "Writer" },
-	{ value: "USER", label: "User" },
+export const USER_ROLES: MultiSelectOption<Roles>[] = [
+	{ label: "Admin", value: "ADMIN" },
+	{ label: "User", value: "USER" },
+	{ label: "Writer", value: "WRITER" },
+	{ label: "Demo", value: "DEMO" },
 ] as const;

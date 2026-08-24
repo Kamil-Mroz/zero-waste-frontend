@@ -1,5 +1,5 @@
 import MultiSelectMenu from "@/features/shared/components/multi-select-menu";
-import { roleOptions } from "../constants";
+import { USER_ROLES } from "../constants";
 import type { Roles } from "../types";
 
 export type UserRoleMenuProps = {
@@ -10,7 +10,7 @@ export function UserRoleMenu({ roles, onChange }: UserRoleMenuProps) {
 	return (
 		<MultiSelectMenu
 			title="Roles"
-			options={roleOptions}
+			options={USER_ROLES}
 			value={roles}
 			onChange={onChange}
 			clearLabel="Clear filters"

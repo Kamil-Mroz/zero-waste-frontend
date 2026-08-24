@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_authenticated/_writer")({
 		getTitle: () => "Writer",
 	},
 	beforeLoad: ({ context, location }) => {
-		if (!context.auth.hasAnyRole(["WRITER", "ADMIN"])) {
+		if (!context.auth.hasAnyRole(["WRITER", "ADMIN", "DEMO"])) {
 			throw redirect({
 				to: "/unauthorized",
 				search: {

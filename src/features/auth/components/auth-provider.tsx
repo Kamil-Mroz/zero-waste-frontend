@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import {
 	type PropsWithChildren,
 	useEffect,
@@ -6,7 +5,7 @@ import {
 	useState,
 } from "react";
 import { appToast } from "@/features/shared/components/toast";
-import type { Roles, UserRoles } from "@/features/users/types";
+import type { Roles } from "@/features/users/types";
 import { api } from "@/lib/axios";
 import { AuthContext } from "../hooks/useAuth";
 import type {
@@ -68,7 +67,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 							? `Too many requests. Please try again in ${seconds} seconds.`
 							: "Too many requests. Please try again later.",
 					});
-          return Promise.reject(error);
+					return Promise.reject(error);
 				}
 				const isAuthEndpoint = originalRequest.url?.includes("auth");
 
@@ -132,12 +131,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	};
 	const hasRole = (role: Roles) => {
 		if (!user) return false;
-		return user.roles.includes(role);
+		return user.role === role;
 	};
 
-	const hasAnyRole = (roles: UserRoles) => {
+	const hasAnyRole = (roles: Roles[]) => {
 		if (!user) return false;
-		return roles.some((role) => user.roles.includes(role));
+		return roles.some((role) => user.role === role);
 	};
 
 	return (

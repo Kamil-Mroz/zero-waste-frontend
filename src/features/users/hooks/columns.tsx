@@ -55,14 +55,13 @@ export const columns: ColumnDef<User>[] = [
 		),
 	},
 	{
-		accessorKey: "roles",
+		accessorKey: "role",
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Roles" />
+			<DataTableColumnHeader column={column} title="Role" />
 		),
-		cell: ({ row }) => {
-			const formatted = (row.getValue("roles") as User["roles"]).join(", ");
-			return <div>{formatted}</div>;
-		},
+		// cell: ({ row }) => {
+		// 	return <div>{row.getValue("role")}</div>;
+		// },
 	},
 	{
 		id: "Banned",

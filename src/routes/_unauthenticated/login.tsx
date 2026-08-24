@@ -83,7 +83,7 @@ function RouteComponent() {
 				</Button>
 			</CardContent>
 			<CardFooter>
-				<div className="text-base">
+				<div className="">
 					<span>
 						By logging in you have read and agreed to the{" "}
 						<Link to="/terms" className="text-indigo-600 underline">

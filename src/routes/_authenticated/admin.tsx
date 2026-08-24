@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
 		getTitle: () => "Admin",
 	},
 	beforeLoad: ({ context, location }) => {
-		if (!context.auth.hasRole("ADMIN")) {
+		if (!context.auth.hasAnyRole(["ADMIN", "DEMO"])) {
 			throw redirect({
 				to: "/unauthorized",
 				search: {

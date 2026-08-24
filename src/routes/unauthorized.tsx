@@ -43,8 +43,8 @@ function RouteComponent() {
 
 				<div className="mb-6 text-sm text-muted-foreground">
 					<p>
-						<strong>Your roles:</strong>{" "}
-						{(auth.user && Array.from(auth.user.roles).join(", ")) || "None"}
+						<strong>Your role:</strong>{" "}
+						{auth.user?.role || "None"}
 					</p>
 				</div>
 

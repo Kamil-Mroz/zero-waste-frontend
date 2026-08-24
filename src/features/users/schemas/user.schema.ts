@@ -1,10 +1,10 @@
 import { z } from "zod/v4";
 import { registerSchema } from "@/features/auth/schemas/register.schema";
 
-export const roleSchema = z.enum(["ADMIN", "USER", "WRITER"]);
+export const roleSchema = z.enum(["ADMIN", "USER", "WRITER", "DEMO"]);
 
 export const createUserSchema = registerSchema.extend({
-	roles: z.array(roleSchema),
+	role: roleSchema,
 });
 export type CreateUserType = z.infer<typeof createUserSchema>;
 
@@ -16,7 +16,7 @@ export const passwordSchema = z
 	);
 
 export const updateUserSchema = registerSchema.extend({
-	roles: z.array(roleSchema),
+	role: roleSchema,
 	password: z
 		.string()
 		.transform((v) => v.trim())

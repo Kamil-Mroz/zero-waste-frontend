@@ -29,7 +29,7 @@ export const userFormOptions = (user?: User) => {
 			nickname: user?.nickname || "",
 			email: user?.email || "",
 			password: "",
-			roles: user?.roles && user.roles.length > 0 ? user.roles : ["USER"],
+			role: user?.role ? user.role : ["USER"],
 		},
 	});
 };

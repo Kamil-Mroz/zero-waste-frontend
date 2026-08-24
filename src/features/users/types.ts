@@ -7,7 +7,6 @@ import type {
 } from "./schemas/user.schema";
 
 export type Roles = z.infer<typeof roleSchema>;
-export type UserRoles = Roles[];
 
 export type User = {
 	id: string;
@@ -16,7 +15,7 @@ export type User = {
 	hasActiveBan: boolean;
 	bannedUntil: string | null;
 	joinedAt: string;
-	roles: UserRoles;
+	role: Roles;
 };
 
 export type UserSummary = Pick<User, "email" | "id" | "nickname">;

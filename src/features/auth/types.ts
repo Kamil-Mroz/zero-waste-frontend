@@ -1,5 +1,5 @@
 import type { z } from "zod/v4";
-import type { User, UserRoles } from "../users/types";
+import type { Roles, User } from "../users/types";
 import type { loginSchema } from "./schemas/login.schema";
 import type { registerSchema } from "./schemas/register.schema";
 
@@ -13,7 +13,7 @@ export type AuthState = {
 	token: string | null;
 	isLoading: boolean;
 	hasRole: (role: "USER" | "ADMIN" | "WRITER") => boolean;
-	hasAnyRole: (roles: UserRoles) => boolean;
+	hasAnyRole: (roles: Roles[]) => boolean;
 	register: (data: RegisterRequest) => Promise<void>;
 	login: (data: LoginRequest) => Promise<void>;
 	logout: () => Promise<void>;

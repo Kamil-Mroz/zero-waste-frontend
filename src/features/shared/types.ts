@@ -34,6 +34,7 @@ export type Pageable = {
 	page: number;
 	size: number;
 };
+
 export type MultiSelectOption<T extends string> = {
 	value: T;
 	label: string;

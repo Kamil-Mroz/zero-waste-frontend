@@ -1,9 +1,4 @@
-import {
-	useMutation,
-	useQuery,
-	useQueryClient,
-	useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAppForm } from "@/features/shared/components/form/form";
@@ -80,10 +75,8 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 				<form.AppField name="password">
 					{(field) => <field.TextField label="Password" type="password" />}
 				</form.AppField>
-				<form.AppField mode="array" name="roles">
-					{(field) => (
-						<field.CheckboxArrayField items={USER_ROLES} label="Roles" />
-					)}
+				<form.AppField name="role">
+					{(field) => <field.RadioField items={USER_ROLES} label="Role" />}
 				</form.AppField>
 				<div className="grid md:grid-cols-2 gap-1">
 					{isMobile ? null : (

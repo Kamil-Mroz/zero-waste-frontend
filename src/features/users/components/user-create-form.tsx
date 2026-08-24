@@ -57,11 +57,10 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 					{(field) => <field.TextField label="Password" type="password" />}
 				</form.AppField>
 
-				<form.AppField mode="array" name="roles">
-					{(field) => (
-						<field.CheckboxArrayField items={USER_ROLES} label="Roles" />
-					)}
+				<form.AppField name="role">
+					{(field) => <field.RadioField items={USER_ROLES} label="Role" />}
 				</form.AppField>
+
 				<div className="grid md:grid-cols-2 gap-1">
 					{isMobile ? null : (
 						<form.AppForm>

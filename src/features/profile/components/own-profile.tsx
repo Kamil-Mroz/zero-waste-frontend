@@ -1,10 +1,16 @@
 import { Suspense } from "react";
+import { Badge } from "@/features/shared/components/ui/badge";
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/features/shared/components/ui/card";
 import type { User } from "@/features/users/types";
 import { AccountStatusCard } from "./account-status-card";
 import { OwnProfileStats } from "./own-profile-stats";
 import { OwnProfileStatsSkeleton } from "./own-profile-stats-skeleton";
 import { PersonalInfoCard } from "./personal-info-card";
-import { RolesCard } from "./roles-card";
 import { UserHeader } from "./user-header";
 
 type Props = {
@@ -21,7 +27,17 @@ export function OwnProfile({ user }: Props) {
 					bannedUntil={user.bannedUntil}
 				/>
 
-				<RolesCard roles={user.roles} />
+				<Card>
+					<CardHeader>
+						<CardTitle>Role</CardTitle>
+					</CardHeader>
+
+					<CardContent>
+						<div className="flex flex-wrap gap-2">
+							<Badge variant="secondary">{user.role}</Badge>
+						</div>
+					</CardContent>
+				</Card>
 			</div>
 
 			<PersonalInfoCard user={user} />
