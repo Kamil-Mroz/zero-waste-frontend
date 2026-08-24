@@ -93,7 +93,7 @@ export function Blog({ blog }: BlogProps) {
 			</div>
 
 			<div className="mt-4">
-				<p className="line-clamp-3 text-sm leading-relaxed max-w-prose mx-auto">
+				<p className="text-sm leading-relaxed max-w-prose mx-auto">
 					{blog.content}
 				</p>
 			</div>
