@@ -1,3 +1,4 @@
+import axios, { AxiosError } from "axios";
 import {
 	type PropsWithChildren,
 	useEffect,
@@ -7,6 +8,7 @@ import {
 import { appToast } from "@/features/shared/components/toast";
 import type { Roles, UserRoles } from "@/features/users/types";
 import { api } from "@/lib/axios";
+import type { ApiError } from "@/lib/utils";
 import { AuthContext } from "../hooks/useAuth";
 import type {
 	AuthResponse,
@@ -27,9 +29,25 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				setToken(res.data.accessToken);
 
 				setUser(res.data.user);
-			} catch {
+			} catch (error) {
 				setToken(null);
 				setUser(null);
+				if (error instanceof AxiosError && error.response) {
+					const { status } = error.response;
+
+					if (status === 429) {
+						const retryAfter = error.response.headers["retry-after"];
+
+						const seconds = Number(retryAfter);
+
+						appToast.error({
+							description: Number.isFinite(seconds)
+								? `Too many requests. Please try again in ${seconds} seconds.`
+								: "Too many requests. Please try again later.",
+						});
+						return;
+					}
+				}
 			} finally {
 				setIsLoading(false);
 			}

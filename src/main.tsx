@@ -23,7 +23,6 @@ export const queryClient = new QueryClient({
 		onError: (error) => {
 			if (error instanceof AxiosError && error.response) {
 				const { status, data } = error.response;
-				console.log(error.response);
 
 				if (status === 429) {
 					const retryAfter = error.response.headers["retry-after"];

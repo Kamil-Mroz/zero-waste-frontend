@@ -24,7 +24,6 @@ export function ProfileReviewCard({ review, isOwn }: ProfileItemCardProps) {
 	const handleDelete = () => {
 		deleteMutation.mutate(review.id);
 	};
-	console.log(review);
 
 	return (
 		<div
