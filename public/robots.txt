@@ -1,11 +1,51 @@
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
+
+# Public pages
 Allow: /
+Allow: /marketplace
+Allow: /marketplace/*
+Allow: /eco-hub
+Allow: /eco-hub/blogs
+Allow: /eco-hub/blogs/*
+Allow: /profile/*
+Allow: /profile/*/items
+Allow: /profile/*/reviews
 
-Disallow:
+# Authentication pages
+Allow: /login
+Allow: /register
 
-# Sitemap location
+# Legal pages
+Allow: /privacy
+Allow: /terms
+
+# Private / authenticated pages
+Disallow: /profile
+Disallow: /settings
+Disallow: /notifications
+Disallow: /notifications/*
+Disallow: /offers
+Disallow: /offers/*
+Disallow: /reviews
+Disallow: /reviews/*
+Disallow: /marketplace/create
+Disallow: /marketplace/history
+Disallow: /marketplace/my-items
+Disallow: /marketplace/*/edit
+
+# Admin pages
+Disallow: /admin
+Disallow: /admin/*
+
+# Writer-only pages
+Disallow: /eco-hub/blogs/own
+Disallow: /eco-hub/blogs/create
+Disallow: /eco-hub/blogs/*/edit
+
+# Other non-content pages
+Disallow: /unauthorized
+
+# Sitemap
 Sitemap: https://zw.kamilpm.com/sitemap.xml
-
-# Respectful crawling
-Crawl-delay: 1

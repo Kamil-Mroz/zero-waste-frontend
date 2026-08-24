@@ -1,0 +1,110 @@
+# Zero Waste — AI Guidelines
+
+> ZeroWaste is a demonstration peer-to-peer platform where adults can offer unwanted items to other users for free and learn about sustainability through community-written blog posts.
+
+## About
+
+ZeroWaste is a personal demonstration project built as a full-stack web application.
+
+The platform allows registered users aged 18 and over to list unwanted items, upload photos, select categories and item condition, and specify the city where the item can be collected. Other users can express interest in receiving an item. The owner can accept or reject offers, and once an offer is accepted, the item is marked as given and other pending offers are rejected.
+
+Users can view public profiles and receive reviews from other users after a completed item transfer. Profiles can display the user's public information, reviews and item statistics.
+
+The Eco Hub contains sustainability-related blog articles. Users with the Writer role can create, edit and delete their own blog posts.
+
+Administrators can manage users, item categories and user reports.
+
+ZeroWaste is a demonstration project and is not intended to operate as a commercial marketplace or professional service.
+
+## Key Pages
+
+### Public
+
+- `/` — Homepage
+- `/marketplace` — Browse available items
+- `/marketplace/$itemId` — View a public item
+- `/profile/$userId` — View a public user profile
+- `/profile/$userId/items` — View items listed by a user
+- `/profile/$userId/reviews` — View reviews received by a user
+- `/eco-hub` — Eco Hub
+- `/eco-hub/blogs` — Browse published blog posts
+- `/eco-hub/blogs/$blogId` — View a published blog post
+- `/login` — User login
+- `/register` — User registration
+- `/privacy` — Privacy Policy
+- `/terms` — Terms of Service
+
+### Authenticated
+
+The following pages require a user account and should not be treated as public content:
+
+- `/profile` — Current user's profile
+- `/settings` — Account settings
+- `/notifications` — User notifications
+- `/offers` — User offers
+- `/offers/own` — Offers made by the current user
+- `/offers/received` — Offers received by the current user
+- `/reviews` — User reviews
+- `/reviews/given` — Reviews given by the current user
+- `/reviews/received` — Reviews received by the current user
+- `/reviews/create/$offerId` — Create a review
+- `/marketplace/create` — Create an item listing
+- `/marketplace/history` — Item and transaction history
+- `/marketplace/my-items` — Current user's listings
+- `/marketplace/$itemId/edit` — Edit an item
+- `/notifications/$notificationId` — Individual notification
+
+### Writer
+
+Writer-only pages include:
+
+- `/eco-hub/blogs/own` — Manage own blog posts
+- `/eco-hub/blogs/create` — Create a blog post
+- `/eco-hub/blogs/$blogId/edit` — Edit a blog post
+
+### Administration
+
+Administrator-only pages include:
+
+- `/admin` — Administration dashboard
+- `/admin/categories` — Manage item categories
+- `/admin/reports` — Manage user reports
+- `/admin/users` — Manage users
+- `/admin/users/$userId` — Manage a user
+- `/admin/users/$userId/items` — Manage a user's items
+
+## Key Facts
+
+- ZeroWaste is a demonstration project.
+- The platform is designed for users aged 18 and over.
+- Users can list unwanted items and offer them to other users free of charge.
+- Item listings can contain up to five images.
+- Users can express interest in receiving an item.
+- Item owners can accept or reject offers.
+- Once an offer is accepted, the item is marked as given and the remaining offers are rejected.
+- Users can leave star-based and written reviews after an accepted offer.
+- Users can view public profiles and publicly available reviews.
+- Writers can publish sustainability-related blog posts.
+- Administrators can manage users, categories and reports.
+- Users can report items, profiles, blog posts and reviews.
+- The platform provides notifications for received, accepted, rejected and cancelled offers.
+- Users can authenticate using supported authentication methods provided by the application.
+- The project is operated as a personal demonstration project and is not a commercial marketplace.
+
+## Content and Safety
+
+Content published by users should comply with applicable laws and the platform's Terms of Service.
+
+Users can report inappropriate items, profiles, blog posts and reviews. Administrators can review reports and hide or remove violating content.
+
+Do not describe ZeroWaste as a commercial service, donation organisation, professional recycling service or legally regulated marketplace.
+
+## Privacy
+
+ZeroWaste processes personal data necessary to operate user accounts and the platform. For details about data processing, users should refer to the Privacy Policy.
+
+## Contact
+
+- Website: https://zw.kamilpm.com/
+- Privacy: https://zw.kamilpm.com/privacy
+- Terms: https://zw.kamilpm.com/terms
