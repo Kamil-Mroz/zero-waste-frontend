@@ -11,16 +11,17 @@ type BlogProps = {
 	blog: BlogType;
 };
 export function Blog({ blog }: BlogProps) {
-	const { user } = useAuth();
+	const { user, hasRole } = useAuth();
 
 	const deleteMutation = useBlogDeleteMutation();
 
+	const isAdmin = hasRole("ADMIN");
 	const isOwner = user?.id === blog.author.id;
 	const isHidden = blog.moderationStatus === "HIDDEN";
 	const isVisible = blog.moderationStatus === "VISIBLE";
 
 	const canEdit = isOwner && isVisible;
-	const canDelete = isOwner;
+	const canDelete = isOwner || isAdmin;
 	const canReport = !isOwner && isVisible;
 
 	return (
@@ -62,34 +63,36 @@ export function Blog({ blog }: BlogProps) {
 						By {blog.author.nickname}
 					</p>
 				</div>
+				<div className="flex items-center gap-2">
+					{isOwner ||
+						(isAdmin && (
+							<div className="flex gap-2 opacity-0 transition group-hover:opacity-100">
+								{canEdit && (
+									<Button asChild size="sm">
+										<Link
+											to="/eco-hub/blogs/$blogId/edit"
+											params={{ blogId: blog.id }}
+										>
+											Edit
+										</Link>
+									</Button>
+								)}
 
-				{isOwner && (
-					<div className="flex gap-2 opacity-0 transition group-hover:opacity-100">
-						{canEdit && (
-							<Button asChild size="sm">
-								<Link
-									to="/eco-hub/blogs/$blogId/edit"
-									params={{ blogId: blog.id }}
-								>
-									Edit
-								</Link>
-							</Button>
-						)}
+								{canDelete && (
+									<Button
+										variant="destructive"
+										size="sm"
+										onClick={() => deleteMutation.mutate(blog.id)}
+										disabled={deleteMutation.isPending}
+									>
+										{deleteMutation.isPending ? "Deleting..." : "Delete"}
+									</Button>
+								)}
+							</div>
+						))}
 
-						{canDelete && (
-							<Button
-								variant="destructive"
-								size="sm"
-								onClick={() => deleteMutation.mutate(blog.id)}
-								disabled={deleteMutation.isPending}
-							>
-								{deleteMutation.isPending ? "Deleting..." : "Delete"}
-							</Button>
-						)}
-					</div>
-				)}
-
-				{canReport && <ReportButton subjectId={blog.id} subjectType="BLOG" />}
+					{canReport && <ReportButton subjectId={blog.id} subjectType="BLOG" />}
+				</div>
 			</div>
 
 			<div className="mt-4">

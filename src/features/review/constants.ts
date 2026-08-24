@@ -8,6 +8,8 @@ export const REVIEW_QUERY_KEYS = {
 		userId,
 		search,
 	],
+	byIdRoot: () => [...REVIEW_QUERY_KEYS.all, "detail"],
+	byId: (reviewId: string) => [...REVIEW_QUERY_KEYS.byIdRoot(), reviewId],
 	receivedRoot: () => [...REVIEW_QUERY_KEYS.all, "received"],
 	received: (search: Partial<Pageable>) => [
 		...REVIEW_QUERY_KEYS.receivedRoot(),

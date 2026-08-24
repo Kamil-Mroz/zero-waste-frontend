@@ -69,8 +69,6 @@ export type ItemProps = {
 
 export type ItemActionsProps = {
 	item: ItemWithOwnerType;
-	isOwner: boolean;
-	isAuthenticated: boolean;
 };
 export type ItemDeleteDialogProps = {
 	id: string;

@@ -1,14 +1,19 @@
 import { api } from "@/lib/axios";
 import type { Pageable } from "../shared/types";
-import type { CreateReviewFormValues, ReviewResponse } from "./types";
+import type { CreateReviewFormValues, Review, ReviewResponse } from "./types";
 
 export async function createReview(values: CreateReviewFormValues) {
 	const res = await api.post(`/v1/reviews`, values);
 	return res.data;
 }
 
-export async function deleteReview(id:string) {
+export async function deleteReview(id: string) {
 	const res = await api.delete(`/v1/reviews/${id}`);
+	return res.data;
+}
+
+export async function getReview(id: string) {
+	const res = await api.get<Review>(`/v1/reviews/${id}`);
 	return res.data;
 }
 

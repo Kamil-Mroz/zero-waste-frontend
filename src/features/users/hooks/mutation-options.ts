@@ -29,7 +29,7 @@ export function userDeleteMutationOptions() {
 		onError: (error) => {
 			const message = handleApiError(error);
 			if (message) {
-				appToast.error({ title: "Deletion failed", description: message });
+				appToast.error({ title: "Failed to delete", description: message });
 			}
 		},
 	});

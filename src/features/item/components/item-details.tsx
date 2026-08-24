@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ShieldAlertIcon } from "lucide-react";
 import { useRef, useState } from "react";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import GoBackButton from "@/features/shared/components/go-back-button";
 import { Button } from "@/features/shared/components/ui/button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
@@ -14,10 +13,6 @@ import type { ItemProps } from "../types";
 import { ItemActionsButtons } from "./item-actions-buttons";
 
 export function ItemDetails({ item }: ItemProps) {
-	const { user } = useAuth();
-
-	const isAuthenticated = !!user;
-	const isOwner = isAuthenticated && user.id === item.owner.id;
 	const [activeImage, setActiveImage] = useState(item.thumbnail?.url ?? null);
 	const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
@@ -122,9 +117,7 @@ export function ItemDetails({ item }: ItemProps) {
 					</div>
 
 					<ItemActionsButtons
-						isOwner={isOwner}
 						item={item}
-						isAuthenticated={isAuthenticated}
 					/>
 				</CardContent>
 			</Card>

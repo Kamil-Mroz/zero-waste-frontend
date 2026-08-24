@@ -19,10 +19,12 @@ export const useReportForm = ({
 	subjectType,
 	subjectId,
 	closeModal,
+	showToast,
 }: {
 	subjectType: ReportSubjectType;
 	subjectId: string;
 	closeModal: () => void;
+	showToast: boolean;
 }) => {
 	const queryClient = useQueryClient();
 	const router = useRouter();
@@ -46,7 +48,8 @@ export const useReportForm = ({
 			});
 			await router.invalidate();
 			closeModal();
-			appToast.success({ description: "Report submitted successfully" });
+			if (showToast)
+				appToast.success({ description: "Report submitted successfully" });
 		},
 	});
 };

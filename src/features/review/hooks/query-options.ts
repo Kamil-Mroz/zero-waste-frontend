@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { Pageable } from "@/features/shared/types";
-import { getGivenReviews, getReceivedReviews, getUserReviews } from "../api";
+import { getGivenReviews, getReceivedReviews, getReview, getUserReviews } from "../api";
 import { REVIEW_QUERY_KEYS } from "../constants";
 
 export const userReviewsQueryOptions = (
@@ -10,6 +10,13 @@ export const userReviewsQueryOptions = (
 	queryOptions({
 		queryKey: REVIEW_QUERY_KEYS.byUserId(userId, search),
 		queryFn: async () => getUserReviews(userId, search),
+		staleTime: 30 * 60 * 1000,
+	});
+
+export const reviewQueryOptions = (reviewId: string) =>
+	queryOptions({
+		queryKey: REVIEW_QUERY_KEYS.byId(reviewId),
+		queryFn: async () => getReview(reviewId),
 		staleTime: 30 * 60 * 1000,
 	});
 

@@ -31,17 +31,34 @@ export const invalidateNotificationQueries = async (
 			break;
 
 		case "OFFER_ACCEPTED": {
-			await queryClient.invalidateQueries({
-				queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
-			});
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ITEM_QUERY_KEYS.all,
+				}),
 
+				queryClient.invalidateQueries({
+					queryKey: OFFER_QUERY_KEYS.own(),
+				}),
+			]);
 			break;
 		}
 
 		case "OFFER_REJECTED": {
-			await queryClient.invalidateQueries({
-				queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
-			});
+			await Promise.all([
+				queryClient.invalidateQueries({
+					queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ITEM_QUERY_KEYS.all,
+				}),
+
+				queryClient.invalidateQueries({
+					queryKey: OFFER_QUERY_KEYS.own(),
+				}),
+			]);
 
 			break;
 		}

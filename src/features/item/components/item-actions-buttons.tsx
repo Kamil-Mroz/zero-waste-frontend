@@ -1,29 +1,31 @@
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ReportButton } from "@/features/report/components/report-button";
 import { Button } from "@/features/shared/components/ui/button";
 import type { ItemActionsProps } from "../types";
 
-export function ItemActionsButtons({
-	isOwner,
-	item,
-	isAuthenticated,
-}: ItemActionsProps) {
+export function ItemActionsButtons({ item }: ItemActionsProps) {
 	const isHidden = item.moderationStatus === "HIDDEN";
 	const isGiven = item.state === "GIVEN";
 	const isPending = item.state === "PENDING";
 	const isVisible = item.moderationStatus === "VISIBLE";
 
+	const { user } = useAuth();
+	const isOwner = item.owner.id === user?.id;
+	const isAuthenticated = !!user;
+	const isAdmin = user?.role === "ADMIN";
+
 	const canEdit = isOwner && !isGiven && !isHidden;
 	const canPublish = canEdit && isPending;
 	const canHide = canEdit && !isPending;
 
-	const canDelete = isOwner && (isHidden || !isGiven);
+	const canDelete = (isOwner || isAdmin) && (isHidden || !isGiven);
 
 	const canInteract = !isOwner && isAuthenticated && !isGiven && isVisible;
 
 	return (
 		<div className="flex gap-2 pt-4">
-			{isOwner &&
+			{(isOwner || isAdmin) &&
 				(isHidden ? (
 					<>
 						<p className="text-sm text-muted-foreground mr-auto">
@@ -43,7 +45,7 @@ export function ItemActionsButtons({
 					</>
 				) : (
 					<>
-						{!isGiven && (
+						{!isGiven && isOwner && (
 							<>
 								{canPublish && (
 									<Button asChild>

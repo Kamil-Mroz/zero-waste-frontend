@@ -1,5 +1,6 @@
 import { Flag } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import ResponsiveDialog from "@/features/shared/components/responsive-dialog";
 import { Button } from "@/features/shared/components/ui/button";
 import { FieldGroup } from "@/features/shared/components/ui/field";
@@ -14,11 +15,13 @@ type ReportButtonProps = {
 };
 export function ReportButton({ subjectId, subjectType }: ReportButtonProps) {
 	const [showReportModal, setShowReportModal] = useState(false);
+	const { hasRole } = useAuth();
 
 	const closeModal = () => setShowReportModal(false);
 	const isMobile = useIsMobile();
+	const showToast = !hasRole("ADMIN");
 
-	const form = useReportForm({ subjectId, subjectType, closeModal });
+	const form = useReportForm({ subjectId, subjectType, closeModal, showToast });
 	return (
 		<>
 			<Button variant="warning" onClick={() => setShowReportModal(true)}>

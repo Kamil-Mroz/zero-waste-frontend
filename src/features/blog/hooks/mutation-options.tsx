@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { appToast } from "@/features/shared/components/toast";
+import { handleApiError } from "@/lib/utils";
 import { createBlog, deleteBlog, updateBlog } from "../api";
 import { BLOG_QUERY_KEYS } from "../constants";
 import type { BlogFormValues, BlogType } from "../types";
@@ -24,6 +26,12 @@ export function useBlogDeleteMutation() {
 			]);
 
 			await navigate({ to: "/eco-hub/blogs/own" });
+		},
+		onError: (error) => {
+			const message = handleApiError(error);
+			if (message) {
+				appToast.error({ title: "Failed to delete", description: message });
+			}
 		},
 	});
 }

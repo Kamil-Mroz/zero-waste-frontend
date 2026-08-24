@@ -20,7 +20,7 @@ export function getSubjectPath(report: Report) {
 
 		case "REVIEW":
 			return {
-				url: `/review/$reviewId`,
+				url: `/admin/reviews/$reviewId`,
 				params: {
 					reviewId: report.subjectId,
 				},

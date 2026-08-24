@@ -2,6 +2,7 @@
 
 import { Link } from "@tanstack/react-router";
 import { Star } from "lucide-react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ReportButton } from "@/features/report/components/report-button";
 import { useReviewDeleteMutation } from "@/features/review/hooks/mutation-options";
 import type { Review } from "@/features/review/types";
@@ -12,14 +13,19 @@ import { cn } from "@/lib/utils";
 
 type ProfileItemCardProps = {
 	review: Review;
-	isOwn: boolean;
+	isOwn?: boolean;
 };
 
-export function ProfileReviewCard({ review, isOwn }: ProfileItemCardProps) {
+export function ProfileReviewCard({
+	review,
+	isOwn = false,
+}: ProfileItemCardProps) {
+	const { hasRole } = useAuth();
 	const isHidden = review.moderationStatus === "HIDDEN";
 	const isVisible = review.moderationStatus === "VISIBLE";
 
 	const deleteMutation = useReviewDeleteMutation();
+	const isAdmin = hasRole("ADMIN");
 
 	const handleDelete = () => {
 		deleteMutation.mutate(review.id);
@@ -34,7 +40,7 @@ export function ProfileReviewCard({ review, isOwn }: ProfileItemCardProps) {
 					"rounded-lg border-destructive/30 bg-destructive/5 p-4",
 			)}
 		>
-			{isHidden && isOwn && (
+			{isHidden && (isOwn || isAdmin) && (
 				<div className="mb-4 flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/5 p-3">
 					<Badge variant={"destructive"}>Hidden</Badge>
 
@@ -85,21 +91,23 @@ export function ProfileReviewCard({ review, isOwn }: ProfileItemCardProps) {
 						</div>
 
 						<div className="flex flex-col items-end gap-1">
-							{isOwn && (
-								<Button
-									variant="destructive"
-									size="sm"
-									onClick={handleDelete}
-									disabled={deleteMutation.isPending}
-								>
-									{deleteMutation.isPending ? "Deleting..." : "Delete"}
-								</Button>
-							)}
+							<div className="flex gap-2 items-center">
+								{isOwn ||
+									(isAdmin && (
+										<Button
+											variant="destructive"
+											size="sm"
+											onClick={handleDelete}
+											disabled={deleteMutation.isPending}
+										>
+											{deleteMutation.isPending ? "Deleting..." : "Delete"}
+										</Button>
+									))}
 
-							{!isOwn && isVisible && (
-								<ReportButton subjectId={review.id} subjectType="REVIEW" />
-							)}
-
+								{!isOwn && isVisible && (
+									<ReportButton subjectId={review.id} subjectType="REVIEW" />
+								)}
+							</div>
 							<time className="block text-xs text-muted-foreground">
 								{new Date(review.createdAt).toLocaleDateString()}
 							</time>

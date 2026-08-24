@@ -38,6 +38,7 @@ import { Route as AuthenticatedWriterEcoHubRouteRouteImport } from './routes/_au
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin/reports'
+import { Route as AuthenticatedAdminReviewRouteImport } from './routes/_authenticated/admin/review'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedMarketplaceCreateRouteImport } from './routes/_authenticated/marketplace/create'
 import { Route as AuthenticatedMarketplaceHistoryRouteImport } from './routes/_authenticated/marketplace/history'
@@ -56,6 +57,7 @@ import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId
 import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
 import { Route as AuthenticatedAdminCategoriesIndexRouteImport } from './routes/_authenticated/admin/categories/index'
 import { Route as AuthenticatedAdminReportsIndexRouteImport } from './routes/_authenticated/admin/reports/index'
+import { Route as AuthenticatedAdminReviewsReviewIdRouteImport } from './routes/_authenticated/admin/reviews/$reviewId'
 import { Route as AuthenticatedAdminUsersIndexRouteImport } from './routes/_authenticated/admin/users/index'
 import { Route as AuthenticatedAdminUsersUserIdRouteImport } from './routes/_authenticated/admin/users/$userId'
 import { Route as AuthenticatedMarketplaceItemIdEditRouteImport } from './routes/_authenticated/marketplace/$itemId.edit'
@@ -66,6 +68,7 @@ import { Route as EcoHubBlogsBlogIdIndexRouteImport } from './routes/eco-hub/blo
 import { Route as AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/route'
 import { Route as AuthenticatedWriterEcoHubBlogsOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/own'
 import { Route as AuthenticatedWriterEcoHubQuizzesOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/quizzes/own'
+import { Route as AuthenticatedAdminReviewsReviewIdIndexRouteImport } from './routes/_authenticated/admin/reviews/$reviewId/index'
 import { Route as AuthenticatedAdminUsersUserIdIndexRouteImport } from './routes/_authenticated/admin/users/$userId/index'
 import { Route as AuthenticatedAdminUsersUserIdItemsRouteImport } from './routes/_authenticated/admin/users/$userId/items'
 import { Route as AuthenticatedWriterEcoHubBlogsBlogIdEditRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
@@ -242,6 +245,14 @@ const AuthenticatedAdminReportsRoute =
   } as any).lazy(() =>
     import('./routes/_authenticated/admin/reports.lazy').then((d) => d.Route),
   )
+const AuthenticatedAdminReviewRoute =
+  AuthenticatedAdminReviewRouteImport.update({
+    id: '/review',
+    path: '/review',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/review.lazy').then((d) => d.Route),
+  )
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -384,6 +395,16 @@ const AuthenticatedAdminReportsIndexRoute =
       (d) => d.Route,
     ),
   )
+const AuthenticatedAdminReviewsReviewIdRoute =
+  AuthenticatedAdminReviewsReviewIdRouteImport.update({
+    id: '/reviews/$reviewId',
+    path: '/reviews/$reviewId',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/reviews/$reviewId.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const AuthenticatedAdminUsersIndexRoute =
   AuthenticatedAdminUsersIndexRouteImport.update({
     id: '/',
@@ -487,6 +508,16 @@ const AuthenticatedWriterEcoHubQuizzesOwnRoute =
     path: '/quizzes/own',
     getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
   } as any)
+const AuthenticatedAdminReviewsReviewIdIndexRoute =
+  AuthenticatedAdminReviewsReviewIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedAdminReviewsReviewIdRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/admin/reviews/$reviewId/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const AuthenticatedAdminUsersUserIdIndexRoute =
   AuthenticatedAdminUsersUserIdIndexRouteImport.update({
     id: '/',
@@ -536,6 +567,7 @@ export interface FileRoutesByFullPath {
   '/marketplace/': typeof MarketplaceIndexRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
+  '/admin/review': typeof AuthenticatedAdminReviewRoute
   '/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
@@ -552,6 +584,7 @@ export interface FileRoutesByFullPath {
   '/eco-hub/blogs/': typeof EcoHubBlogsIndexRoute
   '/eco-hub/quizzes/': typeof EcoHubQuizzesIndexRoute
   '/profile/$userId/': typeof ProfileUserIdIndexRoute
+  '/admin/reviews/$reviewId': typeof AuthenticatedAdminReviewsReviewIdRouteWithChildren
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRouteWithChildren
   '/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
   '/reviews/given': typeof AuthenticatedReviewsLayoutGivenRoute
@@ -566,6 +599,7 @@ export interface FileRoutesByFullPath {
   '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
+  '/admin/reviews/$reviewId/': typeof AuthenticatedAdminReviewsReviewIdIndexRoute
   '/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
   '/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
@@ -582,6 +616,7 @@ export interface FileRoutesByTo {
   '/marketplace/$itemId': typeof MarketplaceItemIdRoute
   '/eco-hub': typeof EcoHubIndexRoute
   '/reviews': typeof AuthenticatedReviewsIndexRoute
+  '/admin/review': typeof AuthenticatedAdminReviewRoute
   '/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
   '/marketplace/my-items': typeof AuthenticatedMarketplaceMyItemsRoute
@@ -608,6 +643,7 @@ export interface FileRoutesByTo {
   '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
+  '/admin/reviews/$reviewId': typeof AuthenticatedAdminReviewsReviewIdIndexRoute
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdIndexRoute
   '/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
@@ -640,6 +676,7 @@ export interface FileRoutesById {
   '/_authenticated/reviews/_layout': typeof AuthenticatedReviewsLayoutRouteRouteWithChildren
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRouteWithChildren
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRouteWithChildren
+  '/_authenticated/admin/review': typeof AuthenticatedAdminReviewRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRouteWithChildren
   '/_authenticated/marketplace/create': typeof AuthenticatedMarketplaceCreateRoute
   '/_authenticated/marketplace/history': typeof AuthenticatedMarketplaceHistoryRoute
@@ -656,6 +693,7 @@ export interface FileRoutesById {
   '/eco-hub/blogs/': typeof EcoHubBlogsIndexRoute
   '/eco-hub/quizzes/': typeof EcoHubQuizzesIndexRoute
   '/profile/$userId/': typeof ProfileUserIdIndexRoute
+  '/_authenticated/admin/reviews/$reviewId': typeof AuthenticatedAdminReviewsReviewIdRouteWithChildren
   '/_authenticated/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRouteWithChildren
   '/_authenticated/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
   '/_authenticated/reviews/_layout/given': typeof AuthenticatedReviewsLayoutGivenRoute
@@ -670,6 +708,7 @@ export interface FileRoutesById {
   '/_authenticated/_writer/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/_authenticated/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/_authenticated/_writer/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
+  '/_authenticated/admin/reviews/$reviewId/': typeof AuthenticatedAdminReviewsReviewIdIndexRoute
   '/_authenticated/admin/users/$userId/': typeof AuthenticatedAdminUsersUserIdIndexRoute
   '/_authenticated/_writer/eco-hub/blogs/$blogId/edit': typeof AuthenticatedWriterEcoHubBlogsBlogIdEditRoute
 }
@@ -697,6 +736,7 @@ export interface FileRouteTypes {
     | '/marketplace/'
     | '/admin/categories'
     | '/admin/reports'
+    | '/admin/review'
     | '/admin/users'
     | '/marketplace/create'
     | '/marketplace/history'
@@ -713,6 +753,7 @@ export interface FileRouteTypes {
     | '/eco-hub/blogs/'
     | '/eco-hub/quizzes/'
     | '/profile/$userId/'
+    | '/admin/reviews/$reviewId'
     | '/admin/users/$userId'
     | '/marketplace/$itemId/edit'
     | '/reviews/given'
@@ -727,6 +768,7 @@ export interface FileRouteTypes {
     | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
     | '/eco-hub/blogs/create'
+    | '/admin/reviews/$reviewId/'
     | '/admin/users/$userId/'
     | '/eco-hub/blogs/$blogId/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -743,6 +785,7 @@ export interface FileRouteTypes {
     | '/marketplace/$itemId'
     | '/eco-hub'
     | '/reviews'
+    | '/admin/review'
     | '/marketplace/create'
     | '/marketplace/history'
     | '/marketplace/my-items'
@@ -769,6 +812,7 @@ export interface FileRouteTypes {
     | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
     | '/eco-hub/blogs/create'
+    | '/admin/reviews/$reviewId'
     | '/admin/users/$userId'
     | '/eco-hub/blogs/$blogId/edit'
   id:
@@ -800,6 +844,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reviews/_layout'
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/reports'
+    | '/_authenticated/admin/review'
     | '/_authenticated/admin/users'
     | '/_authenticated/marketplace/create'
     | '/_authenticated/marketplace/history'
@@ -816,6 +861,7 @@ export interface FileRouteTypes {
     | '/eco-hub/blogs/'
     | '/eco-hub/quizzes/'
     | '/profile/$userId/'
+    | '/_authenticated/admin/reviews/$reviewId'
     | '/_authenticated/admin/users/$userId'
     | '/_authenticated/marketplace/$itemId/edit'
     | '/_authenticated/reviews/_layout/given'
@@ -830,6 +876,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_writer/eco-hub/quizzes/own'
     | '/_authenticated/admin/users/$userId/items'
     | '/_authenticated/_writer/eco-hub/blogs/create'
+    | '/_authenticated/admin/reviews/$reviewId/'
     | '/_authenticated/admin/users/$userId/'
     | '/_authenticated/_writer/eco-hub/blogs/$blogId/edit'
   fileRoutesById: FileRoutesById
@@ -1037,6 +1084,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/review': {
+      id: '/_authenticated/admin/review'
+      path: '/review'
+      fullPath: '/admin/review'
+      preLoaderRoute: typeof AuthenticatedAdminReviewRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
       path: '/users'
@@ -1163,6 +1217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminReportsIndexRouteImport
       parentRoute: typeof AuthenticatedAdminReportsRoute
     }
+    '/_authenticated/admin/reviews/$reviewId': {
+      id: '/_authenticated/admin/reviews/$reviewId'
+      path: '/reviews/$reviewId'
+      fullPath: '/admin/reviews/$reviewId'
+      preLoaderRoute: typeof AuthenticatedAdminReviewsReviewIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/users/': {
       id: '/_authenticated/admin/users/'
       path: '/'
@@ -1239,6 +1300,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/eco-hub/quizzes/own'
       preLoaderRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRouteImport
       parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
+    }
+    '/_authenticated/admin/reviews/$reviewId/': {
+      id: '/_authenticated/admin/reviews/$reviewId/'
+      path: '/'
+      fullPath: '/admin/reviews/$reviewId/'
+      preLoaderRoute: typeof AuthenticatedAdminReviewsReviewIdIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminReviewsReviewIdRoute
     }
     '/_authenticated/admin/users/$userId/': {
       id: '/_authenticated/admin/users/$userId/'
@@ -1459,19 +1527,39 @@ const AuthenticatedAdminUsersRouteWithChildren =
     AuthenticatedAdminUsersRouteChildren,
   )
 
+interface AuthenticatedAdminReviewsReviewIdRouteChildren {
+  AuthenticatedAdminReviewsReviewIdIndexRoute: typeof AuthenticatedAdminReviewsReviewIdIndexRoute
+}
+
+const AuthenticatedAdminReviewsReviewIdRouteChildren: AuthenticatedAdminReviewsReviewIdRouteChildren =
+  {
+    AuthenticatedAdminReviewsReviewIdIndexRoute:
+      AuthenticatedAdminReviewsReviewIdIndexRoute,
+  }
+
+const AuthenticatedAdminReviewsReviewIdRouteWithChildren =
+  AuthenticatedAdminReviewsReviewIdRoute._addFileChildren(
+    AuthenticatedAdminReviewsReviewIdRouteChildren,
+  )
+
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRouteWithChildren
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRouteWithChildren
+  AuthenticatedAdminReviewRoute: typeof AuthenticatedAdminReviewRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRouteWithChildren
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminReviewsReviewIdRoute: typeof AuthenticatedAdminReviewsReviewIdRouteWithChildren
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCategoriesRoute:
     AuthenticatedAdminCategoriesRouteWithChildren,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRouteWithChildren,
+  AuthenticatedAdminReviewRoute: AuthenticatedAdminReviewRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRouteWithChildren,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminReviewsReviewIdRoute:
+    AuthenticatedAdminReviewsReviewIdRouteWithChildren,
 }
 
 const AuthenticatedAdminRouteWithChildren =
