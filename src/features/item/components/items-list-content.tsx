@@ -1,4 +1,4 @@
-import { useQuery,  } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { Package } from "lucide-react";
 import { useEffect } from "react";
@@ -52,13 +52,15 @@ export function ItemsListContent() {
 				/>
 			) : null}
 			{data?.content && data.content.length > 0 && (
-				<ItemList items={data.content} />
-			)}
+				<>
+					<ItemList items={data.content} />
 
-			<CustomPagination
-				totalPages={data?.totalPages ?? 1}
-				pageable={pageable}
-			/>
+					<CustomPagination
+						totalPages={data?.totalPages ?? 1}
+						pageable={pageable}
+					/>
+				</>
+			)}
 		</>
 	);
 }

@@ -56,7 +56,6 @@ export type Image = {
 
 export type ItemListProps = {
 	items: ItemType[];
-	isOwnItems?: boolean;
 };
 
 export type ItemCardProps = {
