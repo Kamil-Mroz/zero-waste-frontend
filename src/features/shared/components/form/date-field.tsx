@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-form";
+import { useSelector,  } from "@tanstack/react-form";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -13,7 +13,7 @@ type DateFieldProps = {
 export function DateField({ label }: DateFieldProps) {
 	const field = useFieldContext<string | undefined>();
 
-	const [errors, isInvalid] = useStore(field.store, (state) => [
+	const [errors, isInvalid] = useSelector(field.store, (state) => [
 		state.meta.errors,
 		state.meta.isTouched && !state.meta.isValid,
 	]);

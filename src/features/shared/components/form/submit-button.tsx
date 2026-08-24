@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-form";
+import { useSelector } from "@tanstack/react-form";
 import type { VariantProps } from "class-variance-authority";
 import { Button, buttonVariants } from "../ui/button";
 import { useFormContext } from "./form";
@@ -11,7 +11,7 @@ export function SubmitButton({
 } & VariantProps<typeof buttonVariants>) {
 	const form = useFormContext();
 
-	const [isSubmitting, canSubmit] = useStore(form.store, (state) => [
+	const [isSubmitting, canSubmit] = useSelector(form.store, (state) => [
 		state.isSubmitting,
 		state.canSubmit,
 	]);

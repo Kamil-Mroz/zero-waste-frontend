@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-form";
+import { useSelector,  } from "@tanstack/react-form";
 import { Checkbox } from "../ui/checkbox";
 import {
 	Field,
@@ -19,7 +19,7 @@ export function CheckboxArrayField({
 }) {
 	const field = useFieldContext<string[]>();
 
-	const [errors, isInvalid] = useStore(field.store, (state) => [
+	const [errors, isInvalid] = useSelector(field.store, (state) => [
 		state.meta.errors,
 		state.meta.isTouched && !state.meta.isValid,
 	]);

@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-form";
+import { useSelector } from "@tanstack/react-form";
 import { Field, FieldError, FieldLegend } from "../ui/field";
 import { Input } from "../ui/input";
 import { useFieldContext } from "./form";
@@ -6,7 +6,7 @@ import { useFieldContext } from "./form";
 export function FileField({ label }: { label: string }) {
 	const field = useFieldContext<File[]>();
 
-	const [value, errors, isInvalid] = useStore(field.store, (state) => [
+	const [value, errors, isInvalid] = useSelector(field.store, (state) => [
 		state.value,
 		state.meta.errors,
 		state.meta.isTouched && !state.meta.isValid,

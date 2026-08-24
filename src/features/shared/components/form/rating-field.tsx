@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-form";
+import { useSelector,  } from "@tanstack/react-form";
 import { Star } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,7 @@ import { useFieldContext } from "./form";
 function RatingField({ label }: { label: string }) {
 	const field = useFieldContext<number>();
 
-	const [value, errors, isInvalid] = useStore(field.store, (state) => [
+	const [value, errors, isInvalid] = useSelector(field.store, (state) => [
 		state.value,
 		state.meta.errors,
 		state.meta.isTouched && !state.meta.isValid,

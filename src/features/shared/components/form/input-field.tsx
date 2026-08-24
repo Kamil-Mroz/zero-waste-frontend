@@ -1,4 +1,4 @@
-import { useStore } from "@tanstack/react-form";
+import { useSelector } from "@tanstack/react-form";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import { type HTMLInputTypeAttribute, useState } from "react";
 import {
@@ -23,7 +23,7 @@ export function InputField({
 	const field = useFieldContext<string>();
 	const [showPassword, setShowPassword] = useState(false);
 
-	const [errors, isInvalid] = useStore(field.store, (state) => [
+	const [errors, isInvalid] = useSelector(field.store, (state) => [
 		state.meta.errors,
 		state.meta.isTouched && !state.meta.isValid,
 	]);

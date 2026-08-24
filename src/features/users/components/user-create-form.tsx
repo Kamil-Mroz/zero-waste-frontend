@@ -54,7 +54,7 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 					{(field) => <field.TextField label="Email" type="email" />}
 				</form.AppField>
 				<form.AppField name="password">
-					{(field) => <field.TextField label="Password" type="text" />}
+					{(field) => <field.TextField label="Password" type="password" />}
 				</form.AppField>
 
 				<form.AppField mode="array" name="roles">
