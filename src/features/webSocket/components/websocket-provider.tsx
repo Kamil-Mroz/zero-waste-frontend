@@ -22,6 +22,10 @@ function WebsocketProvider({ children }: PropsWithChildren) {
 			return;
 		}
 
+		if (hasRole("DEMO")) {
+			return;
+		}
+
 		const notificationSubscriptionId = websocket.subscribe(
 			"/user/queue/notifications",
 			(notification: Notification) => {

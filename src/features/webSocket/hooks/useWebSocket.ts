@@ -34,6 +34,10 @@ export const useWebSocketService = (webSocketUrl: string) => {
 			return;
 		}
 
+		if (user.role === "DEMO") {
+			return;
+		}
+
 		const client = new Client({
 			webSocketFactory: () =>
 				new WebSocket(`${isDev ? "ws" : "wss"}://${window.location.host}/ws`),

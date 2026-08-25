@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { HiddenItemOverlay } from "@/features/shared/components/hidden-item-overlay";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -7,56 +9,44 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/features/shared/components/ui/card";
-import type { BlogType } from "../types";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { cn } from "@/lib/utils";
-import { HiddenItemOverlay } from "@/features/shared/components/hidden-item-overlay";
+import type { BlogType } from "../types";
 
 type BlogListProps = {
 	blogs: BlogType[];
 	showCreate?: boolean;
 };
-export function BlogList({
-	blogs,
-	showCreate = false,
-}: BlogListProps) {
+export function BlogList({ blogs, showCreate = false }: BlogListProps) {
 	const { user } = useAuth();
 
 	return (
 		<section>
 			<div className="mb-8 flex items-center justify-between flex-wrap">
 				<div>
-					<h1 className="text-3xl font-bold tracking-tight">
-						Blogs
-					</h1>
+					<h1 className="text-3xl font-bold tracking-tight">Blogs</h1>
 
 					<p className="mt-2 text-muted-foreground">
-						Explore articles about sustainability, zero waste
-						living, and practical ways to protect our planet.
+						Explore articles about sustainability, zero waste living, and
+						practical ways to protect our planet.
 					</p>
 				</div>
 
 				{showCreate && (
 					<Button asChild>
-						<Link to="/eco-hub/blogs/create">
-							Create Blog
-						</Link>
+						<Link to="/eco-hub/blogs/create">Create Blog</Link>
 					</Button>
 				)}
 			</div>
 
 			{blogs.length === 0 ? (
 				<div className="rounded-xl border border-dashed p-12 text-center">
-					<h2 className="text-lg font-semibold">
-						No blogs yet
-					</h2>
+					<h2 className="text-lg font-semibold">No blogs yet</h2>
 				</div>
 			) : (
 				<div className="grid gap-6 lg:grid-cols-2 2xl:grid-cols-3">
 					{blogs.map((blog) => {
 						const isOwner = user?.id === blog.author.id;
-						const isHidden =
-							blog.moderationStatus === "HIDDEN";
+						const isHidden = blog.moderationStatus === "HIDDEN";
 
 						return (
 							<Link
@@ -65,21 +55,16 @@ export function BlogList({
 								params={{ blogId: blog.id }}
 								className={cn(
 									"group relative shadow-sm transition",
-									!isHidden &&
-										"hover:-translate-y-1 hover:shadow-md",
+									!isHidden && "hover:-translate-y-1 hover:shadow-md",
 								)}
 							>
 								<Card
 									className={cn(
-										"relative overflow-hidden",
-										isHidden &&
-											isOwner &&
-											"border-destructive/40",
+										"relative overflow-hidden h-full",
+										isHidden && isOwner && "border-destructive/40",
 									)}
 								>
-									{isHidden && isOwner && (
-										<HiddenItemOverlay />
-									)}
+									{isHidden && isOwner && <HiddenItemOverlay />}
 
 									<CardHeader>
 										<CardTitle>

@@ -1,9 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
+import { Spinner } from "@/features/shared/components/ui/spinner";
 import { cn } from "@/lib/utils";
-import type { Notification } from "../types";
 import { notificationConfig } from "../constants";
+import { useMarkAsReadMutation } from "../hooks/use-mutations";
+import type { Notification } from "../types";
 
 type NotificationCardProps = {
 	notification: Notification;
@@ -12,6 +14,7 @@ function NotificationCard({ notification }: NotificationCardProps) {
 	const config = notificationConfig[notification.type];
 	const Icon = config.icon;
 	const navigate = useNavigate();
+	const markAsReadMutation = useMarkAsReadMutation();
 
 	return (
 		<Card
@@ -19,12 +22,15 @@ function NotificationCard({ notification }: NotificationCardProps) {
 				"transition-colors hover:bg-muted/50 cursor-pointer ",
 				!notification.read && "border-primary/40 bg-primary/5",
 			)}
-			onClick={() =>
-				navigate({
+			onClick={async () => {
+				if (!notification.read) {
+					await markAsReadMutation.mutateAsync(notification.id);
+				}
+				await navigate({
 					to: "/notifications/$notificationId",
 					params: { notificationId: notification.id },
-				})
-			}
+				});
+			}}
 		>
 			<CardContent className="p-4">
 				<div className="flex items-start gap-3">
@@ -36,11 +42,15 @@ function NotificationCard({ notification }: NotificationCardProps) {
 						<div className="flex items-center justify-between gap-4">
 							<h3 className="font-medium">{notification.title}</h3>
 
-							<time className="text-muted-foreground whitespace-nowrap text-xs">
-								{formatDistanceToNow(new Date(notification.createdAt), {
-									addSuffix: true,
-								})}
-							</time>
+							{markAsReadMutation.isPending ? (
+								<Spinner />
+							) : (
+								<time className="text-muted-foreground whitespace-nowrap text-xs">
+									{formatDistanceToNow(new Date(notification.createdAt), {
+										addSuffix: true,
+									})}
+								</time>
+							)}
 						</div>
 
 						<p className="text-muted-foreground mt-1 line-clamp-2 text-sm">

@@ -23,7 +23,7 @@ export const itemConditionSchema = z.enum([
 
 export const createItemFormSchema = z.object({
 	title: z.string().nonempty("Title is required"),
-	description: z.string().nonempty("Description is required"),
+	description: z.string().max(255, "Description can not exceed  255 characters").nonempty("Description is required"),
 	condition: itemConditionSchema,
 	state: itemFormStateSchema,
 	categoryId: z.string().nonempty("Category is required"),

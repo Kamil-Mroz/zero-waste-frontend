@@ -1,4 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	type InfiniteData,
+	useMutation,
+	useQueryClient,
+} from "@tanstack/react-query";
 import type { CursorResponse } from "@/features/shared/types";
 import { markAllNotificationsAsRead, markNotificationsAsRead } from "../api";
 import { NOTIFICATIONS_QUERY_KEYS } from "../constants";
@@ -40,16 +44,20 @@ export const useMarkAsReadMutation = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: (id: string) => markNotificationsAsRead(id),
-		onSuccess: async (_, id) => {
+		onSuccess: (_, id) => {
 			queryClient.setQueryData(
 				NOTIFICATIONS_QUERY_KEYS.unreadCount(),
-				(old: { unreadCount: number }) => ({
-					unreadCount: Math.max(old.unreadCount - 1, 0),
-				}),
+				(old: { unreadCount: number }) => {
+					if (!old) return old;
+					return {
+						unreadCount: Math.max(old.unreadCount - 1, 0),
+					};
+				},
 			);
 			queryClient.setQueryData(
 				NOTIFICATIONS_QUERY_KEYS.popup(),
 				(old: CursorResponse<Notification>) => {
+					if (!old) return old;
 					return {
 						...old,
 						items: old.items.map((n) => ({
@@ -59,14 +67,32 @@ export const useMarkAsReadMutation = () => {
 					};
 				},
 			);
-			await Promise.all([
-				queryClient.invalidateQueries({
+			queryClient.setQueryData<Notification>(
+				NOTIFICATIONS_QUERY_KEYS.byId(id),
+				(old) => {
+					if (!old) return old;
+					return { ...old, read: true };
+				},
+			);
+			queryClient.setQueriesData<InfiniteData<CursorResponse<Notification>>>(
+				{
 					queryKey: NOTIFICATIONS_QUERY_KEYS.historyRoot(),
-				}),
-				queryClient.invalidateQueries({
-					queryKey: NOTIFICATIONS_QUERY_KEYS.byId(id),
-				}),
-			]);
+				},
+				(old) => {
+					if (!old) return old;
+					return {
+						...old,
+						pages: old.pages.map((page) => ({
+							...page,
+							items: page.items.map((notification) =>
+								notification.id === id
+									? { ...notification, read: true }
+									: notification,
+							),
+						})),
+					};
+				},
+			);
 		},
 	});
 };
