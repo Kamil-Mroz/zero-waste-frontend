@@ -19,41 +19,37 @@ export function OfferOwnTableRowsActions({ row }: DataTableRowActionsProps) {
 	const id = row.original.id;
 
 	return (
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button
-						variant="ghost"
-						size="icon"
-						className="size-8 data-[state=open]:bg-muted"
-					>
-						<MoreHorizontal />
-						<span className="sr-only">Open menu</span>
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="end">
-					{offer.status === "PENDING" ? (
-						<DropdownMenuItem asChild variant={"destructive"}>
-							<Link
-								to="/offers/own"
-								search={(prev) => ({ ...prev, modal: "cancel", offerId: id })}
-								replace={true}
-							>
-								Cancel
-							</Link>
-						</DropdownMenuItem>
-					) : null}
-					{offer.status === "ACCEPTED" ? (
-						<DropdownMenuItem asChild>
-							<Link
-								to="/reviews"
-								search={(prev) => ({ ...prev, modal: "review", offerId: id })}
-								replace={true}
-							>
-								Leave review
-							</Link>
-						</DropdownMenuItem>
-					) : null}
-				</DropdownMenuContent>
-			</DropdownMenu>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button
+					variant="ghost"
+					size="icon"
+					className="size-8 data-[state=open]:bg-muted"
+				>
+					<MoreHorizontal />
+					<span className="sr-only">Open menu</span>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				{offer.status === "PENDING" ? (
+					<DropdownMenuItem asChild variant={"destructive"}>
+						<Link
+							to="/offers/own"
+							search={(prev) => ({ ...prev, modal: "cancel", offerId: id })}
+							replace={true}
+						>
+							Cancel
+						</Link>
+					</DropdownMenuItem>
+				) : null}
+				{offer.status === "ACCEPTED" ? (
+					<DropdownMenuItem asChild>
+						<Link to="/reviews/create/$offerId" params={{ offerId: id }}>
+							Leave review
+						</Link>
+					</DropdownMenuItem>
+				) : null}
+			</DropdownMenuContent>
+		</DropdownMenu>
 	);
 }

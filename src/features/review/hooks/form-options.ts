@@ -32,7 +32,7 @@ export const useCreateReviewForm = (offerId: string) => {
 
 				formApi.reset();
 
-				navigate({ to: "/reviews/given" });
+				navigate({ to: "/reviews/given", replace: true });
 			} catch (error) {
 				const message = handleApiError(error, formApi);
 				if (message)
