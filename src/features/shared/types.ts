@@ -8,7 +8,7 @@ export type NavItem = {
 	icon: LucideIcon;
 	isActive?: boolean;
 	private?: boolean;
-	role?: Roles;
+	role?: Roles[];
 	items: NavItem[];
 };
 

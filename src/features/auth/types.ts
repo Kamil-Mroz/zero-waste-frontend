@@ -12,10 +12,11 @@ export type AuthState = {
 	user: User | null;
 	token: string | null;
 	isLoading: boolean;
-	hasRole: (role: "USER" | "ADMIN" | "WRITER") => boolean;
+	hasRole: (role: Roles) => boolean;
 	hasAnyRole: (roles: Roles[]) => boolean;
 	register: (data: RegisterRequest) => Promise<void>;
 	login: (data: LoginRequest) => Promise<void>;
+	loginDemo: () => Promise<void>;
 	logout: () => Promise<void>;
 	resetState: () => void;
 };

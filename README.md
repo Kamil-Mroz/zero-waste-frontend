@@ -8,22 +8,22 @@ The frontend provides a full UI for the Zero Waste platform: authentication, ite
 
 ## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| React 19 | UI framework |
-| TanStack Start / Vite | Build tool + SSR |
-| TanStack Router | File-based routing |
-| TanStack Query | Server state / caching |
-| TanStack Form + Zod | Form handling + validation |
-| TanStack Table | Data tables |
-| Tailwind CSS 4 | Styling |
-| shadcn/ui + Radix UI | Component primitives |
-| Biome | Linting + formatting |
-| Zustand | Client state management |
-| SockJS + STOMP | WebSocket client for real-time notifications |
-| Axios | HTTP client |
-| Lucide React | Icons |
-| Sonner | Toast notifications |
+| Technology            | Purpose                                      |
+| --------------------- | -------------------------------------------- |
+| React 19              | UI framework                                 |
+| TanStack Start / Vite | Build tool + SSR                             |
+| TanStack Router       | File-based routing                           |
+| TanStack Query        | Server state / caching                       |
+| TanStack Form + Zod   | Form handling + validation                   |
+| TanStack Table        | Data tables                                  |
+| Tailwind CSS 4        | Styling                                      |
+| shadcn/ui + Radix UI  | Component primitives                         |
+| Biome                 | Linting + formatting                         |
+| Zustand               | Client state management                      |
+| SockJS + STOMP        | WebSocket client for real-time notifications |
+| Axios                 | HTTP client                                  |
+| Lucide React          | Icons                                        |
+| Sonner                | Toast notifications                          |
 
 ## Prerequisites
 
@@ -39,9 +39,9 @@ pnpm install
 
 ## Configuration
 
-| Variable | Default | Description |
-|---|---|---|
-| `VITE_API_URL` | `/api` | Backend API base URL |
+| Variable       | Default | Description          |
+| -------------- | ------- | -------------------- |
+| `VITE_API_URL` | `/api`  | Backend API base URL |
 
 The dev server proxies `/api` and `/ws` to `http://localhost:8080` (see `vite.config.ts`).
 
@@ -71,15 +71,15 @@ pnpm preview
 
 ## Scripts
 
-| Script | Command |
-|---|---|
-| `dev` | `vite dev --port 3000` |
-| `build` | `vite build` |
-| `preview` | `vite preview` |
-| `test` | `vitest run` |
-| `lint` | `biome lint` |
-| `format` | `biome format` |
-| `check` | `biome check` |
+| Script    | Command                |
+| --------- | ---------------------- |
+| `dev`     | `vite dev --port 3000` |
+| `build`   | `vite build`           |
+| `preview` | `vite preview`         |
+| `test`    | `vitest run`           |
+| `lint`    | `biome lint`           |
+| `format`  | `biome format`         |
+| `check`   | `biome check`          |
 
 ## Docker
 
@@ -122,8 +122,8 @@ src/
 │   │   ├── reviews.tsx
 │   │   └── admin/        # User + category management
 │   ├── _writer/          # Writer mode
-│   │   └── eco-hub/     # Blog + quiz creation
-│   ├── eco-hub/          # Public blog + quiz listing
+│   │   └── eco-hub/     # Blog creation
+│   ├── eco-hub/          # Public blog
 │   ├── marketplace/      # Item listing + detail
 │   ├── profile/$userId/  # Public user profile
 │   ├── index.tsx         # Home page
@@ -140,7 +140,8 @@ src/
 - **Trade Offers** — Create and manage item swap offers between users
 - **Profiles** — Own profile with item summary + review stats; public user profiles
 - **Reviews & Ratings** — Write reviews, view rating breakdowns
-- **Eco Hub** — Blog posts and eco-quizzes for community education
+- **Eco Hub** — Blog posts for community education
+<!-- and eco-quizzes for community education -->
 - **Admin Dashboard** — Manage users (ban/unban) and categories
 - **Real-time Notifications** — WebSocket (STOMP via SockJS) for live alerts
 - **Responsive UI** — shadcn/ui components with Tailwind CSS

@@ -1,14 +1,19 @@
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
+import {
+	QueryClient,
+	useMutation,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import { Spinner } from "@/features/shared/components/ui/spinner";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 import type { ItemOfferDialogProps } from "../../item/types";
+import { OFFER_QUERY_KEYS } from "../constants";
 import { showInterestInItemMutationOptions } from "../hooks/mutation-options";
 
 function OfferItemDialog({ id, onDone }: ItemOfferDialogProps) {
 	const isMobile = useIsMobile();
+	const queryClient = useQueryClient();
 	const mutation = useMutation({
 		...showInterestInItemMutationOptions(id),
 
@@ -17,6 +22,9 @@ function OfferItemDialog({ id, onDone }: ItemOfferDialogProps) {
 				title: "Item offer",
 				description: "Offer submitted successfully",
 			});
+
+			await queryClient.invalidateQueries({ queryKey: OFFER_QUERY_KEYS.own() });
+
 			onDone();
 		},
 	});

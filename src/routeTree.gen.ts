@@ -30,7 +30,6 @@ import { Route as UnauthenticatedLoginRouteImport } from './routes/_unauthentica
 import { Route as UnauthenticatedRegisterRouteImport } from './routes/_unauthenticated/register'
 import { Route as EcoHubIndexRouteImport } from './routes/eco-hub/index'
 import { Route as EcoHubBlogsRouteRouteImport } from './routes/eco-hub/blogs/route'
-import { Route as EcoHubQuizzesRouteRouteImport } from './routes/eco-hub/quizzes/route'
 import { Route as MarketplaceIndexRouteImport } from './routes/marketplace/index'
 import { Route as MarketplaceItemIdRouteImport } from './routes/marketplace/$itemId'
 import { Route as ProfileUserIdRouteRouteImport } from './routes/profile/$userId/route'
@@ -51,7 +50,6 @@ import { Route as AuthenticatedOffersReceivedRouteImport } from './routes/_authe
 import { Route as AuthenticatedReviewsIndexRouteImport } from './routes/_authenticated/reviews/index'
 import { Route as AuthenticatedReviewsLayoutRouteRouteImport } from './routes/_authenticated/reviews/_layout/route'
 import { Route as EcoHubBlogsIndexRouteImport } from './routes/eco-hub/blogs/index'
-import { Route as EcoHubQuizzesIndexRouteImport } from './routes/eco-hub/quizzes/index'
 import { Route as ProfileUserIdIndexRouteImport } from './routes/profile/$userId/index'
 import { Route as ProfileUserIdItemsRouteImport } from './routes/profile/$userId/items'
 import { Route as ProfileUserIdReviewsRouteImport } from './routes/profile/$userId/reviews'
@@ -67,7 +65,6 @@ import { Route as AuthenticatedReviewsCreateOfferIdRouteImport } from './routes/
 import { Route as EcoHubBlogsBlogIdIndexRouteImport } from './routes/eco-hub/blogs/$blogId.index'
 import { Route as AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/$blogId/route'
 import { Route as AuthenticatedWriterEcoHubBlogsOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/blogs/own'
-import { Route as AuthenticatedWriterEcoHubQuizzesOwnRouteImport } from './routes/_authenticated/_writer/eco-hub/quizzes/own'
 import { Route as AuthenticatedAdminReviewsReviewIdIndexRouteImport } from './routes/_authenticated/admin/reviews/$reviewId/index'
 import { Route as AuthenticatedAdminUsersUserIdIndexRouteImport } from './routes/_authenticated/admin/users/$userId/index'
 import { Route as AuthenticatedAdminUsersUserIdItemsRouteImport } from './routes/_authenticated/admin/users/$userId/items'
@@ -188,11 +185,6 @@ const EcoHubBlogsRouteRoute = EcoHubBlogsRouteRouteImport.update({
 } as any).lazy(() =>
   import('./routes/eco-hub/blogs/route.lazy').then((d) => d.Route),
 )
-const EcoHubQuizzesRouteRoute = EcoHubQuizzesRouteRouteImport.update({
-  id: '/quizzes',
-  path: '/quizzes',
-  getParentRoute: () => EcoHubRouteRoute,
-} as any)
 const MarketplaceIndexRoute = MarketplaceIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -349,11 +341,6 @@ const EcoHubBlogsIndexRoute = EcoHubBlogsIndexRouteImport.update({
 } as any).lazy(() =>
   import('./routes/eco-hub/blogs/index.lazy').then((d) => d.Route),
 )
-const EcoHubQuizzesIndexRoute = EcoHubQuizzesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EcoHubQuizzesRouteRoute,
-} as any)
 const ProfileUserIdIndexRoute = ProfileUserIdIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -502,12 +489,6 @@ const AuthenticatedWriterEcoHubBlogsOwnRoute =
       (d) => d.Route,
     ),
   )
-const AuthenticatedWriterEcoHubQuizzesOwnRoute =
-  AuthenticatedWriterEcoHubQuizzesOwnRouteImport.update({
-    id: '/quizzes/own',
-    path: '/quizzes/own',
-    getParentRoute: () => AuthenticatedWriterEcoHubRouteRoute,
-  } as any)
 const AuthenticatedAdminReviewsReviewIdIndexRoute =
   AuthenticatedAdminReviewsReviewIdIndexRouteImport.update({
     id: '/',
@@ -554,7 +535,6 @@ export interface FileRoutesByFullPath {
   '/unauthorized': typeof UnauthorizedRoute
   '/reviews': typeof AuthenticatedReviewsRouteRouteWithChildren
   '/eco-hub/blogs': typeof EcoHubBlogsRouteRouteWithChildren
-  '/eco-hub/quizzes': typeof EcoHubQuizzesRouteRouteWithChildren
   '/profile/$userId': typeof ProfileUserIdRouteRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/offers': typeof AuthenticatedOffersRouteWithChildren
@@ -582,7 +562,6 @@ export interface FileRoutesByFullPath {
   '/offers/': typeof AuthenticatedOffersIndexRoute
   '/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/eco-hub/blogs/': typeof EcoHubBlogsIndexRoute
-  '/eco-hub/quizzes/': typeof EcoHubQuizzesIndexRoute
   '/profile/$userId/': typeof ProfileUserIdIndexRoute
   '/admin/reviews/$reviewId': typeof AuthenticatedAdminReviewsReviewIdRouteWithChildren
   '/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRouteWithChildren
@@ -596,7 +575,6 @@ export interface FileRoutesByFullPath {
   '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
   '/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
-  '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
   '/admin/reviews/$reviewId/': typeof AuthenticatedAdminReviewsReviewIdIndexRoute
@@ -629,7 +607,6 @@ export interface FileRoutesByTo {
   '/notifications': typeof AuthenticatedNotificationsIndexRoute
   '/offers': typeof AuthenticatedOffersIndexRoute
   '/eco-hub/blogs': typeof EcoHubBlogsIndexRoute
-  '/eco-hub/quizzes': typeof EcoHubQuizzesIndexRoute
   '/profile/$userId': typeof ProfileUserIdIndexRoute
   '/marketplace/$itemId/edit': typeof AuthenticatedMarketplaceItemIdEditRoute
   '/reviews/given': typeof AuthenticatedReviewsLayoutGivenRoute
@@ -640,7 +617,6 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AuthenticatedAdminUsersIndexRoute
   '/eco-hub/blogs/$blogId': typeof EcoHubBlogsBlogIdIndexRoute
   '/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
-  '/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
   '/admin/reviews/$reviewId': typeof AuthenticatedAdminReviewsReviewIdIndexRoute
@@ -660,7 +636,6 @@ export interface FileRoutesById {
   '/_authenticated/_writer': typeof AuthenticatedWriterRouteRouteWithChildren
   '/_authenticated/reviews': typeof AuthenticatedReviewsRouteRouteWithChildren
   '/eco-hub/blogs': typeof EcoHubBlogsRouteRouteWithChildren
-  '/eco-hub/quizzes': typeof EcoHubQuizzesRouteRouteWithChildren
   '/profile/$userId': typeof ProfileUserIdRouteRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRouteWithChildren
@@ -691,7 +666,6 @@ export interface FileRoutesById {
   '/_authenticated/offers/': typeof AuthenticatedOffersIndexRoute
   '/_authenticated/reviews/': typeof AuthenticatedReviewsIndexRoute
   '/eco-hub/blogs/': typeof EcoHubBlogsIndexRoute
-  '/eco-hub/quizzes/': typeof EcoHubQuizzesIndexRoute
   '/profile/$userId/': typeof ProfileUserIdIndexRoute
   '/_authenticated/admin/reviews/$reviewId': typeof AuthenticatedAdminReviewsReviewIdRouteWithChildren
   '/_authenticated/admin/users/$userId': typeof AuthenticatedAdminUsersUserIdRouteWithChildren
@@ -705,7 +679,6 @@ export interface FileRoutesById {
   '/eco-hub/blogs/$blogId/': typeof EcoHubBlogsBlogIdIndexRoute
   '/_authenticated/_writer/eco-hub/blogs/$blogId': typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   '/_authenticated/_writer/eco-hub/blogs/own': typeof AuthenticatedWriterEcoHubBlogsOwnRoute
-  '/_authenticated/_writer/eco-hub/quizzes/own': typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   '/_authenticated/admin/users/$userId/items': typeof AuthenticatedAdminUsersUserIdItemsRoute
   '/_authenticated/_writer/eco-hub/blogs/create': typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
   '/_authenticated/admin/reviews/$reviewId/': typeof AuthenticatedAdminReviewsReviewIdIndexRoute
@@ -723,7 +696,6 @@ export interface FileRouteTypes {
     | '/unauthorized'
     | '/reviews'
     | '/eco-hub/blogs'
-    | '/eco-hub/quizzes'
     | '/profile/$userId'
     | '/admin'
     | '/offers'
@@ -751,7 +723,6 @@ export interface FileRouteTypes {
     | '/offers/'
     | '/reviews/'
     | '/eco-hub/blogs/'
-    | '/eco-hub/quizzes/'
     | '/profile/$userId/'
     | '/admin/reviews/$reviewId'
     | '/admin/users/$userId'
@@ -765,7 +736,6 @@ export interface FileRouteTypes {
     | '/eco-hub/blogs/$blogId/'
     | '/eco-hub/blogs/$blogId'
     | '/eco-hub/blogs/own'
-    | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
     | '/eco-hub/blogs/create'
     | '/admin/reviews/$reviewId/'
@@ -798,7 +768,6 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/offers'
     | '/eco-hub/blogs'
-    | '/eco-hub/quizzes'
     | '/profile/$userId'
     | '/marketplace/$itemId/edit'
     | '/reviews/given'
@@ -809,7 +778,6 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/eco-hub/blogs/$blogId'
     | '/eco-hub/blogs/own'
-    | '/eco-hub/quizzes/own'
     | '/admin/users/$userId/items'
     | '/eco-hub/blogs/create'
     | '/admin/reviews/$reviewId'
@@ -828,7 +796,6 @@ export interface FileRouteTypes {
     | '/_authenticated/_writer'
     | '/_authenticated/reviews'
     | '/eco-hub/blogs'
-    | '/eco-hub/quizzes'
     | '/profile/$userId'
     | '/_authenticated/admin'
     | '/_authenticated/marketplace'
@@ -859,7 +826,6 @@ export interface FileRouteTypes {
     | '/_authenticated/offers/'
     | '/_authenticated/reviews/'
     | '/eco-hub/blogs/'
-    | '/eco-hub/quizzes/'
     | '/profile/$userId/'
     | '/_authenticated/admin/reviews/$reviewId'
     | '/_authenticated/admin/users/$userId'
@@ -873,7 +839,6 @@ export interface FileRouteTypes {
     | '/eco-hub/blogs/$blogId/'
     | '/_authenticated/_writer/eco-hub/blogs/$blogId'
     | '/_authenticated/_writer/eco-hub/blogs/own'
-    | '/_authenticated/_writer/eco-hub/quizzes/own'
     | '/_authenticated/admin/users/$userId/items'
     | '/_authenticated/_writer/eco-hub/blogs/create'
     | '/_authenticated/admin/reviews/$reviewId/'
@@ -1028,13 +993,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EcoHubBlogsRouteRouteImport
       parentRoute: typeof EcoHubRouteRoute
     }
-    '/eco-hub/quizzes': {
-      id: '/eco-hub/quizzes'
-      path: '/quizzes'
-      fullPath: '/eco-hub/quizzes'
-      preLoaderRoute: typeof EcoHubQuizzesRouteRouteImport
-      parentRoute: typeof EcoHubRouteRoute
-    }
     '/marketplace/': {
       id: '/marketplace/'
       path: '/'
@@ -1175,13 +1133,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EcoHubBlogsIndexRouteImport
       parentRoute: typeof EcoHubBlogsRouteRoute
     }
-    '/eco-hub/quizzes/': {
-      id: '/eco-hub/quizzes/'
-      path: '/'
-      fullPath: '/eco-hub/quizzes/'
-      preLoaderRoute: typeof EcoHubQuizzesIndexRouteImport
-      parentRoute: typeof EcoHubQuizzesRouteRoute
-    }
     '/profile/$userId/': {
       id: '/profile/$userId/'
       path: '/'
@@ -1294,13 +1245,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedWriterEcoHubBlogsOwnRouteImport
       parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
     }
-    '/_authenticated/_writer/eco-hub/quizzes/own': {
-      id: '/_authenticated/_writer/eco-hub/quizzes/own'
-      path: '/quizzes/own'
-      fullPath: '/eco-hub/quizzes/own'
-      preLoaderRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRouteImport
-      parentRoute: typeof AuthenticatedWriterEcoHubRouteRoute
-    }
     '/_authenticated/admin/reviews/$reviewId/': {
       id: '/_authenticated/admin/reviews/$reviewId/'
       path: '/'
@@ -1345,26 +1289,13 @@ const EcoHubBlogsRouteRouteChildren: EcoHubBlogsRouteRouteChildren = {
 const EcoHubBlogsRouteRouteWithChildren =
   EcoHubBlogsRouteRoute._addFileChildren(EcoHubBlogsRouteRouteChildren)
 
-interface EcoHubQuizzesRouteRouteChildren {
-  EcoHubQuizzesIndexRoute: typeof EcoHubQuizzesIndexRoute
-}
-
-const EcoHubQuizzesRouteRouteChildren: EcoHubQuizzesRouteRouteChildren = {
-  EcoHubQuizzesIndexRoute: EcoHubQuizzesIndexRoute,
-}
-
-const EcoHubQuizzesRouteRouteWithChildren =
-  EcoHubQuizzesRouteRoute._addFileChildren(EcoHubQuizzesRouteRouteChildren)
-
 interface EcoHubRouteRouteChildren {
   EcoHubBlogsRouteRoute: typeof EcoHubBlogsRouteRouteWithChildren
-  EcoHubQuizzesRouteRoute: typeof EcoHubQuizzesRouteRouteWithChildren
   EcoHubIndexRoute: typeof EcoHubIndexRoute
 }
 
 const EcoHubRouteRouteChildren: EcoHubRouteRouteChildren = {
   EcoHubBlogsRouteRoute: EcoHubBlogsRouteRouteWithChildren,
-  EcoHubQuizzesRouteRoute: EcoHubQuizzesRouteRouteWithChildren,
   EcoHubIndexRoute: EcoHubIndexRoute,
 }
 
@@ -1390,7 +1321,6 @@ const AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren =
 interface AuthenticatedWriterEcoHubRouteRouteChildren {
   AuthenticatedWriterEcoHubBlogsBlogIdRouteRoute: typeof AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren
   AuthenticatedWriterEcoHubBlogsOwnRoute: typeof AuthenticatedWriterEcoHubBlogsOwnRoute
-  AuthenticatedWriterEcoHubQuizzesOwnRoute: typeof AuthenticatedWriterEcoHubQuizzesOwnRoute
   AuthenticatedWriterEcoHubBlogsCreateLazyRoute: typeof AuthenticatedWriterEcoHubBlogsCreateLazyRoute
 }
 
@@ -1400,8 +1330,6 @@ const AuthenticatedWriterEcoHubRouteRouteChildren: AuthenticatedWriterEcoHubRout
       AuthenticatedWriterEcoHubBlogsBlogIdRouteRouteWithChildren,
     AuthenticatedWriterEcoHubBlogsOwnRoute:
       AuthenticatedWriterEcoHubBlogsOwnRoute,
-    AuthenticatedWriterEcoHubQuizzesOwnRoute:
-      AuthenticatedWriterEcoHubQuizzesOwnRoute,
     AuthenticatedWriterEcoHubBlogsCreateLazyRoute:
       AuthenticatedWriterEcoHubBlogsCreateLazyRoute,
   }

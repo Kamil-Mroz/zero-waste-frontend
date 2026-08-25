@@ -22,7 +22,7 @@ import { useIsMobile } from "../hooks/use-mobile";
 import type { NavItem } from "../types";
 
 export function NavMain({ items }: { items: NavItem[] }) {
-	const { user, hasRole } = useAuth();
+	const { user, hasAnyRole } = useAuth();
 
 	const { toggleSidebar } = useSidebar();
 	const isMobile = useIsMobile();
@@ -31,10 +31,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
 		if (!user) {
 			return !item.private;
 		}
-		if (hasRole("ADMIN")) {
-			return true;
-		}
-		if (item.role && !hasRole(item.role)) {
+		if (item.role && !hasAnyRole(item.role)) {
 			return false;
 		}
 		return true;

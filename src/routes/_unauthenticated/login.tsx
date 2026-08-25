@@ -3,7 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod/v4";
 import { LoginForm } from "@/features/auth/components/login-form";
-import { loginWithOAuth2MutationOptions } from "@/features/auth/hooks/mutation-options";
+import {
+	loginWithOAuth2MutationOptions,
+	useLoginDemoMutation,
+} from "@/features/auth/hooks/mutation-options";
 import type { Providers } from "@/features/auth/types";
 import { Button } from "@/features/shared/components/ui/button";
 import {
@@ -47,6 +50,8 @@ function RouteComponent() {
 		loginWithOAuth2MutationOptions("GOOGLE", setPendingProvider),
 	);
 
+	const loginDemo = useLoginDemoMutation();
+
 	return (
 		<Card className="w-full sm:max-w-md">
 			<CardHeader>
@@ -60,6 +65,18 @@ function RouteComponent() {
 			<CardContent className="grid gap-2">
 				<LoginForm redirect={redirect} />
 
+				<Button
+					variant={"secondary"}
+					className="w-full"
+					onClick={() => loginDemo.mutate()}
+					disabled={pendingProvider !== null || loginDemo.isPending}
+				>
+					{loginDemo.isPending ? "..." : "Try Demo"}
+				</Button>
+				<div className="text-center text-xs text-muted-foreground">
+					Read-only demo account — no registration required.
+				</div>
+
 				<div className=" flex items-center gap-2">
 					<Separator className="flex-1" />
 					<span>OR</span>
@@ -69,7 +86,7 @@ function RouteComponent() {
 					variant="outline"
 					className="block w-full"
 					onClick={() => loginWithGoogle.mutate()}
-					disabled={pendingProvider !== null}
+					disabled={pendingProvider !== null || loginDemo.isPending}
 				>
 					{pendingProvider === "GOOGLE" ? "..." : "Login with Google"}
 				</Button>
@@ -77,7 +94,7 @@ function RouteComponent() {
 					variant="outline"
 					className="block w-full"
 					onClick={() => loginWithGithub.mutate()}
-					disabled={pendingProvider !== null}
+					disabled={pendingProvider !== null || loginDemo.isPending}
 				>
 					{pendingProvider === "GITHUB" ? "..." : "Login with Github"}
 				</Button>

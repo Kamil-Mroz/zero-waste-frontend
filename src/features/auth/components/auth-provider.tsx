@@ -110,7 +110,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	};
 
 	const login = async (data: LoginRequest) => {
-		const res = await api.post<AuthResponse>("/v1/auth/login", data);
+		const res = await api.post<AuthResponse>("/v1/auth/login", {
+			...data,
+			email: data.email.toLocaleLowerCase(),
+		});
+		setToken(res.data.accessToken);
+		setUser(res.data.user);
+	};
+
+	const loginDemo = async () => {
+		const res = await api.post<AuthResponse>("/v1/auth/demo");
 		setToken(res.data.accessToken);
 		setUser(res.data.user);
 	};
@@ -145,6 +154,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				user,
 				register,
 				login,
+				loginDemo,
 				logout,
 				hasRole,
 				isLoading,

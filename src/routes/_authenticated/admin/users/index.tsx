@@ -22,6 +22,10 @@ export const Route = createFileRoute("/_authenticated/admin/users/")({
 		return { modal, page, roles, size, text, userId };
 	},
 	loader: async ({ context, deps: search }) => {
+		if (context.auth.hasRole("DEMO")) {
+			return;
+		}
+
 		const { modal, userId, ...usersSearch } = search;
 		const page = await context.queryClient.ensureQueryData(
 			usersQueryOptions(usersSearch),

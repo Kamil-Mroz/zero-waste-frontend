@@ -54,7 +54,7 @@ export const NAV_LINKS = {
 					title: "My blogs",
 					url: "/eco-hub/blogs/own",
 					private: true,
-					role: "WRITER",
+					role: ["WRITER", "DEMO", "ADMIN"],
 				},
 				// {
 				// 	title: "Quizzes",
@@ -72,7 +72,7 @@ export const NAV_LINKS = {
 			title: "Admin",
 			icon: Shield,
 			private: true,
-			role: "ADMIN",
+			role: ["ADMIN", "DEMO"],
 			isActive: true,
 			items: [
 				{
@@ -82,6 +82,7 @@ export const NAV_LINKS = {
 				{
 					title: "Manage categories",
 					url: "/admin/categories",
+					role: ["ADMIN", "DEMO"],
 				},
 				{
 					title: "Reports",
