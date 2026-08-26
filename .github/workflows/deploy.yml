@@ -36,5 +36,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{secrets.VPS_USER}}@${{secrets.VPS_HOST}} << 'EOF'
             cd ${{secrets.PROJECT_DIR}}
             docker compose pull frontend
-            docker compose up -d
+            docker compose up -d frontend
           EOF

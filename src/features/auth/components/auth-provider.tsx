@@ -69,12 +69,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
 					});
 					return Promise.reject(error);
 				}
-				const isAuthEndpoint = originalRequest.url?.includes("auth");
+				const isRefreshEndpoint = originalRequest.url?.includes("/auth/refresh");
 
 				if (
 					error.response?.status === 401 &&
 					!originalRequest._retry &&
-					!isAuthEndpoint
+					!isRefreshEndpoint
 				) {
 					try {
 						const res = await api.post<AuthResponse>("/v1/auth/refresh");
@@ -83,10 +83,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
 						originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
 						originalRequest._retry = true;
 						return api(originalRequest);
-					} catch (refreshError) {
+					} catch {
 						setToken(null);
 						setUser(null);
-						return Promise.reject(refreshError);
+						return Promise.reject(error);
 					}
 				}
 				return Promise.reject(error);
@@ -125,15 +125,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
 	};
 
 	const logout = async () => {
-		try {
-			await api.post("/v1/auth/logout");
-			resetState();
-		} catch {
-			appToast.error({
-				description: "Something went wrong, please try again.",
-			});
-		}
+		await api.post("/v1/auth/logout");
+		resetState();
 	};
+
 	const resetState = () => {
 		setUser(null);
 		setToken(null);

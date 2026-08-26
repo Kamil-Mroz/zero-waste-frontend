@@ -1,7 +1,6 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useLogoutMutation } from "@/features/auth/hooks/mutation-options";
 import {
 	Avatar,
 	AvatarFallback,
@@ -25,22 +24,13 @@ import {
 import type { User } from "@/features/users/types";
 
 export function NavUser({ user }: { user: User }) {
-	const { isMobile, toggleSidebar } = useSidebar();
-	const router = useRouter();
-	const { logout } = useAuth();
-	const navigate = useNavigate();
-	const queryClient = useQueryClient();
+	const { isMobile } = useSidebar();
 
 	const nickname = user.nickname;
 	const shortName = user.nickname.charAt(0).toUpperCase();
 
-	const onLogout = async () => {
-		await logout();
-		await queryClient.clear();
-		await router.invalidate();
-		await navigate({ to: "/login" });
-		if (isMobile) toggleSidebar();
-	};
+	const logoutMutation = useLogoutMutation();
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -97,7 +87,10 @@ export function NavUser({ user }: { user: User }) {
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem onClick={onLogout} variant="destructive">
+						<DropdownMenuItem
+							onClick={() => logoutMutation.mutate()}
+							variant="destructive"
+						>
 							<LogOut />
 							Log out
 						</DropdownMenuItem>

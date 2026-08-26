@@ -1,6 +1,11 @@
-import { mutationOptions, useMutation } from "@tanstack/react-query";
-import { useNavigate, useRouter, useSearch } from "@tanstack/react-router";
+import {
+	mutationOptions,
+	useMutation,
+	useQueryClient,
+} from "@tanstack/react-query";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { appToast } from "@/features/shared/components/toast";
+import { useSidebar } from "@/features/shared/components/ui/sidebar";
 import { handleApiError } from "@/lib/utils";
 import { connectAccount, loginWithOAuth, unlinkAccount } from "../api";
 import type { Providers } from "../types";
@@ -77,6 +82,30 @@ export function useLoginDemoMutation() {
 			const message = handleApiError(error);
 			if (message) {
 				appToast.error({ title: "Login failed", description: message });
+			}
+		},
+	});
+}
+
+export function useLogoutMutation() {
+	const { isMobile, toggleSidebar } = useSidebar();
+	const router = useRouter();
+	const { logout } = useAuth();
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: logout,
+		onSuccess: async () => {
+			await queryClient.clear();
+			await router.invalidate();
+			await navigate({ to: "/login" });
+			if (isMobile) toggleSidebar();
+		},
+		onError: (error) => {
+			const message = handleApiError(error);
+			if (message) {
+				appToast.error({ title: "Logout failed", description: message });
 			}
 		},
 	});
