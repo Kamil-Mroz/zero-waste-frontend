@@ -32,29 +32,36 @@ export type ApiError = {
 };
 
 export const handleApiError = (error: unknown, form?: AnyFormApi) => {
-	if (error instanceof AxiosError && error.response) {
-		const { status, data } = error.response;
+	if (!(error instanceof AxiosError) || !error.response) {
+		return "Something went wrong, please try again.";
+	}
 
-		if (status === 429) {
+	const { status, data } = error.response;
+
+	if (status === 429) {
+		const retryAfter = error.response.headers["retry-after"];
+		const seconds = Number(retryAfter);
+		return Number.isFinite(seconds)
+			? `Too many requests. Please try again in ${seconds} seconds.`
+			: "Too many requests. Please try again later.";
+	}
+
+	if (typeof data === "object" && data !== null) {
+		const apiError = data as ApiError;
+
+		if (apiError.errors && form) {
+			form.setErrorMap({
+				onSubmit: {
+					fields: apiError.errors,
+				},
+			});
+
 			return;
 		}
 
-		if (typeof data === "object" && data !== null) {
-			const apiError = data as ApiError;
-
-			if (apiError.errors && form) {
-				form.setErrorMap({
-					onSubmit: { fields: apiError.errors },
-				});
-				return;
-			}
-
-			if (apiError.detail) {
-				return apiError.detail;
-			}
+		if (apiError.detail) {
+			return apiError.detail;
 		}
-
-		return "Something went wrong, please try again.";
 	}
 
 	return "Something went wrong, please try again.";

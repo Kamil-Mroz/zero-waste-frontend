@@ -1,7 +1,10 @@
+import type { AnyFormApi } from "@tanstack/react-form";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
 import { createPassword, updatePassword } from "@/features/auth/api";
-import { appToast } from "@/features/shared/components/toast";
-import { handleApiError } from "@/lib/utils";
+import type {
+	CreatePasswordInput,
+	UpdatePasswordInput,
+} from "@/features/auth/schemas/password.schema";
 import {
 	banUsers,
 	createUser,
@@ -10,38 +13,41 @@ import {
 	unbanUsers,
 	updateUser,
 } from "../api";
-import type { UpdateUserType } from "../schemas/user.schema";
+import type {
+	BanUserSchema,
+	CreateUserType,
+	UpdateUserType,
+} from "../schemas/user.schema";
+import type { UnbanUserSchema } from "../types";
 
 export function userCreateMutationOptions() {
 	return mutationOptions({
-		mutationFn: createUser,
+		mutationFn: ({ value }: { value: CreateUserType; form: AnyFormApi }) =>
+			createUser(value),
 	});
 }
 export function userUpdateMutationOptions(id: string) {
 	return mutationOptions({
-		mutationFn: (values: UpdateUserType) => updateUser(id, values),
+		mutationFn: ({ value }: { value: UpdateUserType; form: AnyFormApi }) =>
+			updateUser(id, value),
 	});
 }
 
 export function userDeleteMutationOptions() {
 	return mutationOptions({
 		mutationFn: deleteUsers,
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Failed to delete", description: message });
-			}
-		},
 	});
 }
 export function userBanMutationOptions() {
 	return mutationOptions({
-		mutationFn: banUsers,
+		mutationFn: ({ value }: { value: BanUserSchema; form: AnyFormApi }) =>
+			banUsers(value),
 	});
 }
 export function userUnbanMutationOptions() {
 	return mutationOptions({
-		mutationFn: unbanUsers,
+		mutationFn: ({ value }: { value: UnbanUserSchema; form: AnyFormApi }) =>
+			unbanUsers(value),
 	});
 }
 
@@ -53,30 +59,14 @@ export function useUserAccountDeleteMutation() {
 
 export function createPasswordMutationOptions() {
 	return mutationOptions({
-		mutationFn: createPassword,
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({
-					title: "Password creation failed",
-					description: message,
-				});
-			}
-		},
+		mutationFn: ({ value }: { value: CreatePasswordInput; form: AnyFormApi }) =>
+			createPassword(value),
 	});
 }
 
 export function updatePasswordMutationOptions() {
 	return mutationOptions({
-		mutationFn: updatePassword,
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({
-					title: "Update password failed",
-					description: message,
-				});
-			}
-		},
+		mutationFn: ({ value }: { value: UpdatePasswordInput; form: AnyFormApi }) =>
+			updatePassword(value),
 	});
 }

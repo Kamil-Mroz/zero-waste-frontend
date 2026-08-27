@@ -1,31 +1,27 @@
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useAppForm } from "@/features/shared/components/form/form";
-import { appToast } from "@/features/shared/components/toast";
 
 import { FieldGroup } from "@/features/shared/components/ui/field";
-import { handleApiError } from "@/lib/utils";
 import { loginFormOpts } from "../hooks/form-options";
-import { useAuth } from "../hooks/useAuth";
+import { useLoginMutation } from "../hooks/mutation-options";
 
 export function LoginForm({ redirect = "/" }: { redirect?: string }) {
-	const { login } = useAuth();
 	const route = useRouter();
 	const navigate = useNavigate();
+	const loginMutation = useLoginMutation();
 
 	const form = useAppForm({
 		...loginFormOpts(),
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
-				await login(value);
+				await loginMutation.mutateAsync({ value, form: formApi });
 				form.reset();
 				await route.invalidate();
 				await navigate({ to: redirect, replace: true });
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message) appToast.error({ description: message });
-			}
+			} catch {}
 		},
 	});
+
 	return (
 		<form
 			onSubmit={(e) => {

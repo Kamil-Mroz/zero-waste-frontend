@@ -1,14 +1,13 @@
+import type { AnyFormApi } from "@tanstack/react-form";
 import {
 	mutationOptions,
 	useMutation,
 	useQueryClient,
 } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { appToast } from "@/features/shared/components/toast";
 import { useSidebar } from "@/features/shared/components/ui/sidebar";
-import { handleApiError } from "@/lib/utils";
 import { connectAccount, loginWithOAuth, unlinkAccount } from "../api";
-import type { Providers } from "../types";
+import type { LoginRequest, Providers, RegisterRequest } from "../types";
 import { useAuth } from "./useAuth";
 
 export function connectAccountMutationOptions(
@@ -16,11 +15,7 @@ export function connectAccountMutationOptions(
 ) {
 	return mutationOptions({
 		mutationFn: connectAccount,
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Connection failed", description: message });
-			}
+		onError: () => {
 			setPendingProvider(null);
 		},
 	});
@@ -31,12 +26,7 @@ export function unlinkAccountMutationOptions(
 ) {
 	return mutationOptions({
 		mutationFn: unlinkAccount,
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Unlink failed", description: message });
-			}
-
+		onError: () => {
 			setPendingProvider(null);
 		},
 	});
@@ -57,12 +47,17 @@ export function loginWithOAuth2MutationOptions(
 		onSettled: () => {
 			setPendingProvider(null);
 		},
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Login failed", description: message });
-			}
+		onError: () => {
+			setPendingProvider(null);
 		},
+	});
+}
+
+export function useLoginMutation() {
+	const { login } = useAuth();
+	return useMutation({
+		mutationFn: ({ value }: { value: LoginRequest; form: AnyFormApi }) =>
+			login(value),
 	});
 }
 
@@ -78,18 +73,11 @@ export function useLoginDemoMutation() {
 			await route.invalidate();
 			await navigate({ to: "/profile", replace: true });
 		},
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Login failed", description: message });
-			}
-		},
 	});
 }
 
 export function useLogoutMutation() {
 	const { isMobile, toggleSidebar } = useSidebar();
-	const router = useRouter();
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -97,16 +85,18 @@ export function useLogoutMutation() {
 	return useMutation({
 		mutationFn: logout,
 		onSuccess: async () => {
-			await queryClient.clear();
-			await router.invalidate();
+			queryClient.clear();
 			await navigate({ to: "/login" });
 			if (isMobile) toggleSidebar();
 		},
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Logout failed", description: message });
-			}
-		},
+	});
+}
+
+export function useRegisterMutation() {
+	const { register } = useAuth();
+
+	return useMutation({
+		mutationFn: ({ value }: { value: RegisterRequest; form: AnyFormApi }) =>
+			register(value),
 	});
 }

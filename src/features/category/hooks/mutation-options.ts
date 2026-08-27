@@ -1,29 +1,23 @@
+import type { AnyFormApi } from "@tanstack/react-form";
 import { mutationOptions } from "@tanstack/react-query";
-import { toast } from "sonner";
 import type { CategoryFormType } from "@/features/category/types";
-import { appToast } from "@/features/shared/components/toast";
-import { handleApiError } from "@/lib/utils";
 import { createCategory, deleteCategoryById, editCategoryById } from "../api";
 
 export function createCategoryMutationOptions() {
 	return mutationOptions({
-		mutationFn: createCategory,
+		mutationFn: ({ value }: { value: CategoryFormType; form: AnyFormApi }) =>
+			createCategory(value),
 	});
 }
 export function updateCategoryMutationOptions(id: string) {
 	return mutationOptions({
-		mutationFn: (value: CategoryFormType) => editCategoryById(id, value),
+		mutationFn: ({ value }: { value: CategoryFormType; form: AnyFormApi }) =>
+			editCategoryById(id, value),
 	});
 }
 
 export function deleteCategoryMutationOptions() {
 	return mutationOptions({
 		mutationFn: deleteCategoryById,
-		onError: (error) => {
-			const message = handleApiError(error);
-			if (message) {
-				appToast.error({ title: "Failed to delete", description: message });
-			}
-		},
 	});
 }

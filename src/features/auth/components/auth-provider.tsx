@@ -27,7 +27,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 				setToken(res.data.accessToken);
 
 				setUser(res.data.user);
-			} catch (error) {
+			} catch {
 				setToken(null);
 				setUser(null);
 			} finally {
@@ -57,19 +57,20 @@ export function AuthProvider({ children }: PropsWithChildren) {
 			async (error) => {
 				const originalRequest = error.config;
 
-				if (error.response?.status === 429) {
-					const retryAfter = error.response.headers["retry-after"];
+				// if (error.response?.status === 429) {
+				// 	const retryAfter = error.response.headers["retry-after"];
 
-					const seconds = Number(retryAfter);
+				// 	const seconds = Number(retryAfter);
 
-					appToast.error({
-						description: Number.isFinite(seconds)
-							? `Too many requests. Please try again in ${seconds} seconds.`
-							: "Too many requests. Please try again later.",
-					});
-					return Promise.reject(error);
-				}
-				const isRefreshEndpoint = originalRequest.url?.includes("/auth/refresh");
+				// 	appToast.error({
+				// 		description: Number.isFinite(seconds)
+				// 			? `Too many requests. Please try again in ${seconds} seconds.`
+				// 			: "Too many requests. Please try again later.",
+				// 	});
+				// 	return Promise.reject(error);
+				// }
+				const isRefreshEndpoint =
+					originalRequest.url?.includes("/auth/refresh");
 
 				if (
 					error.response?.status === 401 &&

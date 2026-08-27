@@ -22,7 +22,7 @@ export function Blog({ blog }: BlogProps) {
 
 	const canEdit = isOwner && isVisible;
 	const canDelete = isOwner || isAdmin;
-	const canReport = !isOwner && isVisible;
+	const canReport = user && !isOwner && isVisible;
 
 	return (
 		<article

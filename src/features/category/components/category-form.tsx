@@ -1,6 +1,4 @@
-import { appToast } from "@/features/shared/components/toast";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
-import { handleApiError } from "@/lib/utils";
 import { useAppForm } from "../../shared/components/form/form";
 import { FieldGroup } from "../../shared/components/ui/field";
 import { categoryFormOptions } from "../hooks/form-options";
@@ -26,7 +24,7 @@ export function CategoryForm({
 				}
 			},
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
 				if (
 					(defaultValues?.categoryId ?? "") === value.categoryId &&
@@ -42,13 +40,9 @@ export function CategoryForm({
 					});
 					return;
 				}
-				await onSubmit(value);
+				await onSubmit({ value, form: formApi });
 				form.reset();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({ title: "Category form", description: message });
-			}
+			} catch {}
 		},
 	});
 

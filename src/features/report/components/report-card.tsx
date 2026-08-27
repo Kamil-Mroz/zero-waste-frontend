@@ -77,7 +77,11 @@ export default function ReportCard({ report, subjectPath }: ReportCardProps) {
 					)}
 
 					<Button asChild size="sm">
-						<Link to={subjectPath.url} params={subjectPath.params}>
+						<Link
+							to={subjectPath.url}
+							params={subjectPath.params}
+							preload={false}
+						>
 							View {subjectConfig[report.subjectType].title}
 							<ArrowRight className="ml-2 size-4" />
 						</Link>

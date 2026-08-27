@@ -1,11 +1,12 @@
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ReportButton } from "@/features/report/components/report-button";
 import { Card, CardContent } from "@/features/shared/components/ui/card";
 
 type UserHeaderProps = {
 	nickname: string;
-	subtitle?: string;
+	subtitle: string;
 	userId?: string;
-	banned?: boolean;
+	banned: boolean;
 };
 
 export function UserHeader({
@@ -14,6 +15,7 @@ export function UserHeader({
 	banned,
 	userId,
 }: UserHeaderProps) {
+	const { user } = useAuth();
 	return (
 		<Card>
 			<CardContent className="flex items-center flex-col sm:flex-row sm:items-start sm:justify-between gap-4 p-6">
@@ -37,7 +39,7 @@ export function UserHeader({
 						)}
 					</div>
 				</div>
-				{userId && !banned && (
+				{userId && !banned && user && (
 					<ReportButton subjectId={userId} subjectType="USER" />
 				)}
 			</CardContent>

@@ -11,7 +11,6 @@ import {
 } from "@/features/auth/schemas/password.schema";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { appToast } from "@/features/shared/components/toast";
-import { handleApiError } from "@/lib/utils";
 import {
 	type BanUserSchema,
 	deleteUserFormSchema,
@@ -29,7 +28,7 @@ export const userFormOptions = (user?: User) => {
 			nickname: user?.nickname || "",
 			email: user?.email || "",
 			password: "",
-			role: user?.role ? user.role : ["USER"],
+			role: user?.role ? user.role : "USER",
 		},
 	});
 };
@@ -90,14 +89,7 @@ export const useDeleteForm = ({ onSuccess }: { onSuccess: () => void }) => {
 				onSuccess();
 
 				await navigate({ to: "/marketplace" });
-			} catch (error) {
-				const message = handleApiError(error, formApi);
-				if (message)
-					appToast.error({
-						title: "Delete account failed",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 };
@@ -129,25 +121,33 @@ export const usePasswordManagerForm = (
 			onSubmit: schema,
 		},
 		onSubmit: async ({ value, formApi }) => {
-			if (hasPassword) {
-				await updatePasswordMutation.mutateAsync({
-					currentPassword: value.currentPassword,
-					newPassword: value.newPassword,
-					confirmPassword: value.confirmPassword,
-				} as UpdatePasswordInput);
-			} else {
-				await createPasswordMutation.mutateAsync({
-					newPassword: value.newPassword,
-					confirmPassword: value.confirmPassword,
-				} as CreatePasswordInput);
-			}
-			formApi.reset();
-			await queryClient.invalidateQueries({
-				queryKey: AUTH_QUERY_KEYS.connections(),
-			});
-			setShowForm(false);
-			await router.invalidate();
-			appToast.success({ description: "Password save successfully" });
+			try {
+				if (hasPassword) {
+					await updatePasswordMutation.mutateAsync({
+						value: {
+							currentPassword: value.currentPassword,
+							newPassword: value.newPassword,
+							confirmPassword: value.confirmPassword,
+						} as UpdatePasswordInput,
+						form: formApi,
+					});
+				} else {
+					await createPasswordMutation.mutateAsync({
+						value: {
+							newPassword: value.newPassword,
+							confirmPassword: value.confirmPassword,
+						} as CreatePasswordInput,
+						form: formApi,
+					});
+				}
+				formApi.reset();
+				await queryClient.invalidateQueries({
+					queryKey: AUTH_QUERY_KEYS.connections(),
+				});
+				setShowForm(false);
+				await router.invalidate();
+				appToast.success({ description: "Password save successfully" });
+			} catch {}
 		},
 	});
 };

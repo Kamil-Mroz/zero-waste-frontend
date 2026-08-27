@@ -1,3 +1,4 @@
+import type { AnyFormApi } from "@tanstack/react-form";
 import type { AxiosResponse } from "axios";
 import type { z } from "zod/v4";
 import type { SelectItems } from "../shared/components/form/select-field";
@@ -9,7 +10,13 @@ export type CategoryFormProps = {
 		categoryId?: string;
 	};
 	blank?: boolean;
-	onSubmit: (value: CategoryFormType) => Promise<AxiosResponse>;
+	onSubmit: ({
+		value,
+		form,
+	}: {
+		value: CategoryFormType;
+		form: AnyFormApi;
+	}) => Promise<AxiosResponse>;
 	showCategorySelect?: boolean;
 	categories?: SelectItems;
 };

@@ -1,5 +1,9 @@
 import { api } from "@/lib/axios";
 import { OAUTH_LINK_PREFIX, OAUTH_LOGIN_PREFIX } from "./constants";
+import type {
+	CreatePasswordInput,
+	UpdatePasswordInput,
+} from "./schemas/password.schema";
 import type { Connections, Providers } from "./types";
 
 export const getConnections = async () => {
@@ -18,19 +22,12 @@ export const connectAccount = async (provider: Providers) => {
 	return response.data;
 };
 
-export const createPassword = async (data: {
-	newPassword: string;
-	confirmPassword: string;
-}) => {
+export const createPassword = async (data: CreatePasswordInput) => {
 	const response = await api.post("/v1/auth/password", data);
 	return response.data;
 };
 
-export const updatePassword = async (data: {
-	currentPassword: string;
-	newPassword: string;
-	confirmPassword: string;
-}) => {
+export const updatePassword = async (data: UpdatePasswordInput) => {
 	const response = await api.put("/v1/auth/password", data);
 	return response.data;
 };

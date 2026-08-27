@@ -1,10 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useAppForm } from "@/features/shared/components/form/form";
-import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
-import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS } from "../constants";
 import { userUnbanFormOptions } from "../hooks/form-options";
 import { userUnbanMutationOptions } from "../hooks/mutation-options";
@@ -29,9 +27,9 @@ export function UserUnbanForm({
 		validators: {
 			onSubmit: unbanUserSchema,
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
-				await mutation.mutateAsync(value);
+				await mutation.mutateAsync({ value, form: formApi });
 
 				await Promise.all([
 					client.invalidateQueries({ queryKey: USER_QUERY_KEYS.all }),
@@ -43,14 +41,7 @@ export function UserUnbanForm({
 				form.reset();
 
 				onDone();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({
-						title: "Unban user",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 

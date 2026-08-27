@@ -1,14 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useAppForm } from "@/features/shared/components/form/form";
-import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
-import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS, USER_ROLES } from "../constants";
 import { userFormOptions } from "../hooks/form-options";
 import { userCreateMutationOptions } from "../hooks/mutation-options";
-import { type CreateUserType, createUserSchema } from "../schemas/user.schema";
+import { createUserSchema } from "../schemas/user.schema";
 
 export function UserCreateForm({ onDone }: { onDone: () => void }) {
 	const router = useRouter();
@@ -21,21 +19,14 @@ export function UserCreateForm({ onDone }: { onDone: () => void }) {
 		validators: {
 			onSubmit: createUserSchema,
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
-				await mutation.mutateAsync(value as CreateUserType);
+				await mutation.mutateAsync({ value, form: formApi });
 				await client.invalidateQueries({ queryKey: USER_QUERY_KEYS.all });
 				await router.invalidate();
 				form.reset();
 				onDone();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({
-						title: "User form",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 

@@ -13,14 +13,11 @@ import { cn } from "@/lib/utils";
 
 type ProfileItemCardProps = {
 	review: Review;
-	isOwn?: boolean;
 };
 
-export function ProfileReviewCard({
-	review,
-	isOwn = false,
-}: ProfileItemCardProps) {
-	const { hasRole } = useAuth();
+export function ProfileReviewCard({ review }: ProfileItemCardProps) {
+	const { user, hasRole } = useAuth();
+	const isOwn = user?.id === review.reviewerId;
 	const isHidden = review.moderationStatus === "HIDDEN";
 	const isVisible = review.moderationStatus === "VISIBLE";
 
@@ -92,21 +89,23 @@ export function ProfileReviewCard({
 
 						<div className="flex flex-col items-end gap-1">
 							<div className="flex gap-2 items-center">
-								{isOwn ||
-									(isAdmin && (
-										<Button
-											variant="destructive"
-											size="sm"
-											onClick={handleDelete}
-											disabled={deleteMutation.isPending}
-										>
-											{deleteMutation.isPending ? "Deleting..." : "Delete"}
-										</Button>
-									))}
-
-								{!isOwn && isVisible && (
-									<ReportButton subjectId={review.id} subjectType="REVIEW" />
+								{(isOwn || (isAdmin && review.revieweeId !== user?.id)) && (
+									<Button
+										variant="destructive"
+										size="sm"
+										onClick={handleDelete}
+										disabled={deleteMutation.isPending}
+									>
+										{deleteMutation.isPending ? "Deleting..." : "Delete"}
+									</Button>
 								)}
+
+								{!isOwn &&
+									user &&
+									review.revieweeId === user.id &&
+									isVisible && (
+										<ReportButton subjectId={review.id} subjectType="REVIEW" />
+									)}
 							</div>
 							<time className="block text-xs text-muted-foreground">
 								{new Date(review.createdAt).toLocaleDateString()}
@@ -119,4 +118,4 @@ export function ProfileReviewCard({
 			<p className="text-muted-foreground">{review.comment}</p>
 		</div>
 	);
-} // };
+}

@@ -1,3 +1,4 @@
+import type { AnyFormApi } from "@tanstack/react-form";
 import type { z } from "zod/v4";
 import type { Category } from "../category/types";
 import type { SelectItems } from "../shared/components/form/select-field";
@@ -17,7 +18,7 @@ export type CreateItemFormValues = z.infer<typeof createItemFormSchema>;
 
 export type CreateItemFormProps = {
 	categories: SelectItems;
-	onSubmit: (values: FormData) => void;
+	onSubmit: ({ value, form }: { value: FormData; form: AnyFormApi }) => void;
 };
 
 export type UpdateItemFormValues = z.infer<
@@ -27,7 +28,7 @@ export type UpdateItemFormValues = z.infer<
 export type UpdateItemFormProps = {
 	item: ItemType;
 	categories: SelectItems;
-	onSubmit: (values: FormData) => void;
+	onSubmit: ({ value, form }: { value: FormData; form: AnyFormApi }) => void;
 };
 
 export type ItemConditionType = z.infer<typeof itemConditionSchema>;

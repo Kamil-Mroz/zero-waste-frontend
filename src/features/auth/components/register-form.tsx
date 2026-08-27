@@ -1,7 +1,6 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useAppForm } from "@/features/shared/components/form/form";
-import { appToast } from "@/features/shared/components/toast";
 import {
 	Card,
 	CardContent,
@@ -10,28 +9,25 @@ import {
 	CardTitle,
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
-import { handleApiError } from "@/lib/utils";
 import { registerFormOpts } from "../hooks/form-options";
-import { useAuth } from "../hooks/useAuth";
+import { useRegisterMutation } from "../hooks/mutation-options";
 
 export function RegisterForm() {
-	const { register } = useAuth();
-	const navigate = useNavigate();
-	const route = useRouter();
+	// const registerMutation = useRegisterMutation();
+	// const navigate = useNavigate();
+	// const route = useRouter();
 	const form = useAppForm({
 		...registerFormOpts(),
-		onSubmit: async ({ value }) => {
+		// onSubmit: async ({ value, formApi }) => {
+		onSubmit: async () => {
 			try {
-				// await register(value);
+				// await registerMutation.mutateAsync({ value, form:formApi });
 				// form.reset();
 				// toast.success("Account created successfully");
 				// route.invalidate();
 				// await navigate({ to: "/login", replace: true });
 				toast.info("Registration disabled for now");
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message) appToast.error({ description: message });
-			}
+			} catch {}
 		},
 	});
 

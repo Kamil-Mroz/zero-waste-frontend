@@ -14,13 +14,8 @@ import type { ReviewResponse } from "../types";
 type ReviewListProps = {
 	reviews: ReviewResponse;
 	pageable: Pageable;
-	isOwn?: boolean;
 };
-export function ReviewList({
-	reviews,
-	pageable,
-	isOwn = false,
-}: ReviewListProps) {
+export function ReviewList({ reviews, pageable }: ReviewListProps) {
 	return (
 		<Card>
 			<CardHeader>
@@ -37,11 +32,7 @@ export function ReviewList({
 					<div className="space-y-2">
 						<div className="">
 							{reviews.content.map((review) => (
-								<ProfileReviewCard
-									review={review}
-									key={review.id}
-									isOwn={isOwn}
-								/>
+								<ProfileReviewCard review={review} key={review.id} />
 							))}
 						</div>
 						<CustomPagination

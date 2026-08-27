@@ -41,15 +41,17 @@ export const useReportForm = ({
 			onSubmit: reportSchema,
 		},
 		onSubmit: async ({ value, formApi }) => {
-			await sendRaportMutation.mutateAsync(value);
-			formApi.reset();
-			await queryClient.invalidateQueries({
-				queryKey: REPORT_QUERY_KEYS.all,
-			});
-			await router.invalidate();
-			closeModal();
-			if (showToast)
-				appToast.success({ description: "Report submitted successfully" });
+			try {
+				await sendRaportMutation.mutateAsync({ value, form: formApi });
+				formApi.reset();
+				await queryClient.invalidateQueries({
+					queryKey: REPORT_QUERY_KEYS.all,
+				});
+				await router.invalidate();
+				closeModal();
+				if (showToast)
+					appToast.success({ description: "Report submitted successfully" });
+			} catch {}
 		},
 	});
 };
@@ -75,14 +77,16 @@ export const useReportRejectForm = ({
 			onSubmit: reportRejectSchema,
 		},
 		onSubmit: async ({ value, formApi }) => {
-			await rejectReportMutation.mutateAsync(value);
-			formApi.reset();
-			await queryClient.invalidateQueries({
-				queryKey: REPORT_QUERY_KEYS.all,
-			});
-			await router.invalidate();
-			onSuccess();
-			appToast.success({ description: "Report rejected successfully" });
+			try {
+				await rejectReportMutation.mutateAsync({ value, form: formApi });
+				formApi.reset();
+				await queryClient.invalidateQueries({
+					queryKey: REPORT_QUERY_KEYS.all,
+				});
+				await router.invalidate();
+				onSuccess();
+				appToast.success({ description: "Report rejected successfully" });
+			} catch {}
 		},
 	});
 };
@@ -109,14 +113,16 @@ export const useReportResolveForm = ({
 			onSubmit: reportResolveSchema,
 		},
 		onSubmit: async ({ value, formApi }) => {
-			await resolveReportMutation.mutateAsync(value);
-			formApi.reset();
-			await queryClient.invalidateQueries({
-				queryKey: REPORT_QUERY_KEYS.all,
-			});
-			await router.invalidate();
-			onSuccess();
-			appToast.success({ description: "Report resolved successfully" });
+			try {
+				await resolveReportMutation.mutateAsync({ value, form: formApi });
+				formApi.reset();
+				await queryClient.invalidateQueries({
+					queryKey: REPORT_QUERY_KEYS.all,
+				});
+				await router.invalidate();
+				onSuccess();
+				appToast.success({ description: "Report resolved successfully" });
+			} catch {}
 		},
 	});
 };

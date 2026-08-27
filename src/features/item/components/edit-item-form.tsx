@@ -3,7 +3,6 @@ import { ChevronLeft } from "lucide-react";
 import { useMemo } from "react";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { ImagePickerField } from "@/features/shared/components/form/image-picker-field";
-import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -13,7 +12,6 @@ import {
 	CardTitle,
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
-import { handleApiError } from "@/lib/utils";
 import { ITEM_CONDITION, ITEM_STATE } from "../constants";
 import { updateItemFormOptions } from "../hooks/form-options";
 import type { ItemFormStateType, UpdateItemFormProps } from "../types";
@@ -42,7 +40,7 @@ export function EditItemForm({
 			},
 			currentImageIds,
 		),
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
 				const formData = new FormData();
 				formData.append("title", value.title);
@@ -75,16 +73,9 @@ export function EditItemForm({
 					formData.append("removedImageIds", id);
 				});
 
-				await onSubmit(formData);
+				await onSubmit({ value: formData, form: formApi });
 				form.reset();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({
-						title: "Item form",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 

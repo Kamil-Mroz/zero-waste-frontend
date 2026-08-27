@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -9,12 +8,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/features/shared/components/ui/card";
-import { handleApiError } from "@/lib/utils";
 import { useAppForm } from "../../shared/components/form/form";
 import { FieldGroup } from "../../shared/components/ui/field";
 import { categoryFormOptions } from "../hooks/form-options";
 import type { CategoryFormProps } from "../types";
-import { appToast } from "@/features/shared/components/toast";
 
 export function CategoryForm({
 	defaultValues,
@@ -35,7 +32,7 @@ export function CategoryForm({
 				}
 			},
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
 				if (
 					(defaultValues?.categoryId ?? "") === value.categoryId &&
@@ -51,13 +48,9 @@ export function CategoryForm({
 					});
 					return;
 				}
-				await onSubmit(value);
+				await onSubmit({ value, form: formApi });
 				form.reset();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({ title: "Category form", description: message });
-			}
+			} catch {}
 		},
 	});
 

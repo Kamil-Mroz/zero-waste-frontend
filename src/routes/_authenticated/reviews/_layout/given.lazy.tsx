@@ -20,5 +20,5 @@ function RouteComponent() {
 		GivenReviewsQueryOptions(pageable),
 	);
 
-	return <ReviewList reviews={reviews} isOwn pageable={pageable} />;
+	return <ReviewList reviews={reviews} pageable={pageable} />;
 }

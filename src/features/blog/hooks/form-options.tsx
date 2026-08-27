@@ -1,8 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useAppForm } from "@/features/shared/components/form/form";
-import { appToast } from "@/features/shared/components/toast";
-import { handleApiError } from "@/lib/utils";
 import { BLOG_QUERY_KEYS } from "../constants";
 import { blogFormSchema } from "../schemas";
 import type { BlogType } from "../types";
@@ -22,9 +20,10 @@ export const useBlogForm = (blog?: BlogType) => {
 		validators: {
 			onSubmit: blogFormSchema,
 		},
+
 		onSubmit: async ({ value, formApi }) => {
 			try {
-				await mutation.mutateAsync(value);
+				await mutation.mutateAsync({ value, form: formApi });
 
 				await Promise.all([
 					client.invalidateQueries({ queryKey: BLOG_QUERY_KEYS.own() }),
@@ -35,7 +34,7 @@ export const useBlogForm = (blog?: BlogType) => {
 									queryKey: BLOG_QUERY_KEYS.byId(blog.id),
 								}),
 							]
-						: [])
+						: []),
 				]);
 				await router.invalidate();
 
@@ -48,14 +47,7 @@ export const useBlogForm = (blog?: BlogType) => {
 				} else {
 					navigate({ to: "/eco-hub/blogs/own" });
 				}
-			} catch (error) {
-				const message = handleApiError(error, formApi);
-				if (message)
-					appToast.error({
-						title: "Blog form failed",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 };

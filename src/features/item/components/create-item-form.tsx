@@ -12,7 +12,6 @@ import {
 	CardTitle,
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
-import { handleApiError } from "@/lib/utils";
 import { ITEM_CONDITION, ITEM_STATE } from "../constants";
 import { createItemFormOptions } from "../hooks/form-options";
 import type { CreateItemFormProps } from "../types";
@@ -20,7 +19,7 @@ import type { CreateItemFormProps } from "../types";
 export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 	const form = useAppForm({
 		...createItemFormOptions(),
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
 				const formData = new FormData();
 				formData.append("title", value.title);
@@ -41,16 +40,9 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 					formData.append("thumbnailIndex", thumbnailIndex.toString());
 				}
 
-				await onSubmit(formData);
+				await onSubmit({ value: formData, form: formApi });
 				form.reset();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({
-						title: "Item form",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 
@@ -81,16 +73,22 @@ export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 							<form.AppField name="description">
 								{(field) => <field.TextareaField label="Description" />}
 							</form.AppField>
-							<form.AppField name="condition">
-								{(field) => (
-									<field.SelectField label="Condition" items={ITEM_CONDITION} />
-								)}
-							</form.AppField>
-							<form.AppField name="state">
-								{(field) => (
-									<field.SelectField label="State" items={ITEM_STATE} />
-								)}
-							</form.AppField>
+
+							<div className="grid sm:grid-cols-2 gap-2">
+								<form.AppField name="condition">
+									{(field) => (
+										<field.SelectField
+											label="Condition"
+											items={ITEM_CONDITION}
+										/>
+									)}
+								</form.AppField>
+								<form.AppField name="state">
+									{(field) => (
+										<field.SelectField label="State" items={ITEM_STATE} />
+									)}
+								</form.AppField>
+							</div>
 							<form.AppField name="categoryId">
 								{(field) => (
 									<field.SelectField label="Category" items={categories} />

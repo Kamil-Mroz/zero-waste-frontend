@@ -2,16 +2,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAppForm } from "@/features/shared/components/form/form";
-import { appToast } from "@/features/shared/components/toast";
 import { FieldGroup } from "@/features/shared/components/ui/field";
 import { Spinner } from "@/features/shared/components/ui/spinner";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
-import { handleApiError } from "@/lib/utils";
 import { USER_QUERY_KEYS, USER_ROLES } from "../constants";
 import { userFormOptions } from "../hooks/form-options";
 import { userUpdateMutationOptions } from "../hooks/mutation-options";
 import { userQueryOptions } from "../hooks/query-options";
-import { type UpdateUserType, updateUserSchema } from "../schemas/user.schema";
+import { updateUserSchema } from "../schemas/user.schema";
 
 type UserUpdateForm = { onDone: () => void; userId: string };
 
@@ -27,9 +25,9 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 		validators: {
 			onSubmit: updateUserSchema,
 		},
-		onSubmit: async ({ value }) => {
+		onSubmit: async ({ value, formApi }) => {
 			try {
-				await mutation.mutateAsync(value as UpdateUserType);
+				await mutation.mutateAsync({ value, form: formApi });
 				await Promise.all([
 					client.invalidateQueries({ queryKey: USER_QUERY_KEYS.all }),
 					client.invalidateQueries({ queryKey: USER_QUERY_KEYS.byId(userId) }),
@@ -37,14 +35,7 @@ export function UserUpdateForm({ onDone, userId }: UserUpdateForm) {
 				await router.invalidate();
 				form.reset();
 				onDone();
-			} catch (error) {
-				const message = handleApiError(error, form);
-				if (message)
-					appToast.error({
-						title: "User form",
-						description: message,
-					});
-			}
+			} catch {}
 		},
 	});
 

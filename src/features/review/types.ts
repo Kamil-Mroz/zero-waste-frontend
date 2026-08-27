@@ -9,9 +9,10 @@ export type Review = {
 	rating: number;
 	comment: string;
 	reviewerId: string;
+	revieweeId: string;
 	reviewerName: string;
 	createdAt: string;
-  moderationStatus: ModerationStatus
+	moderationStatus: ModerationStatus;
 };
 
 export type ReviewResponse = Page<Review[]>;
