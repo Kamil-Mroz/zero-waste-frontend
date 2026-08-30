@@ -1,6 +1,7 @@
 import type { AnyFormApi } from "@tanstack/react-form";
 import axios, { AxiosError } from "axios";
 import { type ClassValue, clsx } from "clsx";
+import { intervalToDuration } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import type { CategoryTreeType } from "@/features/category/types";
 import { DEFAULT_PAGEABLE } from "@/features/shared/constants";
@@ -31,6 +32,33 @@ export type ApiError = {
 	errors?: Record<string, { message: string }>;
 };
 
+const formatRetryAfter = (seconds: number): string => {
+	const duration = intervalToDuration({
+		start: 0,
+		end: seconds * 1000,
+	});
+
+	const parts: string[] = [];
+
+	if (duration.hours) {
+		parts.push(`${duration.hours} hour${duration.hours !== 1 ? "s" : ""}`);
+	}
+
+	if (duration.minutes) {
+		parts.push(
+			`${duration.minutes} minute${duration.minutes !== 1 ? "s" : ""}`,
+		);
+	}
+
+	if (!duration.hours && !duration.minutes && duration.seconds) {
+		parts.push(
+			`${duration.seconds} second${duration.seconds !== 1 ? "s" : ""}`,
+		);
+	}
+
+	return parts.join(" ") || "a few seconds";
+};
+
 export const handleApiError = (error: unknown, form?: AnyFormApi) => {
 	if (!(error instanceof AxiosError) || !error.response) {
 		return "Something went wrong, please try again.";
@@ -42,7 +70,7 @@ export const handleApiError = (error: unknown, form?: AnyFormApi) => {
 		const retryAfter = error.response.headers["retry-after"];
 		const seconds = Number(retryAfter);
 		return Number.isFinite(seconds)
-			? `Too many requests. Please try again in ${seconds} seconds.`
+			? `Too many requests. Please try again in ${formatRetryAfter(seconds)} seconds.`
 			: "Too many requests. Please try again later.";
 	}
 
