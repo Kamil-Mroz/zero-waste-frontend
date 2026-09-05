@@ -70,7 +70,7 @@ export const handleApiError = (error: unknown, form?: AnyFormApi) => {
 		const retryAfter = error.response.headers["retry-after"];
 		const seconds = Number(retryAfter);
 		return Number.isFinite(seconds)
-			? `Too many requests. Please try again in ${formatRetryAfter(seconds)} seconds.`
+			? `Too many requests. Please try again in ${formatRetryAfter(seconds)}`
 			: "Too many requests. Please try again later.";
 	}
 

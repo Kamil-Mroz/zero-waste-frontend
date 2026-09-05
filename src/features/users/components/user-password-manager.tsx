@@ -54,7 +54,12 @@ export function UserPasswordManager({ hasPassword }: UserPasswordManagerProps) {
 					</form>
 				) : null}
 				<Button
-					onClick={() => setShowForm((prev) => !prev)}
+					onClick={() => {
+						setShowForm((prev) => {
+							if (prev) form.reset();
+							return !prev;
+						});
+					}}
 					variant={"outline"}
 					className="w-full mx-auto max-w-md block mt-2"
 				>

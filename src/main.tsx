@@ -24,7 +24,7 @@ export const queryClient = new QueryClient({
 		onError: (error, variables) => {
 			const message = handleApiError(
 				error,
-				(variables as { form?: AnyFormApi }).form || undefined,
+				(variables as { form?: AnyFormApi })?.form || undefined,
 			);
 			if (message) appToast.error({ description: message });
 		},
