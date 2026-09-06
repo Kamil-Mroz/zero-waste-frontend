@@ -81,11 +81,13 @@ export function useLogoutMutation() {
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
+	const router = useRouter();
 
 	return useMutation({
 		mutationFn: logout,
 		onSuccess: async () => {
 			queryClient.clear();
+			await router.invalidate();
 			await navigate({ to: "/login" });
 			if (isMobile) toggleSidebar();
 		},

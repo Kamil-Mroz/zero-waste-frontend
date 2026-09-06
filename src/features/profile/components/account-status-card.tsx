@@ -7,11 +7,11 @@ import {
 } from "@/features/shared/components/ui/card";
 
 type Props = {
-	hasActiveBan: boolean;
+	activeBan: boolean;
 	bannedUntil?: string | null;
 };
 
-export function AccountStatusCard({ hasActiveBan, bannedUntil }: Props) {
+export function AccountStatusCard({ activeBan, bannedUntil }: Props) {
 	return (
 		<Card>
 			<CardHeader>
@@ -22,14 +22,14 @@ export function AccountStatusCard({ hasActiveBan, bannedUntil }: Props) {
 				<div className="flex items-center gap-2">
 					<span>Status:</span>
 
-					{hasActiveBan ? (
+					{activeBan ? (
 						<Badge variant="destructive">Banned</Badge>
 					) : (
 						<Badge>Active</Badge>
 					)}
 				</div>
 
-				{hasActiveBan && bannedUntil && (
+				{activeBan && bannedUntil && (
 					<div>
 						<p className="text-muted-foreground text-sm">Banned until</p>
 
