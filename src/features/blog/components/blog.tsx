@@ -64,32 +64,31 @@ export function Blog({ blog }: BlogProps) {
 					</p>
 				</div>
 				<div className="flex items-center gap-2">
-					{isOwner ||
-						(isAdmin && (
-							<div className="flex gap-2 opacity-0 transition group-hover:opacity-100">
-								{canEdit && (
-									<Button asChild size="sm">
-										<Link
-											to="/eco-hub/blogs/$blogId/edit"
-											params={{ blogId: blog.id }}
-										>
-											Edit
-										</Link>
-									</Button>
-								)}
-
-								{canDelete && (
-									<Button
-										variant="destructive"
-										size="sm"
-										onClick={() => deleteMutation.mutate(blog.id)}
-										disabled={deleteMutation.isPending}
+					{(isOwner || isAdmin) && (
+						<div className="flex gap-2 opacity-0 transition group-hover:opacity-100">
+							{canEdit && (
+								<Button asChild size="sm">
+									<Link
+										to="/eco-hub/blogs/$blogId/edit"
+										params={{ blogId: blog.id }}
 									>
-										{deleteMutation.isPending ? "Deleting..." : "Delete"}
-									</Button>
-								)}
-							</div>
-						))}
+										Edit
+									</Link>
+								</Button>
+							)}
+
+							{canDelete && (
+								<Button
+									variant="destructive"
+									size="sm"
+									onClick={() => deleteMutation.mutate(blog.id)}
+									disabled={deleteMutation.isPending}
+								>
+									{deleteMutation.isPending ? "Deleting..." : "Delete"}
+								</Button>
+							)}
+						</div>
+					)}
 
 					{canReport && <ReportButton subjectId={blog.id} subjectType="BLOG" />}
 				</div>
