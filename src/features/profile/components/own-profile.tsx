@@ -22,14 +22,14 @@ export function OwnProfile({ user }: Props) {
 		<div className="mx-auto w-full space-y-4">
 			<UserHeader
 				nickname={user.nickname}
-				banned={user.hasActiveBan}
+				banned={user.activeBan}
 				subtitle={`Member since ${new Date(
 					user.joinedAt,
 				).toLocaleDateString()}`}
 			/>
 			<div className="grid sm:grid-cols-2 gap-4">
 				<AccountStatusCard
-					hasActiveBan={user.hasActiveBan}
+					activeBan={user.activeBan}
 					bannedUntil={user.bannedUntil}
 				/>
 

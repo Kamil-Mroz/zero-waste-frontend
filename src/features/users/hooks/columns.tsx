@@ -65,7 +65,7 @@ export const columns: ColumnDef<User>[] = [
 	},
 	{
 		id: "Banned",
-		accessorKey: "hasActiveBan",
+		accessorKey: "activeBan",
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Banned" />
 		),

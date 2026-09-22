@@ -12,7 +12,7 @@ export type User = {
 	id: string;
 	nickname: string;
 	email: string;
-	hasActiveBan: boolean;
+	activeBan: boolean;
 	bannedUntil: string | null;
 	joinedAt: string;
 	role: Roles;

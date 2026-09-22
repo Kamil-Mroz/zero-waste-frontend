@@ -86,7 +86,7 @@ export function useLogoutMutation() {
 		mutationFn: logout,
 		onSuccess: async () => {
 			queryClient.clear();
-			await navigate({ to: "/login" });
+			await navigate({ to: "/marketplace" });
 			if (isMobile) toggleSidebar();
 		},
 	});

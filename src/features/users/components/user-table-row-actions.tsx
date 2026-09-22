@@ -41,7 +41,7 @@ export function UserTableRowsActions<TData>({
 						Edit
 					</Link>
 				</DropdownMenuItem>
-				{(row.original as User).hasActiveBan ? (
+				{(row.original as User).activeBan ? (
 					<DropdownMenuItem asChild>
 						<Link
 							to="/admin/users"
