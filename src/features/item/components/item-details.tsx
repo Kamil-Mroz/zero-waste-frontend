@@ -116,9 +116,7 @@ export function ItemDetails({ item }: ItemProps) {
 						</Button>
 					</div>
 
-					<ItemActionsButtons
-						item={item}
-					/>
+					<ItemActionsButtons item={item} />
 				</CardContent>
 			</Card>
 		</div>

@@ -36,11 +36,9 @@ function RouteComponent() {
 
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: ITEM_QUERY_KEYS.own() }),
-				queryClient.invalidateQueries({
-					queryKey: ITEM_QUERY_KEYS.byId(itemId),
-				}),
 				queryClient.invalidateQueries({ queryKey: PROFILE_QUERY_KEYS.own() }),
 			]);
+			await queryClient.setQueryData(ITEM_QUERY_KEYS.byId(data.id), data);
 
 			await navigate({
 				to: "/marketplace/$itemId",

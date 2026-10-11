@@ -12,6 +12,7 @@ import {
 	CardTitle,
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
+import { api } from "@/lib/axios";
 import { ITEM_CONDITION, ITEM_STATE } from "../constants";
 import { updateItemFormOptions } from "../hooks/form-options";
 import type { ItemFormStateType, UpdateItemFormProps } from "../types";
@@ -42,39 +43,106 @@ export function EditItemForm({
 		),
 		onSubmit: async ({ value, formApi }) => {
 			try {
-				const formData = new FormData();
-				formData.append("title", value.title);
-				formData.append("description", value.description);
-				formData.append("condition", value.condition);
-				formData.append("city", value.city);
-				formData.append("categoryId", value.categoryId);
-				formData.append("state", value.state);
-
 				const remainingImages = item.images.filter(
-					(i) => !value.removedImageIds.includes(i.id),
+					(image) => !value.removedImageIds.includes(image.id),
 				);
+				let uploads: {
+					uploadId: string;
+					url: string;
+					method: string;
+					headers: Record<string, string>;
+				}[] = [];
 
-				if (value.images.length === 0 && remainingImages.length === 0) {
-				} else if (value.thumbnail?.type === "existing") {
-					formData.append("thumbnailExistingImageId", value.thumbnail.id);
-				} else if (value.thumbnail?.type === "new") {
-					const index = value.images.indexOf(value.thumbnail.file);
-					if (index >= 0) {
-						formData.append("thumbnailIndex", index.toString());
-					}
-				} else if (remainingImages.length > 0) {
-					formData.append("thumbnailExistingImageId", remainingImages[0].id);
+				if (value.images.length > 0) {
+					const response = await api.post<{ uploads: typeof uploads }>(
+						"/v1/images/upload-urls",
+						{
+							files: value.images.map((file) => ({
+								filename: file.name,
+								contentType: file.type,
+								size: file.size,
+							})),
+						},
+					);
+
+					uploads = response.data.uploads;
+
+					await Promise.all(
+						value.images.map(async (file, index) => {
+							const upload = uploads[index];
+
+							const response = await fetch(upload.url, {
+								method: upload.method,
+								headers: upload.headers,
+								body: file,
+							});
+
+							if (!response) {
+								throw new Error(`Failed to upload ${file.name}`);
+							}
+						}),
+					);
 				}
 
-				value.images.forEach((file: File) => {
-					formData.append("images", file);
-				});
-				value.removedImageIds.forEach((id) => {
-					formData.append("removedImageIds", id);
-				});
+				const thumbnailExistingImageId =
+					value.thumbnail?.type === "existing"
+						? value.thumbnail.id
+						: value.thumbnail?.type === "new"
+							? undefined
+							: remainingImages[0]?.id;
 
-				await onSubmit({ value: formData, form: formApi });
+				const thumbnailIndex =
+					value.thumbnail?.type === "new"
+						? value.images.indexOf(value.thumbnail.file)
+						: undefined;
+
+				const data = {
+					title: value.title,
+					description: value.description,
+					condition: value.condition,
+					city: value.city,
+					categoryId: value.categoryId,
+					state: value.state,
+					imageUploadIds: uploads.map((upload) => upload.uploadId),
+					removedImageIds: value.removedImageIds,
+					thumbnailExistingImageId,
+					thumbnailIndex,
+				};
+				await onSubmit({ value: data, form: formApi });
 				form.reset();
+				// const formData = new FormData();
+				// formData.append("title", value.title);
+				// formData.append("description", value.description);
+				// formData.append("condition", value.condition);
+				// formData.append("city", value.city);
+				// formData.append("categoryId", value.categoryId);
+				// formData.append("state", value.state);
+
+				// const remainingImages = item.images.filter(
+				// 	(i) => !value.removedImageIds.includes(i.id),
+				// );
+
+				// if (value.images.length === 0 && remainingImages.length === 0) {
+				// } else if (value.thumbnail?.type === "existing") {
+				// 	formData.append("thumbnailExistingImageId", value.thumbnail.id);
+				// } else if (value.thumbnail?.type === "new") {
+				// 	const index = value.images.indexOf(value.thumbnail.file);
+				// 	if (index >= 0) {
+				// 		formData.append("thumbnailIndex", index.toString());
+				// 	}
+				// } else if (remainingImages.length > 0) {
+				// 	formData.append("thumbnailExistingImageId", remainingImages[0].id);
+				// }
+
+				// value.images.forEach((file: File) => {
+				// 	formData.append("images", file);
+				// });
+				// value.removedImageIds.forEach((id) => {
+				// 	formData.append("removedImageIds", id);
+				// });
+
+				// await onSubmit({ value: formData, form: formApi });
+				// form.reset();
 			} catch {}
 		},
 	});

@@ -1,10 +1,12 @@
 import { api } from "@/lib/axios";
 import type { Page } from "../shared/types";
 import type {
+	CreateItem,
 	ItemsQueryOptions,
 	ItemType,
 	ItemWithOwnerType,
 	OwnItemsQueryOptions,
+	UpdateItem,
 } from "./types";
 
 export const fetchOwnItems = async (search: Partial<OwnItemsQueryOptions>) => {
@@ -36,16 +38,12 @@ export const fetchItemDetails = async (id: string) => {
 	return res.data;
 };
 
-export const createItem = async (values: FormData) => {
-	const res = await api.post<ItemType>(`/v1/items`, values, {
-		headers: { "Content-Type": "multipart/form-data" },
-	});
+export const createItem = async (values: CreateItem) => {
+	const res = await api.post<ItemType>(`/v1/items`, values);
 	return res.data;
 };
-export const updateItem = async (id: string, values: FormData) => {
-	const res = await api.put<ItemType>(`/v1/items/${id}`, values, {
-		headers: { "Content-Type": "multipart/form-data" },
-	});
+export const updateItem = async (id: string, values: UpdateItem) => {
+	const res = await api.put<ItemType>(`/v1/items/${id}`, values);
 	return res.data;
 };
 

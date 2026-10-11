@@ -7,17 +7,18 @@ import {
 	publishItem,
 	updateItem,
 } from "../api";
+import type { CreateItem, UpdateItem } from "../types";
 
 export function createItemMutationOptions() {
 	return mutationOptions({
-		mutationFn: ({ value }: { value: FormData; form: AnyFormApi }) =>
+		mutationFn: ({ value }: { value: CreateItem; form: AnyFormApi }) =>
 			createItem(value),
 	});
 }
 
 export function updateItemMutationOptions(id: string) {
 	return mutationOptions({
-		mutationFn: ({ value }: { value: FormData; form: AnyFormApi }) =>
+		mutationFn: ({ value }: { value: UpdateItem; form: AnyFormApi }) =>
 			updateItem(id, value),
 	});
 }
