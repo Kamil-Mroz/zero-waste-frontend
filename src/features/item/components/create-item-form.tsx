@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
 import { useAppForm } from "@/features/shared/components/form/form";
 import { ImagePickerField } from "@/features/shared/components/form/image-picker-field";
-import { appToast } from "@/features/shared/components/toast";
 import { Button } from "@/features/shared/components/ui/button";
 import {
 	Card,
@@ -12,35 +11,85 @@ import {
 	CardTitle,
 } from "@/features/shared/components/ui/card";
 import { FieldGroup } from "@/features/shared/components/ui/field";
+import { api } from "@/lib/axios";
 import { ITEM_CONDITION, ITEM_STATE } from "../constants";
 import { createItemFormOptions } from "../hooks/form-options";
-import type { CreateItemFormProps } from "../types";
+import type {
+	CreateItem,
+	CreateItemFormProps,
+	ItemConditionType,
+	ItemStateType,
+} from "../types";
 
 export function CreateItemForm({ categories, onSubmit }: CreateItemFormProps) {
 	const form = useAppForm({
 		...createItemFormOptions(),
 		onSubmit: async ({ value, formApi }) => {
 			try {
-				const formData = new FormData();
-				formData.append("title", value.title);
-				formData.append("description", value.description);
-				formData.append("condition", value.condition);
-				formData.append("city", value.city);
-				formData.append("categoryId", value.categoryId);
-				formData.append("state", value.state);
+				let uploads: {
+					uploadId: string;
+					url: string;
+					method: string;
+					headers: Record<string, string>;
+				}[] = [];
 
-				value.images.forEach((file: File) => {
-					formData.append("images", file);
-				});
-				let thumbnailIndex = null;
-				if (!value.thumbnail && value.images.length > 0) {
-					formData.append("thumbnailIndex", "0");
-				} else if (value.thumbnail?.type === "new") {
-					thumbnailIndex = value.images.indexOf(value.thumbnail.file);
-					formData.append("thumbnailIndex", thumbnailIndex.toString());
+				if (value.images.length > 0) {
+					const uploadResponse = await api.post<{
+						uploads: {
+							uploadId: string;
+							url: string;
+							method: string;
+							headers: Record<string, string>;
+						}[];
+					}>("/v1/images/upload-urls", {
+						files: value.images.map((file) => ({
+							filename: file.name,
+							contentType: file.type,
+							size: file.size,
+						})),
+					});
+
+					uploads = uploadResponse.data.uploads;
+
+					await Promise.all(
+						value.images.map(async (file: File, index: number) => {
+							const upload = uploads[index];
+							const response = await fetch(upload.url, {
+								method: upload.method,
+								headers: {
+									...upload.headers,
+								},
+								body: file,
+							});
+
+							if (!response.ok) {
+								throw new Error(`Failed to upload ${file.name}`);
+							}
+						}),
+					);
 				}
 
-				await onSubmit({ value: formData, form: formApi });
+				const thumbnailIndex =
+					value.thumbnail?.type === "new"
+						? value.images.indexOf(value.thumbnail.file)
+						: value.images.length > 0
+							? 0
+							: undefined;
+
+				const data: CreateItem = {
+					title: value.title,
+					description: value.description,
+					condition: value.condition as ItemConditionType,
+					city: value.city,
+					categoryId: value.categoryId,
+					state: value.state as ItemStateType,
+					imageUploadIds: uploads.map(
+						(upload: { uploadId: string }) => upload.uploadId,
+					),
+					thumbnailIndex,
+				};
+
+				await onSubmit({ value: data, form: formApi });
 				form.reset();
 			} catch {}
 		},

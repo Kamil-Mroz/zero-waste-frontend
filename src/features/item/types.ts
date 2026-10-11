@@ -18,7 +18,7 @@ export type CreateItemFormValues = z.infer<typeof createItemFormSchema>;
 
 export type CreateItemFormProps = {
 	categories: SelectItems;
-	onSubmit: ({ value, form }: { value: FormData; form: AnyFormApi }) => void;
+	onSubmit: ({ value, form }: { value: CreateItem; form: AnyFormApi }) => void;
 };
 
 export type UpdateItemFormValues = z.infer<
@@ -28,7 +28,7 @@ export type UpdateItemFormValues = z.infer<
 export type UpdateItemFormProps = {
 	item: ItemType;
 	categories: SelectItems;
-	onSubmit: ({ value, form }: { value: FormData; form: AnyFormApi }) => void;
+	onSubmit: ({ value, form }: { value: UpdateItem; form: AnyFormApi }) => void;
 };
 
 export type ItemConditionType = z.infer<typeof itemConditionSchema>;
@@ -82,3 +82,27 @@ export type ItemOfferDialogProps = {
 
 export type ItemsQueryOptions = z.infer<typeof baseItemSearchSchema>;
 export type OwnItemsQueryOptions = z.infer<typeof ownItemSearchSchema>;
+
+export type CreateItem = {
+	title: string;
+	description: string;
+	condition: ItemConditionType;
+	city: string;
+	categoryId: string;
+	state: ItemStateType;
+	imageUploadIds: string[];
+	thumbnailIndex: number | undefined;
+};
+
+export type UpdateItem = {
+	title: string;
+	description: string;
+	condition: ItemConditionType;
+	city: string;
+	categoryId: string;
+	state: ItemStateType;
+	imageUploadIds: string[];
+	removedImageIds: string[];
+	thumbnailIndex: number | undefined;
+	thumbnailExistingImageId: string | undefined;
+};
