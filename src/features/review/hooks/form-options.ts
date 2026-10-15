@@ -6,32 +6,30 @@ import { createReviewFormSchema } from "../schemas";
 import { useCreateReviewMutation } from "./mutation-options";
 
 export const useCreateReviewForm = (offerId: string) => {
-	const client = useQueryClient();
-	const router = useRouter();
-	const navigate = useNavigate();
-	const mutation = useCreateReviewMutation();
-	return useAppForm({
-		defaultValues: {
-			offerId: offerId,
-			comment: "",
-			rating: 5,
-		},
-		validators: {
-			onSubmit: createReviewFormSchema,
-		},
-		onSubmit: async ({ value, formApi }) => {
-			try {
-				await mutation.mutateAsync({ value, form: formApi });
+  const client = useQueryClient();
+  const router = useRouter();
+  const navigate = useNavigate();
+  const mutation = useCreateReviewMutation();
+  return useAppForm({
+    defaultValues: {
+      offerId: offerId,
+      comment: "",
+      rating: 5,
+    },
+    validators: {
+      onSubmit: createReviewFormSchema,
+    },
+    onSubmit: async ({ value, formApi }) => {
+      try {
+        await mutation.mutateAsync({ value, form: formApi });
 
-				await Promise.all([
-					client.invalidateQueries({ queryKey: REVIEW_QUERY_KEYS.givenRoot() }),
-				]);
-				await router.invalidate();
+        await client.invalidateQueries({ queryKey: REVIEW_QUERY_KEYS.givenRoot() });
+        await router.invalidate();
 
-				formApi.reset();
+        formApi.reset();
 
-				navigate({ to: "/reviews/given", replace: true });
-			} catch {}
-		},
-	});
+        void navigate({ to: "/reviews/given", replace: true });
+      } catch {}
+    },
+  });
 };

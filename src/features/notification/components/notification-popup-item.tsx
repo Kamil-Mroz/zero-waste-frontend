@@ -1,54 +1,45 @@
 import { Link } from "@tanstack/react-router";
-import { Badge } from "@/features/shared/components/ui/badge";
 import { Button } from "@/features/shared/components/ui/button";
 import { cn } from "@/lib/utils";
 import { notificationConfig } from "../constants";
 import type { Notification } from "../types";
 
 type NotificationPopupItemProps = {
-	markAsRead: (id: string) => void;
-	notification: Notification;
-	onClose: () => void;
+  markAsRead: (id: string) => void;
+  notification: Notification;
+  onClose: () => void;
 };
 
-function NotificationPopupItem({
-	onClose,
-	markAsRead,
-	notification,
-}: NotificationPopupItemProps) {
-	const config = notificationConfig[notification.type];
-	const Icon = config.icon;
-	return (
-		<Button
-			className="block w-full h-auto py-2 text-start "
-			variant="ghost"
-			onClick={() => {
-				onClose();
-				if (!notification.read) markAsRead(notification.id);
-			}}
-			asChild
-		>
-			<Link
-				to={"/notifications/$notificationId"}
-				params={{ notificationId: notification.id }}
-				className="flex gap-2 w-full relative"
-			>
-				{!notification.read && (
-					<span className="bg-destructive/40 size-2.5 absolute top-1 left-1 rounded-full animate-pulse" />
-				)}
-				<Icon className={cn("mt-1 size-4 shrink-0", config.className)} />
+function NotificationPopupItem({ onClose, markAsRead, notification }: NotificationPopupItemProps) {
+  const config = notificationConfig[notification.type];
+  const Icon = config.icon;
+  return (
+    <Button
+      className="block w-full h-auto py-2 text-start "
+      variant="ghost"
+      onClick={() => {
+        onClose();
+        if (!notification.read) markAsRead(notification.id);
+      }}
+      asChild
+    >
+      <Link
+        to={"/notifications/$notificationId"}
+        params={{ notificationId: notification.id }}
+        className="flex gap-2 w-full relative"
+      >
+        {!notification.read && (
+          <span className="bg-destructive/40 size-2.5 absolute top-1 left-1 rounded-full animate-pulse" />
+        )}
+        <Icon className={cn("mt-1 size-4 shrink-0", config.className)} />
 
-				<div className="min-w-0 flex-1">
-					<p className="text-sm leading-snug truncate">
-						{notification.message}
-					</p>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm leading-snug truncate">{notification.message}</p>
 
-					<p className="text-muted-foreground text-xs truncate">
-						{config.label}
-					</p>
-				</div>
-			</Link>
-		</Button>
-	);
+          <p className="text-muted-foreground text-xs truncate">{config.label}</p>
+        </div>
+      </Link>
+    </Button>
+  );
 }
 export default NotificationPopupItem;

@@ -8,35 +8,33 @@ import { offerRejectMutationOptions } from "../hooks/mutation-options";
 import type { OfferDialogProps } from "../types";
 
 function OfferRejectDialog({ onDone, offerId }: OfferDialogProps) {
-	const client = useQueryClient();
-	const router = useRouter();
+  const client = useQueryClient();
+  const router = useRouter();
 
-	const isMobile = useIsMobile();
-	const mutation = useMutation({
-		...offerRejectMutationOptions(),
-		onSuccess: async () => {
-			await Promise.all([
-				client.invalidateQueries({ queryKey: OFFER_QUERY_KEYS.received() }),
-			]);
-			await router.invalidate();
-			onDone();
-		},
-	});
-	return (
-		<div className="grid md:grid-cols-2 gap-2">
-			{isMobile ? null : (
-				<Button variant="outline" onClick={onDone}>
-					Cancel
-				</Button>
-			)}
-			<Button
-				variant="destructive"
-				onClick={() => mutation.mutate(offerId)}
-				disabled={mutation.isPending}
-			>
-				{mutation.isPending ? <Spinner /> : "Reject"}
-			</Button>
-		</div>
-	);
+  const isMobile = useIsMobile();
+  const mutation = useMutation({
+    ...offerRejectMutationOptions(),
+    onSuccess: async () => {
+      await client.invalidateQueries({ queryKey: OFFER_QUERY_KEYS.received() });
+      await router.invalidate();
+      onDone();
+    },
+  });
+  return (
+    <div className="grid md:grid-cols-2 gap-2">
+      {isMobile ? null : (
+        <Button variant="outline" onClick={onDone}>
+          Cancel
+        </Button>
+      )}
+      <Button
+        variant="destructive"
+        onClick={() => mutation.mutate(offerId)}
+        disabled={mutation.isPending}
+      >
+        {mutation.isPending ? <Spinner /> : "Reject"}
+      </Button>
+    </div>
+  );
 }
 export default OfferRejectDialog;

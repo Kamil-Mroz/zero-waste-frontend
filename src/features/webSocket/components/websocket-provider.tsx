@@ -11,62 +11,54 @@ import { appToast } from "@/features/shared/components/toast";
 import { useWebSocketService, WebSocketContext } from "../hooks/useWebSocket";
 
 function WebsocketProvider({ children }: PropsWithChildren) {
-	// return { children };
-	const queryClient = useQueryClient();
-	const websocket = useWebSocketService("/ws");
-	const { hasRole, resetState } = useAuth();
+  // return { children };
+  const queryClient = useQueryClient();
+  const websocket = useWebSocketService("/ws");
+  const { hasRole, resetState } = useAuth();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: depends on the connection state
-	useEffect(() => {
-		if (!websocket.isConnected) {
-			return;
-		}
+  // biome-ignore lint/correctness/useExhaustiveDependencies: depends on the connection state
+  useEffect(() => {
+    if (!websocket.isConnected) {
+      return;
+    }
 
-		if (hasRole("DEMO")) {
-			return;
-		}
+    if (hasRole("DEMO")) {
+      return;
+    }
 
-		const notificationSubscriptionId = websocket.subscribe(
-			"/user/queue/notifications",
-			(notification: Notification) => {
-				showNotificationToast(notification);
+    const notificationSubscriptionId = websocket.subscribe(
+      "/user/queue/notifications",
+      async (notification: Notification) => {
+        showNotificationToast(notification);
 
-				invalidateNotificationQueries(queryClient, notification);
-			},
-		);
-		const banSubscriptionId = websocket.subscribe(
-			"/user/queue/ban",
-			({ message }: { message: string }) => {
-				appToast.error({ title: "Ban", description: message });
-				queryClient.clear();
-				resetState();
-			},
-		);
+        await invalidateNotificationQueries(queryClient, notification);
+      },
+    );
+    const banSubscriptionId = websocket.subscribe(
+      "/user/queue/ban",
+      ({ message }: { message: string }) => {
+        appToast.error({ title: "Ban", description: message });
+        queryClient.clear();
+        resetState();
+      },
+    );
 
-		let reportSubscriptionId: string | null;
+    let reportSubscriptionId: string | null;
 
-		if (hasRole("ADMIN")) {
-			reportSubscriptionId = websocket.subscribe(
-				"/topic/reports",
-				(report: Report) => {
-					showReportToast(report);
-					invalidateReportQueries(queryClient, report);
-				},
-			);
-		}
+    if (hasRole("ADMIN")) {
+      reportSubscriptionId = websocket.subscribe("/topic/reports", async (report: Report) => {
+        showReportToast(report);
+        await invalidateReportQueries(queryClient);
+      });
+    }
 
-		return () => {
-			if (notificationSubscriptionId)
-				websocket.unsubscribe(notificationSubscriptionId);
+    return () => {
+      if (notificationSubscriptionId) websocket.unsubscribe(notificationSubscriptionId);
 
-			if (banSubscriptionId) websocket.unsubscribe(banSubscriptionId);
-			if (reportSubscriptionId) websocket.unsubscribe(reportSubscriptionId);
-		};
-	}, [websocket.isConnected]);
-	return (
-		<WebSocketContext.Provider value={websocket}>
-			{children}
-		</WebSocketContext.Provider>
-	);
+      if (banSubscriptionId) websocket.unsubscribe(banSubscriptionId);
+      if (reportSubscriptionId) websocket.unsubscribe(reportSubscriptionId);
+    };
+  }, [websocket.isConnected]);
+  return <WebSocketContext.Provider value={websocket}>{children}</WebSocketContext.Provider>;
 }
 export default WebsocketProvider;

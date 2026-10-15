@@ -8,35 +8,35 @@ import { ItemHideDialog } from "./item-hide-dialog";
 import { ItemPublishDialog } from "./item-publish-dialog";
 
 export function ItemDialog() {
-	const routeId = "/marketplace/$itemId";
-	const routeApi = getRouteApi(routeId);
-	const { modal } = routeApi.useSearch();
-	const { itemId } = routeApi.useParams();
+  const routeId = "/marketplace/$itemId";
+  const routeApi = getRouteApi(routeId);
+  const { modal } = routeApi.useSearch();
+  const { itemId } = routeApi.useParams();
 
-	const { resetFilters } = useFilters(routeId);
+  const { resetFilters } = useFilters(routeId);
 
-	const isOpen = !!modal;
-	const isDelete = modal === "delete";
-	const isOffer = modal === "offer";
-	const isHide = modal === "hide";
-	const isPublish = modal === "publish";
+  const isOpen = !!modal;
+  const isDelete = modal === "delete";
+  const isOffer = modal === "offer";
+  const isHide = modal === "hide";
+  const isPublish = modal === "publish";
 
-	const config = itemDialogConfig[modal ?? "empty"];
+  const config = itemDialogConfig[modal ?? "empty"];
 
-	const close = () => {
-		resetFilters();
-	};
-	return (
-		<ResponsiveDialog
-			isOpen={isOpen}
-			setIsOpen={(open) => !open && close()}
-			title={config.title}
-			description={config.description}
-		>
-			{isDelete && <ItemDeleteDialog onDone={close} id={itemId} />}
-			{isOffer && <OfferItemDialog onDone={close} id={itemId} />}
-			{isHide && <ItemHideDialog onDone={close} id={itemId} />}
-			{isPublish && <ItemPublishDialog onDone={close} id={itemId} />}
-		</ResponsiveDialog>
-	);
+  const close = () => {
+    void resetFilters();
+  };
+  return (
+    <ResponsiveDialog
+      isOpen={isOpen}
+      setIsOpen={(open) => !open && close()}
+      title={config.title}
+      description={config.description}
+    >
+      {isDelete && <ItemDeleteDialog onDone={close} id={itemId} />}
+      {isOffer && <OfferItemDialog onDone={close} id={itemId} />}
+      {isHide && <ItemHideDialog onDone={close} id={itemId} />}
+      {isPublish && <ItemPublishDialog onDone={close} id={itemId} />}
+    </ResponsiveDialog>
+  );
 }

@@ -8,34 +8,32 @@ import type { OfferDialogProps } from "../types";
 import { useIsMobile } from "@/features/shared/hooks/use-mobile";
 
 function OfferAcceptDialog({ onDone, offerId }: OfferDialogProps) {
-	const client = useQueryClient();
-	const router = useRouter();
-  const isMobile = useIsMobile()
-	const mutation = useMutation({
-		...offerAcceptMutationOptions(),
-		onSuccess: async () => {
-			await Promise.all([
-				client.invalidateQueries({ queryKey: OFFER_QUERY_KEYS.received() }),
-			]);
-			await router.invalidate();
-			onDone();
-		},
-	});
-	return (
-		<div className="grid md:grid-cols-2 gap-2">
-			{isMobile ? null : (
-				<Button variant="outline" onClick={onDone}>
-					Cancel
-				</Button>
-			)}
-			<Button
-				variant={"success"}
-				onClick={() => mutation.mutate(offerId)}
-				disabled={mutation.isPending}
-			>
-				{mutation.isPending ? <Spinner /> : "Accept"}
-			</Button>
-		</div>
-	);
+  const client = useQueryClient();
+  const router = useRouter();
+  const isMobile = useIsMobile();
+  const mutation = useMutation({
+    ...offerAcceptMutationOptions(),
+    onSuccess: async () => {
+      await client.invalidateQueries({ queryKey: OFFER_QUERY_KEYS.received() });
+      await router.invalidate();
+      onDone();
+    },
+  });
+  return (
+    <div className="grid md:grid-cols-2 gap-2">
+      {isMobile ? null : (
+        <Button variant="outline" onClick={onDone}>
+          Cancel
+        </Button>
+      )}
+      <Button
+        variant={"success"}
+        onClick={() => mutation.mutate(offerId)}
+        disabled={mutation.isPending}
+      >
+        {mutation.isPending ? <Spinner /> : "Accept"}
+      </Button>
+    </div>
+  );
 }
 export default OfferAcceptDialog;

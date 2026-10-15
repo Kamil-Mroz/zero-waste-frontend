@@ -2,102 +2,102 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
 } from "@/features/shared/components/ui/collapsible";
 import {
-	SidebarGroup,
-	SidebarGroupLabel,
-	SidebarMenu,
-	SidebarMenuAction,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarMenuSub,
-	SidebarMenuSubButton,
-	SidebarMenuSubItem,
-	useSidebar,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  useSidebar,
 } from "@/features/shared/components/ui/sidebar";
 import { useIsMobile } from "../hooks/use-mobile";
 import type { NavItem } from "../types";
 
 export function NavMain({ items }: { items: NavItem[] }) {
-	const { user, hasAnyRole } = useAuth();
+  const { user, hasAnyRole } = useAuth();
 
-	const { toggleSidebar } = useSidebar();
-	const isMobile = useIsMobile();
+  const { toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile();
 
-	function canAccess(item: NavItem) {
-		if (!user) {
-			return !item.private;
-		}
-		if (item.role && !hasAnyRole(item.role)) {
-			return false;
-		}
-		return true;
-	}
+  function canAccess(item: NavItem) {
+    if (!user) {
+      return !item.private;
+    }
+    if (item.role && !hasAnyRole(item.role)) {
+      return false;
+    }
+    return true;
+  }
 
-	return (
-		<SidebarGroup>
-			<SidebarGroupLabel>Platform</SidebarGroupLabel>
-			<SidebarMenu>
-				{items.map((item) => {
-					return canAccess(item) ? (
-						<Collapsible key={item.title} asChild defaultOpen={item?.isActive}>
-							<SidebarMenuItem>
-								<SidebarMenuButton asChild={!!item.url} tooltip={item.title}>
-									{!!item.url ? (
-										<Link
-											to={item.url}
-											onClick={() => {
-												if (isMobile) toggleSidebar();
-											}}
-										>
-											<item.icon />
-											<span>{item.title}</span>
-										</Link>
-									) : (
-										<>
-											<item.icon />
-											<span>{item.title}</span>
-										</>
-									)}
-								</SidebarMenuButton>
-								{item.items?.length ? (
-									<>
-										<CollapsibleTrigger asChild>
-											<SidebarMenuAction className="data-[state=open]:rotate-90">
-												<ChevronRight />
-												<span className="sr-only">Toggle</span>
-											</SidebarMenuAction>
-										</CollapsibleTrigger>
-										<CollapsibleContent>
-											<SidebarMenuSub>
-												{item.items?.map((subItem) => {
-													return canAccess(subItem) ? (
-														<SidebarMenuSubItem key={subItem.title}>
-															<SidebarMenuSubButton asChild>
-																<Link
-																	to={subItem.url}
-																	onClick={() => {
-																		if (isMobile) toggleSidebar();
-																	}}
-																>
-																	<span>{subItem.title}</span>
-																</Link>
-															</SidebarMenuSubButton>
-														</SidebarMenuSubItem>
-													) : null;
-												})}
-											</SidebarMenuSub>
-										</CollapsibleContent>
-									</>
-								) : null}
-							</SidebarMenuItem>
-						</Collapsible>
-					) : null;
-				})}
-			</SidebarMenu>
-		</SidebarGroup>
-	);
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarMenu>
+        {items.map((item) => {
+          return canAccess(item) ? (
+            <Collapsible key={item.title} asChild defaultOpen={item?.isActive}>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild={!!item.url} tooltip={item.title}>
+                  {item.url ? (
+                    <Link
+                      to={item.url}
+                      onClick={() => {
+                        if (isMobile) toggleSidebar();
+                      }}
+                    >
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  ) : (
+                    <>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </>
+                  )}
+                </SidebarMenuButton>
+                {item.items?.length ? (
+                  <>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuAction className="data-[state=open]:rotate-90">
+                        <ChevronRight />
+                        <span className="sr-only">Toggle</span>
+                      </SidebarMenuAction>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {item.items?.map((subItem) => {
+                          return canAccess(subItem) ? (
+                            <SidebarMenuSubItem key={subItem.title}>
+                              <SidebarMenuSubButton asChild>
+                                <Link
+                                  to={subItem.url}
+                                  onClick={() => {
+                                    if (isMobile) toggleSidebar();
+                                  }}
+                                >
+                                  <span>{subItem.title}</span>
+                                </Link>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          ) : null;
+                        })}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </>
+                ) : null}
+              </SidebarMenuItem>
+            </Collapsible>
+          ) : null;
+        })}
+      </SidebarMenu>
+    </SidebarGroup>
+  );
 }

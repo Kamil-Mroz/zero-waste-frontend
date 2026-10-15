@@ -10,54 +10,54 @@ import type { Pageable } from "@/features/shared/types";
 import { withDefaultPageable } from "@/lib/utils";
 
 export const Route = createLazyFileRoute("/_authenticated/offers/received")({
-	component: RouteComponent,
-	pendingComponent: DataTableSkeleton,
+  component: RouteComponent,
+  pendingComponent: DataTableSkeleton,
 });
 
 function RouteComponent() {
-	const search = Route.useSearch();
+  const search = Route.useSearch();
 
-	const routeId = "/_authenticated/offers/received";
-	const { setFilters } = useFilters(routeId);
+  const routeId = "/_authenticated/offers/received";
+  const { setFilters } = useFilters(routeId);
 
-	const pageable = withDefaultPageable(search);
+  const pageable = withDefaultPageable(search);
 
-	const { data: page } = useSuspenseQuery(receivedOffersQueryOptions(search));
-	return (
-		<>
-			<OfferTable
-				data={page.content}
-				columns={receivedColumns}
-				pagination={{
-					pageIndex: pageable.page,
-					pageSize: pageable.size,
-				}}
-				paginationOptions={{
-					pageCount: page.totalPages,
-					onPaginationChange: (pagination) => {
-						let paginationState: Pageable;
-						if (typeof pagination === "function") {
-							const paginationValue = pagination({
-								pageIndex: pageable.page,
-								pageSize: pageable.size,
-							});
+  const { data: page } = useSuspenseQuery(receivedOffersQueryOptions(search));
+  return (
+    <>
+      <OfferTable
+        data={page.content}
+        columns={receivedColumns}
+        pagination={{
+          pageIndex: pageable.page,
+          pageSize: pageable.size,
+        }}
+        paginationOptions={{
+          pageCount: page.totalPages,
+          onPaginationChange: (pagination) => {
+            let paginationState: Pageable;
+            if (typeof pagination === "function") {
+              const paginationValue = pagination({
+                pageIndex: pageable.page,
+                pageSize: pageable.size,
+              });
 
-							paginationState = {
-								page: paginationValue.pageIndex,
-								size: paginationValue.pageSize,
-							};
-						} else {
-							paginationState = {
-								page: pagination.pageIndex,
-								size: pagination.pageSize,
-							};
-						}
-						setFilters(paginationState);
-					},
-				}}
-			/>
+              paginationState = {
+                page: paginationValue.pageIndex,
+                size: paginationValue.pageSize,
+              };
+            } else {
+              paginationState = {
+                page: pagination.pageIndex,
+                size: pagination.pageSize,
+              };
+            }
+            void setFilters(paginationState);
+          },
+        }}
+      />
 
-			<OfferDialog routeId={routeId} />
-		</>
-	);
+      <OfferDialog routeId={routeId} />
+    </>
+  );
 }

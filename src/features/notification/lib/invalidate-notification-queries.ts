@@ -5,75 +5,76 @@ import { NOTIFICATIONS_QUERY_KEYS } from "../constants";
 import type { Notification } from "../types";
 
 export const invalidateNotificationQueries = async (
-	queryClient: QueryClient,
+  queryClient: QueryClient,
 
-	notification: Notification,
+  notification: Notification,
 ) => {
-	queryClient.invalidateQueries({ queryKey: NOTIFICATIONS_QUERY_KEYS.popup() });
+  await Promise.all([
+    queryClient.invalidateQueries({ queryKey: NOTIFICATIONS_QUERY_KEYS.popup() }),
+    queryClient.invalidateQueries({
+      queryKey: NOTIFICATIONS_QUERY_KEYS.history(notification.type),
+    }),
+  ]);
 
-	queryClient.invalidateQueries({
-		queryKey: NOTIFICATIONS_QUERY_KEYS.history(notification.type),
-	});
+  queryClient.setQueryData(
+    NOTIFICATIONS_QUERY_KEYS.unreadCount(),
+    (old: { unreadCount: number } | undefined) => ({
+      unreadCount: (old?.unreadCount ?? 0) + 1,
+    }),
+  );
 
-	queryClient.setQueryData(
-		NOTIFICATIONS_QUERY_KEYS.unreadCount(),
-		(old: { unreadCount: number } | undefined) => ({
-			unreadCount: (old?.unreadCount ?? 0) + 1,
-		}),
-	);
+  switch (notification.type) {
+    case "OFFER_RECEIVED":
+      await queryClient.invalidateQueries({
+        queryKey: OFFER_QUERY_KEYS.received(),
+      });
 
-	switch (notification.type) {
-		case "OFFER_RECEIVED":
-			await queryClient.invalidateQueries({
-				queryKey: OFFER_QUERY_KEYS.received(),
-			});
+      break;
 
-			break;
+    case "OFFER_ACCEPTED": {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ITEM_QUERY_KEYS.all,
+        }),
 
-		case "OFFER_ACCEPTED": {
-			await Promise.all([
-				queryClient.invalidateQueries({
-					queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
-				}),
-				queryClient.invalidateQueries({
-					queryKey: ITEM_QUERY_KEYS.all,
-				}),
+        queryClient.invalidateQueries({
+          queryKey: OFFER_QUERY_KEYS.own(),
+        }),
+      ]);
+      break;
+    }
 
-				queryClient.invalidateQueries({
-					queryKey: OFFER_QUERY_KEYS.own(),
-				}),
-			]);
-			break;
-		}
+    case "OFFER_REJECTED": {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ITEM_QUERY_KEYS.all,
+        }),
 
-		case "OFFER_REJECTED": {
-			await Promise.all([
-				queryClient.invalidateQueries({
-					queryKey: ITEM_QUERY_KEYS.itemDetailRoot(),
-				}),
-				queryClient.invalidateQueries({
-					queryKey: ITEM_QUERY_KEYS.all,
-				}),
+        queryClient.invalidateQueries({
+          queryKey: OFFER_QUERY_KEYS.own(),
+        }),
+      ]);
 
-				queryClient.invalidateQueries({
-					queryKey: OFFER_QUERY_KEYS.own(),
-				}),
-			]);
+      break;
+    }
 
-			break;
-		}
+    case "OFFER_CANCELLED":
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: OFFER_QUERY_KEYS.own(),
+        }),
 
-		case "OFFER_CANCELLED":
-			await Promise.all([
-				queryClient.invalidateQueries({
-					queryKey: OFFER_QUERY_KEYS.own(),
-				}),
+        queryClient.invalidateQueries({
+          queryKey: OFFER_QUERY_KEYS.received(),
+        }),
+      ]);
 
-				queryClient.invalidateQueries({
-					queryKey: OFFER_QUERY_KEYS.received(),
-				}),
-			]);
-
-			break;
-	}
+      break;
+  }
 };

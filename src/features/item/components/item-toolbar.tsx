@@ -9,49 +9,44 @@ import { Field } from "@/features/shared/components/ui/field";
 
 import { useFilters } from "@/features/shared/hooks/use-filters";
 
-export function ItemToolbar<
-	TId extends RouteIds<RegisteredRouter["routeTree"]>,
->({
-	routeId,
-	children,
+export function ItemToolbar<TId extends RouteIds<RegisteredRouter["routeTree"]>>({
+  routeId,
+  children,
 }: { routeId: TId; isOwnItems?: boolean } & PropsWithChildren) {
-	const { filters, setFilters, resetFilters } = useFilters(
-		routeId as "/marketplace/" | "/_authenticated/marketplace/my-items",
-	);
+  const { filters, setFilters, resetFilters } = useFilters(
+    routeId as "/marketplace/" | "/_authenticated/marketplace/my-items",
+  );
 
-	const onChange = (value: string | number) => {
-		setFilters({ text: `${value}` });
-	};
+  const onChange = (value: string | number) => {
+    void setFilters({ text: `${value}` });
+  };
 
-	const onSelect = (id: string) => {
-		setFilters({ category: id });
-	};
+  const onSelect = (id: string) => {
+    void setFilters({ category: id });
+  };
 
-	return (
-		<div className="flex items-center gap-2 flex-col sm:items-stretch sm:flex-row">
-			<Field className="w-auto">
-				<DebouncedInput
-					placeholder="Search..."
-					value={filters.text ?? ""}
-					onChange={onChange}
-					className="max-w-62.5 p-2"
-				/>
-			</Field>
+  return (
+    <div className="flex items-center gap-2 flex-col sm:items-stretch sm:flex-row">
+      <Field className="w-auto">
+        <DebouncedInput
+          placeholder="Search..."
+          value={filters.text ?? ""}
+          onChange={onChange}
+          className="max-w-62.5 p-2"
+        />
+      </Field>
 
-			{children}
-			<Suspense fallback={<CategoryMenuSkeleton />}>
-				<CategoryMenu
-					onSelect={onSelect}
-					selectedCategoryId={filters.category}
-				/>
-			</Suspense>
-			{Object.values(filters).some((value) => value) && (
-				<div>
-					<Button variant="ghost" onClick={resetFilters} className="h-full">
-						Reset <X />
-					</Button>
-				</div>
-			)}
-		</div>
-	);
+      {children}
+      <Suspense fallback={<CategoryMenuSkeleton />}>
+        <CategoryMenu onSelect={onSelect} selectedCategoryId={filters.category} />
+      </Suspense>
+      {Object.values(filters).some((value) => value) && (
+        <div>
+          <Button variant="ghost" onClick={resetFilters} className="h-full">
+            Reset <X />
+          </Button>
+        </div>
+      )}
+    </div>
+  );
 }

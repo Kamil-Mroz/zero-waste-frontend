@@ -10,29 +10,28 @@ import type { ItemStateType } from "@/features/item/types";
 import { useFilters } from "@/features/shared/hooks/use-filters";
 
 export const Route = createLazyFileRoute("/_authenticated/marketplace/my-items")({
-	component: RouteComponent,
-
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const routeId = "/_authenticated/marketplace/my-items";
-	const { clearFilters, setFilters } = useFilters(routeId);
-	const search = Route.useSearch();
+  const routeId = "/_authenticated/marketplace/my-items";
+  const { clearFilters, setFilters } = useFilters(routeId);
+  const search = Route.useSearch();
 
-	const onChange = (states: ItemStateType[]) => {
-		if (states.length === 0) clearFilters(["states"]);
-		else setFilters({ states });
-	};
+  const onChange = (states: ItemStateType[]) => {
+    if (states.length === 0) clearFilters(["states"]);
+    else void setFilters({ states });
+  };
 
-	return (
-		<div className="space-y-2">
-			<ItemToolbar routeId={routeId}>
-				<ItemStateFilter states={search.states ?? []} onChange={onChange} />
-			</ItemToolbar>
+  return (
+    <div className="space-y-2">
+      <ItemToolbar routeId={routeId}>
+        <ItemStateFilter states={search.states ?? []} onChange={onChange} />
+      </ItemToolbar>
 
-			<Suspense fallback={<ItemsListSkeleton />}>
-				<MyItemsListContent />
-			</Suspense>
-		</div>
-	);
+      <Suspense fallback={<ItemsListSkeleton />}>
+        <MyItemsListContent />
+      </Suspense>
+    </div>
+  );
 }
