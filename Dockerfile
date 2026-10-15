@@ -8,6 +8,7 @@ FROM node:24.17.0-alpine3.23 AS builder
 # Set the working directory inside the container
 WORKDIR /app
 
+RUN apk add --no-cache git
 RUN corepack enable
 
 # Copy package-related files first to leverage Docker's caching mechanism
